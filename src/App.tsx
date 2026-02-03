@@ -1,35 +1,29 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { categories } from "./data/categories";
+import { months } from "./data/months";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export default function App() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div>
+      <h1 className="bg-red-500">Budżet domowy</h1>
 
-export default App
+      <table className="border border-black border-collapse">
+        <thead>
+          <tr>
+            <th className="border border-black">Kategoria</th>
+            {months.map((month) => (
+              <th className="p-2 border border-black bg-blue-100" key={month}>{month}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {categories.map((category) => (
+            <tr>
+              <td className="p-2 border border-black bg-yellow-200">{category}</td>
+              {months.map((month) => (<td key={month} className="p-2 text-center border border-black">0</td>))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
