@@ -17,7 +17,7 @@ export default function App() {
         </thead>
         <tbody>
           {categories.map((category) => (
-            <tr>
+            <tr key={category}>
               <td className="p-2 border border-black bg-yellow-200">{category}</td>
               {months.map((month) => (<td key={month} className="p-2 text-center border border-black">0</td>))}
             </tr>
