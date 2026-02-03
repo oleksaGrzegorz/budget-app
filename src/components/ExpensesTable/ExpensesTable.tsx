@@ -6,7 +6,7 @@ export const ExpensesTable = () => (
     <table className="border border-black border-collapse text-xs">
       <thead>
         <tr>
-          <th className="w-40 border border-black">Kategoria</th>
+          <th  className="w-40 border border-black">Kategoria</th>
           {months.map((month) => (
             <th className="p-2 border border-black bg-blue-100" key={month}>
               {month}
@@ -17,9 +17,9 @@ export const ExpensesTable = () => (
       <tbody>
         {categories.map((category) => (
           <tr key={category}>
-            <td className="p-2 border border-black bg-amber-700">
+            <th className="p-2 border border-black bg-amber-700" scope="row">
               {category}
-            </td>
+            </th>
             {months.map((month) => (
               <td key={month} className="bg-amber-300 w-25 p-5 text-center border border-black">
 
