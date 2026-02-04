@@ -13,10 +13,10 @@ export const ExpensesTable = () => (
             </th>
           ))}
           <th className="p-2 border border-black bg-blue-100">
-            średnia z całego roku
+            średnia
           </th>
           <th className="p-2 border border-black bg-blue-100">
-            cel średniej na cały rok
+            cel
           </th>
         </tr>
       </thead>
@@ -35,8 +35,8 @@ export const ExpensesTable = () => (
                 className="bg-amber-300 w-25 p-5 text-center border border-black"
               ></td>
             ))}
-            <td className="p-2 border border-black bg-blue-100">0</td>
-            <td className="p-2 border border-black bg-blue-100">0</td>
+            <td className="w-25 p-2 border border-black bg-blue-100">0</td>
+            <td className="w-25 p-2 border border-black bg-blue-100">0</td>
           </tr>
         ))}
       </tbody>
