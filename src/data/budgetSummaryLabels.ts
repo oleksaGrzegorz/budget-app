@@ -5,4 +5,7 @@ export const budgetSummaryLabels = [
   "Wpływy inne",
   "Łącznie wpływy",
   "Wydatki",
+  "Główne wydatki",
+  "Dodatkowe wydatki",
+  "Oszczędności",
 ];  
