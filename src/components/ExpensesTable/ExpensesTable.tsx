@@ -1,7 +1,7 @@
 import { categories } from "../../data/categories";
 import { months } from "../../data/months";
 
-export const ExpensesTable = () => {
+export const ExpensesTable = ({ expense }) => {
   return (
     <>
       <table className="border border-black border-collapse text-xs">
@@ -26,11 +26,13 @@ export const ExpensesTable = () => {
               >
                 {category}
               </th>
-              {months.map((month) => (
+              {months.map((month,index) => (
                 <td
                   key={month}
                   className="bg-amber-300 w-25 p-5 text-center border border-black"
-                ></td>
+                >
+                  {category === "Kredyt" && month === "Luty" ? expense : ""}
+                </td>
               ))}
               <td className="w-25 p-2 border border-black bg-blue-100">0</td>
               <td className="w-25 p-2 border border-black bg-blue-100">0</td>
