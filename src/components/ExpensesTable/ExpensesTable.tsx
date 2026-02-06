@@ -1,7 +1,11 @@
 import { categories } from "../../data/categories";
 import { months } from "../../data/months";
 
-export const ExpensesTable = ({ expense }) => {
+interface ExpensesTableProps {
+  expense: number;
+}
+
+export const ExpensesTable = ({ expense }: ExpensesTableProps) => {
   return (
     <>
       <table className="border border-black border-collapse text-xs">
@@ -26,7 +30,7 @@ export const ExpensesTable = ({ expense }) => {
               >
                 {category}
               </th>
-              {months.map((month,index) => (
+              {months.map((month) => (
                 <td
                   key={month}
                   className="bg-amber-300 w-25 p-5 text-center border border-black"
