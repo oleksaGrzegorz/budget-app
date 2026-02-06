@@ -5,8 +5,9 @@ import { Form } from "./components/Form/Form";
 
 export default function App() {
   const [amount, setAmount] = useState(0);
-  const [expenses, setExpenses] = useState<Record<string, number>>({});
+  const [expenses, setExpenses] = useState<Record<string, Record<string, number>>>({});
   const [category, setCategory] = useState("");
+  const [month, setMonth] = useState("");
   return (
     <div>
       <h1 className="bg-red-500">Budżet domowy</h1>
@@ -16,6 +17,8 @@ export default function App() {
         setExpenses={setExpenses}
         category={category}
         setCategory={setCategory}
+        month={month}
+        setMonth={setMonth}
       />
       <ExpensesTable expenses={expenses}/>
       <BudgetSummaryTable />
