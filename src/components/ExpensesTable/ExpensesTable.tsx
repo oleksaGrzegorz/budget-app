@@ -2,7 +2,7 @@ import { categories } from "../../data/categories";
 import { months } from "../../data/months";
 
 interface ExpensesTableProps {
-  expenses: Record<string, number>;
+  expenses: Record<string, Record<string, number>>;
 }
 
 export const ExpensesTable = ({ expenses }: ExpensesTableProps) => {
@@ -35,7 +35,7 @@ export const ExpensesTable = ({ expenses }: ExpensesTableProps) => {
                   key={month}
                   className="bg-amber-300 w-25 p-5 text-center border border-black"
                 >
-                  {expenses[category] || 0}
+                  {expenses[category]?.[month] || 0}
                 </td>
               ))}
               <td className="w-25 p-2 border border-black bg-blue-100">0</td>
