@@ -1,11 +1,18 @@
-export const Form = ({ amount, setAmount, setExpense }) => (
+import type { Dispatch, SetStateAction } from "react";
+
+interface FormProps {
+  amount: number;
+  setAmount: Dispatch<SetStateAction<number>>;
+  setExpense: Dispatch<SetStateAction<number>>;
+}
+
+export const Form = ({ amount, setAmount, setExpense }: FormProps) => (
   <form
     className="p-10 border border-black m-10"
     onSubmit={(e) => {
       e.preventDefault();
-      setExpense(prev => prev + amount);
+      setExpense((prev) => prev + amount);
       setAmount(0);
-
     }}
   >
     <input
