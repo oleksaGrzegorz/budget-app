@@ -2,6 +2,7 @@ import { useState } from "react";
 import { BudgetSummaryTable } from "./components/BudgetSummaryTable/BudgetSummaryTable";
 import { ExpensesTable } from "./components/ExpensesTable/ExpensesTable";
 import { Form } from "./components/Form/Form";
+import { ExpensesList } from "./components/ExpensesList/ExpensesList";
 
 export default function App() {
   const [amount, setAmount] = useState(0);
@@ -22,6 +23,7 @@ export default function App() {
       />
       <ExpensesTable expenses={expenses}/>
       <BudgetSummaryTable />
+      <ExpensesList expenses={expenses} />
     </div>
   );
 }
