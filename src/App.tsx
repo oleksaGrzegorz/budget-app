@@ -19,7 +19,7 @@ export default function App() {
     <div className="min-h-screen bg-gray-100">
       <main className="mx-auto max-w-7xl px-4">
         <Header />
-        <div className="flex gap-4 my-6">
+        <div className="flex gap-4 my-6 justify-center"> 
           <button
             onClick={() => setFormType("expense")}
             className={`px-4 py-2 border ${
