@@ -26,9 +26,12 @@ export const Form = ({
 }: FormProps) => {
   const categoriesToShow = type === "expense" ? categories : incomeCategories;
 
+  const bgColor = type === "expense" ? "bg-red-50" : "bg-green-50";
+  const btnColor = type === "expense" ? "bg-red-500" : "bg-green-500";
+
   return (
     <form
-      className="p-10 border border-black m-10"
+      className={`p-4 border border-gray-300 rounded-md space-y-2 w-64 mx-auto ${bgColor}`}
       onSubmit={(e) => {
         e.preventDefault();
         if (!category || !month || amount === "" || amount <= 0) return;
@@ -46,12 +49,12 @@ export const Form = ({
         setMonth("");
       }}
     >
-      <h2 className="text-lg font-bold mb-4">
+      <h2 className="text-md font-semibold text-gray-700 text-center">
         {type === "expense" ? "Dodaj wydatek" : "Dodaj przychód"}
       </h2>
 
       <input
-        className="border border-red-400 mb-2 p-1 w-full"
+        className="border border-gray-300 rounded p-1 text-sm w-full"
         type="number"
         placeholder="Kwota"
         value={amount}
@@ -59,7 +62,7 @@ export const Form = ({
       />
 
       <select
-        className="border border-red-400 mb-2 p-1 w-full"
+        className="border border-gray-300 rounded p-1 text-sm w-full"
         value={category}
         onChange={(e) => setCategory(e.target.value)}
       >
@@ -72,7 +75,7 @@ export const Form = ({
       </select>
 
       <select
-        className="border border-red-400 mb-2 p-1 w-full"
+        className="border border-gray-300 rounded p-1 text-sm w-full"
         value={month}
         onChange={(e) => setMonth(e.target.value)}
       >
@@ -87,7 +90,7 @@ export const Form = ({
       <button
         type="submit"
         disabled={!category || !month || amount === "" || amount <= 0}
-        className="bg-blue-500 border border-black disabled:opacity-50 disabled:cursor-not-allowed p-2 w-full"
+        className={`${btnColor} text-white rounded p-1 w-full text-sm disabled:opacity-50 disabled:cursor-not-allowed`}
       >
         Dodaj
       </button>
