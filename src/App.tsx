@@ -5,7 +5,7 @@ import { Form } from "./components/Form/Form";
 import { ExpensesList } from "./components/ExpensesList/ExpensesList";
 
 export default function App() {
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState<number | "">("");
   const [expenses, setExpenses] = useState<
     Record<string, Record<string, number>>
   >({});
