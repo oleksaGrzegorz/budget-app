@@ -3,6 +3,7 @@ import { BudgetSummaryTable } from "./components/BudgetSummaryTable/BudgetSummar
 import { ExpensesTable } from "./components/ExpensesTable/ExpensesTable";
 import { Form } from "./components/Form/Form";
 import { ExpensesList } from "./components/ExpensesList/ExpensesList";
+import { Header } from "./components/Header/Header";
 
 export default function App() {
   const [amount, setAmount] = useState<number | "">("");
@@ -12,9 +13,10 @@ export default function App() {
   const [category, setCategory] = useState("");
   const [month, setMonth] = useState("");
   return (
+
     <div className="min-h-screen bg-gray-100">
       <main className="mx-auto max-w-7xl px-4">
-        <h1 className="text-2xl font-bold py-6 text-center">Budżet domowy</h1>
+        <Header />
         <section className="my-8">
           <Form
             amount={amount}
@@ -30,7 +32,7 @@ export default function App() {
           <ExpensesTable expenses={expenses} />
         </section>
         <section className="my-12 overflow-x-auto">
-          <BudgetSummaryTable />
+          <BudgetSummaryTable expenses={expenses} />
         </section>
         <section className="my-12">
           <ExpensesList expenses={expenses} />
