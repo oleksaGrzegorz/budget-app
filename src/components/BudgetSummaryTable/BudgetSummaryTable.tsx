@@ -17,7 +17,19 @@ export const BudgetSummaryTable = ({
     Object.values(incomes).reduce((sum, cat) => sum + (cat[month] || 0), 0);
 
   return (
-    <table className="text-xs border border-black border-collapse w-full">
+    <table className="text-xs border border-black border-collapse mx-auto">
+        <thead>
+    <tr>
+      <th className="w-40 border border-black">Kategoria</th>
+      {months.map((month) => (
+        <th key={month} className="p-2 border border-black bg-blue-100">
+          {month}
+        </th>
+      ))}
+      <th className="p-2 border border-black bg-blue-100">śr</th>
+      <th className="p-2 border border-black bg-blue-100">cel</th>
+    </tr>
+  </thead>
       <tbody>
         {incomeCategories.map((category) => (
           <tr key={category}>
