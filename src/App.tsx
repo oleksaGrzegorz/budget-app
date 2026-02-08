@@ -13,40 +13,50 @@ export default function App() {
   const [expenses, setExpenses] = useState<Record<string, Record<string, number>>>({});
   const [incomes, setIncomes] = useState<Record<string, Record<string, number>>>({});
 
+  const [formType, setFormType] = useState<"expense" | "income">("expense");
+
   return (
     <div className="min-h-screen bg-gray-100">
       <main className="mx-auto max-w-7xl px-4">
         <Header />
-        <section className="my-8">
-          <Form
-            amount={amount}
-            setAmount={setAmount}
-            setExpenses={setExpenses}
-            category={category}
-            setCategory={setCategory}
-            month={month}
-            setMonth={setMonth}
-            type="expense"
-          />
-        </section>
+        <div className="flex gap-4 my-6">
+          <button
+            onClick={() => setFormType("expense")}
+            className={`px-4 py-2 border ${
+              formType === "expense" ? "bg-red-400" : "bg-white"
+            }`}
+          >
+            Wydatki
+          </button>
+
+          <button
+            onClick={() => setFormType("income")}
+            className={`px-4 py-2 border ${
+              formType === "income" ? "bg-green-400" : "bg-white"
+            }`}
+          >
+            Przychody
+          </button>
+        </div>
+        <Form
+          amount={amount}
+          setAmount={setAmount}
+          setExpenses={formType === "expense" ? setExpenses : setIncomes}
+          category={category}
+          setCategory={setCategory}
+          month={month}
+          setMonth={setMonth}
+          type={formType}
+        />
+
         <section className="my-12 overflow-x-auto">
           <ExpensesTable expenses={expenses} />
         </section>
-        <section className="my-8">
-          <Form
-            amount={amount}
-            setAmount={setAmount}
-            setExpenses={setIncomes}
-            category={category}
-            setCategory={setCategory}
-            month={month}
-            setMonth={setMonth}
-            type="income"
-          />
-        </section>
+
         <section className="my-12 overflow-x-auto">
           <BudgetSummaryTable expenses={expenses} incomes={incomes} />
         </section>
+
         <section className="my-12">
           <ExpensesList expenses={expenses} />
         </section>
