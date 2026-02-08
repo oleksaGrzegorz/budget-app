@@ -22,26 +22,18 @@ export const ExpensesTable = ({ expenses }: ExpensesTableProps) => {
           </tr>
         </thead>
         <tbody>
-          {categories.map((category) => (
-            <tr key={category}>
-              <th
-                className="border border-black bg-amber-700 leading-tight"
-                scope="row"
-              >
-                {category}
-              </th>
-              {months.map((month) => (
-                <td
-                  key={month}
-                  className="bg-amber-300 w-25 p-5 text-center border border-black"
-                >
-                  {expenses[category]?.[month] || 0}
-                </td>
-              ))}
-              <td className="w-25 p-2 border border-black bg-blue-100">0</td>
-              <td className="w-25 p-2 border border-black bg-blue-100">0</td>
-            </tr>
-          ))}
+{categories.map((category) => (
+          <tr key={category}>
+            <th className="bg-amber-700 border w-40" scope="row">{category}</th>
+            {months.map((month) => (
+              <td key={month} className="bg-amber-300 p-2 border text-center">
+                {expenses[category]?.[month] || 0}
+              </td>
+            ))}
+            <td className="w-25 p-2 border bg-blue-100">0</td>
+            <td className="w-25 p-2 border bg-blue-100">0</td>
+          </tr>
+        ))}
         </tbody>
       </table>
     </>
