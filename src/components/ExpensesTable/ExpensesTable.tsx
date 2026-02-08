@@ -8,7 +8,7 @@ interface ExpensesTableProps {
 export const ExpensesTable = ({ expenses }: ExpensesTableProps) => {
   return (
     <>
-      <table className="border border-black border-collapse text-xs">
+      <table className="border border-black border-collapse text-xs mx-auto">
         <thead>
           <tr>
             <th className="w-40 border border-black">Kategoria</th>
