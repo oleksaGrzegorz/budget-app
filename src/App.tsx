@@ -16,50 +16,64 @@ export default function App() {
   const [formType, setFormType] = useState<"expense" | "income">("expense");
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <main className="mx-auto max-w-7xl px-4">
+    <div className="min-h-screen bg-gray-200">
+      <main className="mx-auto max-w-7xl px-6 py-8">
         <Header />
-        <div className="flex gap-4 my-6 justify-center"> 
-          <button
-            onClick={() => setFormType("expense")}
-            className={`px-4 py-2 border ${
-              formType === "expense" ? "bg-red-400" : "bg-white"
-            }`}
-          >
-            Wydatki
-          </button>
 
-          <button
-            onClick={() => setFormType("income")}
-            className={`px-4 py-2 border ${
-              formType === "income" ? "bg-green-400" : "bg-white"
-            }`}
-          >
-            Przychody
-          </button>
+        <div className="flex gap-8 mt-8">
+          
+          <div className="w-1/3 bg-white rounded-lg shadow-md p-6 h-fit">
+            <div className="flex gap-3 mb-6">
+              <button
+                onClick={() => setFormType("expense")}
+                className={`flex-1 px-4 py-2 rounded-md text-sm font-medium transition ${
+                  formType === "expense"
+                    ? "bg-red-500 text-white"
+                    : "bg-gray-100 text-gray-700"
+                }`}
+              >
+                Wydatki
+              </button>
+
+              <button
+                onClick={() => setFormType("income")}
+                className={`flex-1 px-4 py-2 rounded-md text-sm font-medium transition ${
+                  formType === "income"
+                    ? "bg-green-500 text-white"
+                    : "bg-gray-100 text-gray-700"
+                }`}
+              >
+                Przychody
+              </button>
+            </div>
+
+            <Form
+              amount={amount}
+              setAmount={setAmount}
+              setExpenses={formType === "expense" ? setExpenses : setIncomes}
+              category={category}
+              setCategory={setCategory}
+              month={month}
+              setMonth={setMonth}
+              type={formType}
+            />
+          </div>
+
+          <div className="w-2/3 space-y-8">
+            <section className="overflow-x-auto bg-white rounded-lg shadow-md p-4">
+              <ExpensesTable expenses={expenses} />
+            </section>
+
+            <section className="overflow-x-auto bg-white rounded-lg shadow-md p-4">
+              <BudgetSummaryTable expenses={expenses} incomes={incomes} />
+            </section>
+
+            <section>
+              <ExpensesList expenses={expenses} />
+            </section>
+          </div>
+
         </div>
-        <Form
-          amount={amount}
-          setAmount={setAmount}
-          setExpenses={formType === "expense" ? setExpenses : setIncomes}
-          category={category}
-          setCategory={setCategory}
-          month={month}
-          setMonth={setMonth}
-          type={formType}
-        />
-
-        <section className="mt-5 overflow-x-auto">
-          <ExpensesTable expenses={expenses} />
-        </section>
-
-        <section className="mt-5 overflow-x-auto">
-          <BudgetSummaryTable expenses={expenses} incomes={incomes} />
-        </section>
-
-        <section className="my-12">
-          <ExpensesList expenses={expenses} />
-        </section>
       </main>
     </div>
   );

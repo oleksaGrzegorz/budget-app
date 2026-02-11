@@ -7,35 +7,47 @@ interface ExpensesTableProps {
 
 export const ExpensesTable = ({ expenses }: ExpensesTableProps) => {
   return (
-    <table className="border border-black border-collapse text-xs mx-auto table-fixed">
-      <thead>
+    <table className="w-full text-xs border border-gray-300 border-collapse">
+      <thead className="bg-gray-100">
         <tr>
-          <th className="w-40 border border-black">Kategoria</th>
+          <th className="px-4 py-2 text-left font-semibold border border-gray-300">
+            Kategoria
+          </th>
           {months.map((month) => (
-            <th key={month} className="w-20 p-2 border border-black bg-blue-100">
+            <th
+              key={month}
+              className="px-3 py-2 text-center font-semibold border border-gray-300"
+            >
               {month}
             </th>
           ))}
-          <th className="w-20 p-2 border border-black bg-blue-100">Średnia</th>
-          <th className="w-20 p-2 border border-black bg-blue-100">Cel</th>
+          <th className="px-3 py-2 text-center font-semibold border border-gray-300">
+            Średnia
+          </th>
+          <th className="px-3 py-2 text-center font-semibold border border-gray-300">
+            Cel
+          </th>
         </tr>
       </thead>
       <tbody>
         {categories.map((category) => (
-          <tr key={category}>
-            <th className="w-40 bg-amber-700 border" scope="row">
+          <tr key={category} className="even:bg-gray-50">
+            <th
+              className="px-4 py-2 text-left font-medium border border-gray-300 bg-gray-50"
+              scope="row"
+            >
               {category}
             </th>
             {months.map((month) => (
               <td
                 key={month}
-                className="w-20 bg-amber-300 p-2 border text-center"
+                className="px-3 py-2 text-center border border-gray-300"
               >
                 {expenses[category]?.[month] || 0}
               </td>
             ))}
-            <td className="w-20 p-2 border bg-blue-100 text-center">0</td>
-            <td className="w-20 p-2 border bg-blue-100 text-center">0</td>
+            <td className="px-3 py-2 text-center border border-gray-300">0</td>
+            <td className="px-3 py-2 text-center border border-gray-300">0</td>
           </tr>
         ))}
       </tbody>
