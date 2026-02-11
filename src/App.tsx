@@ -49,11 +49,11 @@ export default function App() {
           type={formType}
         />
 
-        <section className="my-12 overflow-x-auto">
+        <section className="mt-5 overflow-x-auto">
           <ExpensesTable expenses={expenses} />
         </section>
 
-        <section className="my-12 overflow-x-auto">
+        <section className="mt-5 overflow-x-auto">
           <BudgetSummaryTable expenses={expenses} incomes={incomes} />
         </section>
 
