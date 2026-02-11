@@ -1,7 +1,7 @@
 export const categories = [
   "Kredyt",
   "Jedzenie",
-  "Jedzenie na mieście",
+  "Jedzenie - miasto",
   "Dziecko",
   "Pies",
   "Fryzjer",
@@ -11,7 +11,7 @@ export const categories = [
   "Podatek auto",
   "Ubezpieczenie auta",
   "Naprawy aut i części",
-  "Ubezpieczenie zdrowotne",
+  "Ubezpieczenie zdr",
   "Dentyści leki itd",
   "Energia",
   "Woda",
