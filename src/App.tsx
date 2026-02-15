@@ -20,9 +20,9 @@ export default function App() {
       <main className="mx-auto max-w-7xl px-6 py-8">
         <Header />
 
-        <div className="flex gap-8 mt-8">
+        <div className="flex gap-8 mt-2">
           
-          <div className="w-1/3 bg-white rounded-lg shadow-md p-6 h-fit">
+          <div className="w-1/4 bg-white rounded-lg shadow-md p-6 h-fit">
             <div className="flex gap-3 mb-6">
               <button
                 onClick={() => setFormType("expense")}
