@@ -8,7 +8,7 @@ export const Header = () => {
   });
   return (
     <header>
-      <h1 className="text-2xl font-bold py-6 text-center">Budżet domowy</h1>
+      <h1 className="text-2xl font-bold text-center">Budżet domowy</h1>
       <p className="text-center text-sm text-gray-600">{formattedDate}</p>
     </header>
   );
