@@ -16,6 +16,18 @@ export const BudgetSummaryTable = ({
   const getTotalIncome = (month: string) =>
     Object.values(incomes).reduce((sum, cat) => sum + (cat[month] || 0), 0);
 
+  const getAverageIncomeForCategory = (category: string) => {
+    const monthsData = incomes[category];
+    if (!monthsData) return 0;
+
+    const values = Object.values(monthsData).filter((v) => v > 0);
+
+    if (values.length === 0) return 0;
+
+    const sum = values.reduce((acc, val) => acc + val, 0);
+    return (sum / values.length).toFixed(2);
+  };
+
   return (
     <table className="w-full text-xs border border-gray-300 border-collapse">
       <thead className="bg-gray-100">
@@ -31,10 +43,10 @@ export const BudgetSummaryTable = ({
               {month}
             </th>
           ))}
-          <th className="px-3 py-2 text-center font-semibold border border-gray-300">
+          <th className="px-3 py-2 text-center font-semibold border border-gray-300 bg-gray-300 text-gray-800">
             Śr
           </th>
-          <th className="px-3 py-2 text-center font-semibold border border-gray-300">
+          <th className="px-3 py-2 text-center font-semibold border border-gray-300 bg-amber-300 text-amber-900">
             Cel
           </th>
         </tr>
@@ -56,8 +68,12 @@ export const BudgetSummaryTable = ({
                 {incomes[category]?.[month] || 0}
               </td>
             ))}
-            <td className="px-3 py-2 text-center border border-gray-300">0</td>
-            <td className="px-3 py-2 text-center border border-gray-300">0</td>
+            <td className="px-3 py-2 text-center border border-gray-300 bg-gray-200 text-gray-800 font-medium">
+              {getAverageIncomeForCategory(category)}
+            </td>
+            <td className="px-3 py-2 text-center border border-gray-300 bg-amber-200 text-amber-900 font-semibold">
+              0
+            </td>
           </tr>
         ))}
 
@@ -68,7 +84,7 @@ export const BudgetSummaryTable = ({
           {months.map((month) => (
             <td
               key={month}
-              className="px-3 py-2 text-center border border-gray-300"
+              className="px-3 py-2 text-center border border-gray-300 "
             >
               {getTotalIncome(month)}
             </td>
@@ -84,7 +100,7 @@ export const BudgetSummaryTable = ({
           {months.map((month) => (
             <td
               key={month}
-              className="px-3 py-2 text-center border border-gray-300"
+              className="px-3 py-2 text-center border border-gray-300 "
             >
               {getTotalExpenses(month)}
             </td>
