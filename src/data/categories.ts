@@ -4,7 +4,6 @@ export const categories = [
   "Jedzenie - miasto",
   "Dziecko",
   "Pies",
-  "Fryzjer",
   "Ciuchy/obuwie",
   "Paliwo - dacia",
   "Paliwo - renault",
@@ -15,7 +14,4 @@ export const categories = [
   "Dentyści leki itd",
   "Energia",
   "Woda",
-  "Śmieci",
-  "Internet",
-  "Telefon",
 ];
