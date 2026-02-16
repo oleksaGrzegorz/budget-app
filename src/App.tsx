@@ -10,8 +10,15 @@ export default function App() {
   const [category, setCategory] = useState("");
   const [month, setMonth] = useState("");
 
-  const [expenses, setExpenses] = useState<Record<string, Record<string, number>>>({});
-  const [incomes, setIncomes] = useState<Record<string, Record<string, number>>>({});
+  const [expenses, setExpenses] = useState<
+    Record<string, Record<string, number>>
+  >({});
+  const [incomes, setIncomes] = useState<
+    Record<string, Record<string, number>>
+  >({});
+
+  const [expenseGoals, setExpenseGoals] = useState<Record<string, number>>({});
+  const [incomeGoals, setIncomeGoals] = useState<Record<string, number>>({});
 
   const [formType, setFormType] = useState<"expense" | "income">("expense");
 
@@ -21,7 +28,6 @@ export default function App() {
         <Header />
 
         <div className="flex gap-8 mt-2">
-          
           <div className="w-1/4 bg-white rounded-lg shadow-md p-6 h-fit">
             <div className="flex gap-3 mb-6">
               <button
@@ -61,18 +67,17 @@ export default function App() {
 
           <div className="w-2/3 space-y-8">
             <section className="overflow-x-auto bg-white rounded-lg shadow-md p-4">
-              <ExpensesTable expenses={expenses} />
+              <ExpensesTable expenses={expenses} goals={expenseGoals} setGoals={setExpenseGoals} />
             </section>
 
             <section className="overflow-x-auto bg-white rounded-lg shadow-md p-4">
-              <BudgetSummaryTable expenses={expenses} incomes={incomes} />
+              <BudgetSummaryTable expenses={expenses} incomes={incomes} incomeGoals={incomeGoals} setIncomeGoals={setIncomeGoals} />
             </section>
 
             <section>
               <ExpensesList expenses={expenses} />
             </section>
           </div>
-
         </div>
       </main>
     </div>
