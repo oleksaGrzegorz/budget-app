@@ -3,9 +3,15 @@ import { months } from "../../data/months";
 
 interface ExpensesTableProps {
   expenses: Record<string, Record<string, number>>;
+  goals: Record<string, number>;
+  setGoals: React.Dispatch<React.SetStateAction<Record<string, number>>>;
 }
 
-export const ExpensesTable = ({ expenses }: ExpensesTableProps) => {
+export const ExpensesTable = ({
+  expenses,
+  goals,
+  setGoals,
+}: ExpensesTableProps) => {
   const getAverageForCategory = (category: string) => {
     const monthsData = expenses[category];
     if (!monthsData) return 0;
@@ -67,8 +73,28 @@ export const ExpensesTable = ({ expenses }: ExpensesTableProps) => {
               {getAverageForCategory(category)}
             </td>
 
-            <td className="px-3 py-2 text-center border border-gray-300 bg-amber-200 text-amber-900 font-semibold">
-              0
+            <td
+              className={`px-3 py-2 text-center border border-gray-300 font-semibold ${
+                goals[category] &&
+                Number(getAverageForCategory(category)) > goals[category]
+                  ? "bg-red-200 text-red-800"
+                  : goals[category]
+                    ? "bg-green-200 text-green-800"
+                    : "bg-amber-200 text-amber-900"
+              }`}
+            >
+              <input
+                type="number"
+                value={goals[category] || ""}
+                onChange={(e) =>
+                  setGoals((prev) => ({
+                    ...prev,
+                    [category]: Number(e.target.value),
+                  }))
+                }
+                className="w-20 text-center bg-transparent outline-none"
+                placeholder="0"
+              />
             </td>
           </tr>
         ))}

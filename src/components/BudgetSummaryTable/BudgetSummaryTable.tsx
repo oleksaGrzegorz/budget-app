@@ -4,11 +4,15 @@ import { budgetSummaryLabels as incomeCategories } from "../../data/budgetSummar
 interface BudgetSummaryTableProps {
   expenses: Record<string, Record<string, number>>;
   incomes: Record<string, Record<string, number>>;
+  incomeGoals: Record<string, number>;
+  setIncomeGoals: React.Dispatch<React.SetStateAction<Record<string, number>>>;
 }
 
 export const BudgetSummaryTable = ({
   expenses,
   incomes,
+  incomeGoals,
+  setIncomeGoals,
 }: BudgetSummaryTableProps) => {
   const getTotalExpenses = (month: string) =>
     Object.values(expenses).reduce((sum, cat) => sum + (cat[month] || 0), 0);
@@ -71,8 +75,29 @@ export const BudgetSummaryTable = ({
             <td className="px-3 py-2 text-center border border-gray-300 bg-gray-200 text-gray-800 font-medium">
               {getAverageIncomeForCategory(category)}
             </td>
-            <td className="px-3 py-2 text-center border border-gray-300 bg-amber-200 text-amber-900 font-semibold">
-              0
+            <td
+              className={`px-3 py-2 text-center border border-gray-300 font-semibold ${
+                incomeGoals[category] &&
+                Number(getAverageIncomeForCategory(category)) >
+                  incomeGoals[category]
+                  ? "bg-red-200 text-red-800"
+                  : incomeGoals[category]
+                    ? "bg-green-200 text-green-800"
+                    : "bg-amber-200 text-amber-900"
+              }`}
+            >
+              <input
+                type="number"
+                value={incomeGoals[category] || ""}
+                onChange={(e) =>
+                  setIncomeGoals((prev) => ({
+                    ...prev,
+                    [category]: Number(e.target.value),
+                  }))
+                }
+                className="w-20 text-center bg-transparent outline-none"
+                placeholder="0"
+              />
             </td>
           </tr>
         ))}
