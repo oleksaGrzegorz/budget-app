@@ -9,17 +9,10 @@ export default function App() {
   const [amount, setAmount] = useState<number | "">("");
   const [category, setCategory] = useState("");
   const [month, setMonth] = useState("");
-
-  const [expenses, setExpenses] = useState<
-    Record<string, Record<string, number>>
-  >({});
-  const [incomes, setIncomes] = useState<
-    Record<string, Record<string, number>>
-  >({});
-
+  const [expenses, setExpenses] = useState<Record<string, Record<string, number>>>({});
+  const [incomes, setIncomes] = useState<Record<string, Record<string, number>>>({});
   const [expenseGoals, setExpenseGoals] = useState<Record<string, number>>({});
   const [incomeGoals, setIncomeGoals] = useState<Record<string, number>>({});
-
   const [formType, setFormType] = useState<"expense" | "income">("expense");
 
   return (
