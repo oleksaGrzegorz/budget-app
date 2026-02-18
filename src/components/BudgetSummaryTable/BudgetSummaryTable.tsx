@@ -92,8 +92,8 @@ export const BudgetSummaryTable = ({
                   incomeGoals[category]
                   ? "bg-red-200 text-red-800"
                   : incomeGoals[category]
-                  ? "bg-green-200 text-green-800"
-                  : "bg-amber-200 text-amber-900"
+                    ? "bg-green-200 text-green-800"
+                    : "bg-amber-200 text-amber-900"
               }`}
             >
               <input
@@ -165,6 +165,48 @@ export const BudgetSummaryTable = ({
           })}
           <td className="px-3 py-2 text-center border border-gray-300">
             {getAverageSavings()}
+          </td>
+          <td className="px-3 py-2 text-center border border-gray-300">0</td>
+        </tr>
+
+        <tr className="bg-gray-100 font-semibold">
+          <th className="px-4 py-2 text-left border border-gray-300">
+            Oszczędności (%)
+          </th>
+          {months.map((month) => {
+            const savings = getSavings(month);
+            const totalIncome = getTotalIncome(month);
+            const percentage = totalIncome
+              ? Number(((savings / totalIncome) * 100).toFixed(1))
+              : 0;
+            return (
+              <td
+                key={month}
+                className={`px-3 py-2 text-center border border-gray-300 ${
+                  percentage < 0
+                    ? "bg-red-200 text-red-800"
+                    : "bg-green-200 text-green-800"
+                }`}
+              >
+                {percentage}%
+              </td>
+            );
+          })}
+          <td className="px-3 py-2 text-center border border-gray-300">
+            {(() => {
+              const totalSavings = months.reduce(
+                (acc, m) => acc + getSavings(m),
+                0,
+              );
+              const totalIncome = months.reduce(
+                (acc, m) => acc + getTotalIncome(m),
+                0,
+              );
+              const avgPercentage = totalIncome
+                ? Number(((totalSavings / totalIncome) * 100).toFixed(1))
+                : 0;
+              return avgPercentage + "%";
+            })()}
           </td>
           <td className="px-3 py-2 text-center border border-gray-300">0</td>
         </tr>
