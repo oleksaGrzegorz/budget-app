@@ -20,12 +20,12 @@ export default function App() {
       <main className="mx-auto max-w-7xl px-6 py-8">
         <Header />
 
-        <div className="flex gap-8 mt-2">
-          <div className="w-1/4 bg-white rounded-lg shadow-md p-6 h-fit">
-            <div className="flex gap-3 mb-6">
+        <div className="space-y-8">
+          <div className="bg-white rounded-lg shadow-md p-6 w-full">
+            <div className="flex gap-3 mb-6 justify-center">
               <button
                 onClick={() => setFormType("expense")}
-                className={`flex-1 px-4 py-2 rounded-md text-sm font-medium transition ${
+                className={`px-4 py-2 rounded-md text-sm font-medium transition ${
                   formType === "expense"
                     ? "bg-red-500 text-white"
                     : "bg-gray-100 text-gray-700"
@@ -36,7 +36,7 @@ export default function App() {
 
               <button
                 onClick={() => setFormType("income")}
-                className={`flex-1 px-4 py-2 rounded-md text-sm font-medium transition ${
+                className={`px-4 py-2 rounded-md text-sm font-medium transition ${
                   formType === "income"
                     ? "bg-green-500 text-white"
                     : "bg-gray-100 text-gray-700"
@@ -58,21 +58,25 @@ export default function App() {
             />
           </div>
 
-          <div className="w-2/3 space-y-8">
-            <section className="overflow-x-auto bg-white rounded-lg shadow-md p-4">
-              <ExpensesTable expenses={expenses} goals={expenseGoals} setGoals={setExpenseGoals} />
-            </section>
+          <section className="overflow-x-auto bg-white rounded-lg shadow-md p-4">
+            <ExpensesTable expenses={expenses} goals={expenseGoals} setGoals={setExpenseGoals} />
+          </section>
 
-            <section className="overflow-x-auto bg-white rounded-lg shadow-md p-4">
-              <BudgetSummaryTable expenses={expenses} incomes={incomes} incomeGoals={incomeGoals} setIncomeGoals={setIncomeGoals} />
-            </section>
+          <section className="overflow-x-auto bg-white rounded-lg shadow-md p-4">
+            <BudgetSummaryTable
+              expenses={expenses}
+              incomes={incomes}
+              incomeGoals={incomeGoals}
+              setIncomeGoals={setIncomeGoals}
+            />
+          </section>
 
-            <section>
-              <ExpensesList expenses={expenses} />
-            </section>
-          </div>
+          <section>
+            <ExpensesList expenses={expenses} />
+          </section>
         </div>
       </main>
     </div>
   );
 }
+
