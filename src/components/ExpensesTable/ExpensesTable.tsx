@@ -7,18 +7,18 @@ interface ExpensesTableProps {
   setGoals: React.Dispatch<React.SetStateAction<Record<string, number>>>;
 }
 
-export const ExpensesTable = ({expenses,goals,setGoals,}: ExpensesTableProps) => {
+export const ExpensesTable = ({ expenses, goals, setGoals }: ExpensesTableProps) => {
   const getAverageForCategory = (category: string) => {
     const monthsData = expenses[category];
     if (!monthsData) return 0;
 
     const values = Object.values(monthsData).filter((v) => v > 0);
-
     if (values.length === 0) return 0;
 
     const sum = values.reduce((acc, val) => acc + val, 0);
     return (sum / values.length).toFixed(2);
   };
+
   return (
     <table className="w-full text-xs border border-gray-300 border-collapse">
       <thead className="bg-gray-100">
@@ -47,53 +47,62 @@ export const ExpensesTable = ({expenses,goals,setGoals,}: ExpensesTableProps) =>
       </thead>
 
       <tbody>
-        {categories.map((category) => (
-          <tr key={category} className="even:bg-gray-50">
-            <th
-              className="px-4 py-2 text-left font-medium border border-gray-300 bg-gray-50"
-              scope="row"
-            >
-              {category}
-            </th>
+        {categories.map((category) => {
+          const average = Number(getAverageForCategory(category));
+          const goal = goals[category];
+          const difference = goal !== undefined ? average - goal : null;
 
-            {months.map((month) => (
-              <td
-                key={month}
-                className="px-3 py-2 text-center border border-gray-300"
+          let bgClass = "";
+          if (goal !== undefined) {
+            bgClass = average > goal ? "bg-red-200 text-red-800" : "bg-green-200 text-green-800";
+          }
+
+          return (
+            <tr key={category} className="even:bg-gray-50">
+              <th
+                className="px-4 py-2 text-left font-medium border border-gray-300 bg-gray-50"
+                scope="row"
               >
-                {expenses[category]?.[month] || 0}
+                {category}
+              </th>
+
+              {months.map((month) => (
+                <td
+                  key={month}
+                  className="px-3 py-2 text-center border border-gray-300"
+                >
+                  {expenses[category]?.[month] || 0}
+                </td>
+              ))}
+
+              <td className="px-3 py-2 text-center border border-gray-300 bg-gray-200 text-gray-800 font-medium">
+                {average.toFixed(2)}
               </td>
-            ))}
 
-            <td className="px-3 py-2 text-center border border-gray-300 bg-gray-200 text-gray-800 font-medium">
-              {getAverageForCategory(category)}
-            </td>
-
-            <td
-              className={`px-3 py-2 text-center border border-gray-300 font-semibold ${
-                goals[category] &&
-                Number(getAverageForCategory(category)) > goals[category]
-                  ? "bg-red-200 text-red-800"
-                  : goals[category]
-                    ? "bg-green-200 text-green-800"
-                    : "bg-amber-200 text-amber-900"
-              }`}
-            >
-              <input
-                type="number"
-                value={goals[category] || ""}
-                onChange={(e) =>
-                  setGoals((prev) => ({
-                    ...prev,
-                    [category]: Number(e.target.value),
-                  }))
-                }
-                className="w-20 text-center bg-transparent outline-none"
-                placeholder="0"
-              />
-            </td>
-          </tr>
-        ))}
+              <td className={`px-3 py-2 text-center border border-gray-300 font-semibold ${bgClass}`}>
+                <div className="flex flex-col items-center">
+                  <input
+                    type="number"
+                    value={goal || ""}
+                    onChange={(e) =>
+                      setGoals((prev) => ({
+                        ...prev,
+                        [category]: Number(e.target.value),
+                      }))
+                    }
+                    className="w-20 text-center bg-transparent outline-none mb-1"
+                    placeholder=""
+                  />
+                  {difference !== null && (
+                    <span className="text-xs">
+                      {difference > 0 ? `+${difference.toFixed(2)}` : difference.toFixed(2)}
+                    </span>
+                  )}
+                </div>
+              </td>
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   );
