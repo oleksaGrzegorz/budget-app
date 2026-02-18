@@ -20,16 +20,26 @@ export const BudgetSummaryTable = ({
   const getTotalIncome = (month: string) =>
     Object.values(incomes).reduce((sum, cat) => sum + (cat[month] || 0), 0);
 
+  const getSavings = (month: string) =>
+    getTotalIncome(month) - getTotalExpenses(month);
+
   const getAverageIncomeForCategory = (category: string) => {
     const monthsData = incomes[category];
     if (!monthsData) return 0;
 
     const values = Object.values(monthsData).filter((v) => v > 0);
-
     if (values.length === 0) return 0;
 
     const sum = values.reduce((acc, val) => acc + val, 0);
     return (sum / values.length).toFixed(2);
+  };
+
+  const getAverageSavings = () => {
+    const savings = months.map((month) => getSavings(month));
+    const activeMonths = savings.filter((val) => val !== 0);
+    if (activeMonths.length === 0) return 0;
+    const sum = activeMonths.reduce((acc, val) => acc + val, 0);
+    return (sum / activeMonths.length).toFixed(2);
   };
 
   return (
@@ -82,8 +92,8 @@ export const BudgetSummaryTable = ({
                   incomeGoals[category]
                   ? "bg-red-200 text-red-800"
                   : incomeGoals[category]
-                    ? "bg-green-200 text-green-800"
-                    : "bg-amber-200 text-amber-900"
+                  ? "bg-green-200 text-green-800"
+                  : "bg-amber-200 text-amber-900"
               }`}
             >
               <input
@@ -131,6 +141,31 @@ export const BudgetSummaryTable = ({
             </td>
           ))}
           <td className="px-3 py-2 text-center border border-gray-300">0</td>
+          <td className="px-3 py-2 text-center border border-gray-300">0</td>
+        </tr>
+
+        <tr className="bg-gray-200 font-semibold">
+          <th className="px-4 py-2 text-left border border-gray-300">
+            Oszczędności
+          </th>
+          {months.map((month) => {
+            const savings = getSavings(month);
+            return (
+              <td
+                key={month}
+                className={`px-3 py-2 text-center border border-gray-300 ${
+                  savings < 0
+                    ? "bg-red-200 text-red-800"
+                    : "bg-green-200 text-green-800"
+                }`}
+              >
+                {savings}
+              </td>
+            );
+          })}
+          <td className="px-3 py-2 text-center border border-gray-300">
+            {getAverageSavings()}
+          </td>
           <td className="px-3 py-2 text-center border border-gray-300">0</td>
         </tr>
       </tbody>
