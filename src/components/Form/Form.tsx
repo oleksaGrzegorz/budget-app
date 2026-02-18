@@ -14,16 +14,7 @@ interface FormProps {
   type: "expense" | "income";
 }
 
-export const Form = ({
-  amount,
-  setAmount,
-  setExpenses,
-  category,
-  setCategory,
-  month,
-  setMonth,
-  type,
-}: FormProps) => {
+export const Form = ({amount,setAmount,setExpenses,category,setCategory,month,setMonth,type,}: FormProps) => {
   const categoriesToShow = type === "expense" ? categories : incomeCategories;
 
   const bgColor = type === "expense" ? "bg-red-50" : "bg-green-50";
