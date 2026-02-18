@@ -7,11 +7,7 @@ interface ExpensesTableProps {
   setGoals: React.Dispatch<React.SetStateAction<Record<string, number>>>;
 }
 
-export const ExpensesTable = ({
-  expenses,
-  goals,
-  setGoals,
-}: ExpensesTableProps) => {
+export const ExpensesTable = ({expenses,goals,setGoals,}: ExpensesTableProps) => {
   const getAverageForCategory = (category: string) => {
     const monthsData = expenses[category];
     if (!monthsData) return 0;
