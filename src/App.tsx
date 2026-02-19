@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { BudgetSummaryTable } from "./components/BudgetSummaryTable/BudgetSummaryTable";
-import { ExpensesTable } from "./components/ExpensesTable/ExpensesTable";
-import { Form } from "./components/Form/Form";
-import { ExpensesList } from "./components/ExpensesList/ExpensesList";
+
 import { Header } from "./components/Header/Header";
+import { Form } from "./components/Form/Form";
+import { ExpensesTable } from "./components/ExpensesTable/ExpensesTable";
+import { BudgetSummaryTable } from "./components/BudgetSummaryTable/BudgetSummaryTable";
+import { ExpensesList } from "./components/ExpensesList/ExpensesList";
 
 export default function App() {
   const [amount, setAmount] = useState<number | "">("");
@@ -17,35 +18,10 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-gray-200">
-      <main className="mx-auto max-w-7xl px-6 py-8">
+      <main className="mx-auto max-w-7xl px-6 py-8 bg-amber-300">
         <Header />
-
         <div className="space-y-8">
           <div className="bg-white rounded-lg shadow-md p-6 w-full">
-            <div className="flex gap-3 mb-6 justify-center">
-              <button
-                onClick={() => setFormType("expense")}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition ${
-                  formType === "expense"
-                    ? "bg-red-500 text-white"
-                    : "bg-gray-100 text-gray-700"
-                }`}
-              >
-                Wydatki
-              </button>
-
-              <button
-                onClick={() => setFormType("income")}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition ${
-                  formType === "income"
-                    ? "bg-green-500 text-white"
-                    : "bg-gray-100 text-gray-700"
-                }`}
-              >
-                Przychody
-              </button>
-            </div>
-
             <Form
               amount={amount}
               setAmount={setAmount}
@@ -55,11 +31,17 @@ export default function App() {
               month={month}
               setMonth={setMonth}
               type={formType}
+              setFormType={setFormType}
+              formType={formType}
             />
           </div>
 
           <section className="overflow-x-auto bg-white rounded-lg shadow-md p-4">
-            <ExpensesTable expenses={expenses} goals={expenseGoals} setGoals={setExpenseGoals} />
+            <ExpensesTable
+              expenses={expenses}
+              goals={expenseGoals}
+              setGoals={setExpenseGoals}
+            />
           </section>
 
           <section className="overflow-x-auto bg-white rounded-lg shadow-md p-4">
@@ -71,12 +53,9 @@ export default function App() {
             />
           </section>
 
-          <section>
-            <ExpensesList expenses={expenses} />
-          </section>
+          <ExpensesList expenses={expenses} />
         </div>
       </main>
     </div>
   );
 }
-
