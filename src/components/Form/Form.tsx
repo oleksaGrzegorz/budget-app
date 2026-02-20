@@ -7,7 +7,10 @@ import { months } from "../../data/months";
 interface FormProps {
   amount: number | "";
   setAmount: Dispatch<SetStateAction<number | "">>;
-  setExpenses: Dispatch<SetStateAction<Record<string, Record<string, number>>>>;
+  setExpenses: Dispatch<
+    SetStateAction<{ category: string; month: string; amount: number }[]>
+  >;
+  setIncomes: Dispatch<SetStateAction<Record<string, Record<string, number>>>>;
   category: string;
   setCategory: Dispatch<SetStateAction<string>>;
   month: string;
@@ -21,6 +24,7 @@ export const Form = ({
   amount,
   setAmount,
   setExpenses,
+  setIncomes,
   category,
   setCategory,
   month,
@@ -40,17 +44,19 @@ export const Form = ({
         <button
           onClick={() => setFormType("expense")}
           className={`px-4 py-2 rounded-md text-sm font-medium transition 
-            ${formType === "expense" ? "bg-red-500 text-white" : "bg-gray-100 text-gray-700"}`}>
+            ${formType === "expense" ? "bg-red-500 text-white" : "bg-gray-100 text-gray-700"}`}
+        >
           Wydatki
         </button>
 
         <button
           onClick={() => setFormType("income")}
           className={`px-4 py-2 rounded-md text-sm font-medium transition 
-                ${formType === "income" ? "bg-green-500 text-white" : "bg-gray-100 text-gray-700"}`}>
+                ${formType === "income" ? "bg-green-500 text-white" : "bg-gray-100 text-gray-700"}`}
+        >
           Przychody
         </button>
-      </div>{" "}
+      </div>
 
       <form
         className={`p-4 border border-gray-300 rounded-md space-y-2 w-64 mx-auto ${bgColor}`}
@@ -58,13 +64,17 @@ export const Form = ({
           e.preventDefault();
           if (!category || !month || amount === "" || amount <= 0) return;
 
-          setExpenses((prev) => ({
-            ...prev,
-            [category]: {
-              ...prev[category],
-              [month]: (prev[category]?.[month] || 0) + amount,
-            },
-          }));
+          if (type === "expense") {
+            setExpenses((prev) => [...prev, { category, month, amount }]);
+          } else {
+            setIncomes((prev) => ({
+              ...prev,
+              [category]: {
+                ...prev[category],
+                [month]: (prev[category]?.[month] || 0) + amount,
+              },
+            }));
+          }
 
           setAmount("");
           setCategory("");
@@ -89,9 +99,9 @@ export const Form = ({
           onChange={(e) => setCategory(e.target.value)}
         >
           <option value="">-- wybierz kategorię --</option>
-          {categoriesToShow.map((category) => (
-            <option key={category} value={category}>
-              {category}
+          {categoriesToShow.map((cat) => (
+            <option key={cat} value={cat}>
+              {cat}
             </option>
           ))}
         </select>
@@ -102,9 +112,9 @@ export const Form = ({
           onChange={(e) => setMonth(e.target.value)}
         >
           <option value="">-- wybierz miesiąc --</option>
-          {months.map((month) => (
-            <option key={month} value={month}>
-              {month}
+          {months.map((m) => (
+            <option key={m} value={m}>
+              {m}
             </option>
           ))}
         </select>

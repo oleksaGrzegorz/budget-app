@@ -12,8 +12,8 @@ export default function App() {
   const [month, setMonth] = useState("");
 
   const [expenses, setExpenses] = useState<
-    Record<string, Record<string, number>>
-  >({});
+    { category: string; month: string; amount: number }[]
+  >([]);
   const [incomes, setIncomes] = useState<
     Record<string, Record<string, number>>
   >({});
@@ -22,6 +22,15 @@ export default function App() {
   const [incomeGoals, setIncomeGoals] = useState<Record<string, number>>({});
 
   const [formType, setFormType] = useState<"expense" | "income">("expense");
+
+  const expensesForTable: Record<string, Record<string, number>> = expenses.reduce(
+    (acc, e) => {
+      if (!acc[e.category]) acc[e.category] = {};
+      acc[e.category][e.month] = (acc[e.category][e.month] || 0) + e.amount;
+      return acc;
+    },
+    {} as Record<string, Record<string, number>>
+  );
 
   return (
     <div className="min-h-screen bg-gray-200">
@@ -32,7 +41,8 @@ export default function App() {
             <Form
               amount={amount}
               setAmount={setAmount}
-              setExpenses={formType === "expense" ? setExpenses : setIncomes}
+              setExpenses={setExpenses}
+              setIncomes={setIncomes}
               category={category}
               setCategory={setCategory}
               month={month}
@@ -45,7 +55,7 @@ export default function App() {
 
           <section className="overflow-x-auto bg-white rounded-lg shadow-md p-4">
             <ExpensesTable
-              expenses={expenses}
+              expenses={expensesForTable}
               goals={expenseGoals}
               setGoals={setExpenseGoals}
             />
@@ -53,7 +63,7 @@ export default function App() {
 
           <section className="overflow-x-auto bg-white rounded-lg shadow-md p-4">
             <BudgetSummaryTable
-              expenses={expenses}
+              expenses={expensesForTable}
               incomes={incomes}
               incomeGoals={incomeGoals}
               setIncomeGoals={setIncomeGoals}
