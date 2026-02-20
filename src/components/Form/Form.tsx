@@ -1,15 +1,13 @@
 import type { Dispatch, SetStateAction } from "react";
-
 import { categories } from "../../data/categories";
 import { budgetSummaryLabels as incomeCategories } from "../../data/budgetSummaryLabels";
 import { months } from "../../data/months";
+import type { Entry } from "../../App";
 
 interface FormProps {
   amount: number | "";
   setAmount: Dispatch<SetStateAction<number | "">>;
-  setExpenses: Dispatch<
-    SetStateAction<{ category: string; month: string; amount: number }[]>
-  >;
+  setEntries: Dispatch<SetStateAction<Entry[]>>;
   setIncomes: Dispatch<SetStateAction<Record<string, Record<string, number>>>>;
   category: string;
   setCategory: Dispatch<SetStateAction<string>>;
@@ -23,7 +21,7 @@ interface FormProps {
 export const Form = ({
   amount,
   setAmount,
-  setExpenses,
+  setEntries,
   setIncomes,
   category,
   setCategory,
@@ -34,7 +32,6 @@ export const Form = ({
   setFormType,
 }: FormProps) => {
   const categoriesToShow = type === "expense" ? categories : incomeCategories;
-
   const bgColor = type === "expense" ? "bg-red-50" : "bg-green-50";
   const btnColor = type === "expense" ? "bg-red-500" : "bg-green-500";
 
@@ -43,16 +40,17 @@ export const Form = ({
       <div className="flex gap-3 mb-6 justify-center">
         <button
           onClick={() => setFormType("expense")}
-          className={`px-4 py-2 rounded-md text-sm font-medium transition 
-            ${formType === "expense" ? "bg-red-500 text-white" : "bg-gray-100 text-gray-700"}`}
+          className={`px-4 py-2 rounded-md text-sm font-medium transition ${
+            formType === "expense" ? "bg-red-500 text-white" : "bg-gray-100 text-gray-700"
+          }`}
         >
           Wydatki
         </button>
-
         <button
           onClick={() => setFormType("income")}
-          className={`px-4 py-2 rounded-md text-sm font-medium transition 
-                ${formType === "income" ? "bg-green-500 text-white" : "bg-gray-100 text-gray-700"}`}
+          className={`px-4 py-2 rounded-md text-sm font-medium transition ${
+            formType === "income" ? "bg-green-500 text-white" : "bg-gray-100 text-gray-700"
+          }`}
         >
           Przychody
         </button>
@@ -64,9 +62,9 @@ export const Form = ({
           e.preventDefault();
           if (!category || !month || amount === "" || amount <= 0) return;
 
-          if (type === "expense") {
-            setExpenses((prev) => [...prev, { category, month, amount }]);
-          } else {
+          setEntries((prev) => [...prev, { type, category, month, amount }]);
+
+          if (type === "income") {
             setIncomes((prev) => ({
               ...prev,
               [category]: {

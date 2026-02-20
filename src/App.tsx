@@ -1,36 +1,37 @@
 import { useState } from "react";
-
 import { Header } from "./components/Header/Header";
 import { Form } from "./components/Form/Form";
 import { ExpensesTable } from "./components/ExpensesTable/ExpensesTable";
 import { BudgetSummaryTable } from "./components/BudgetSummaryTable/BudgetSummaryTable";
 import { ExpensesList } from "./components/ExpensesList/ExpensesList";
 
+export type Entry = {
+  type: "expense" | "income";
+  category: string;
+  month: string;
+  amount: number;
+};
+
 export default function App() {
   const [amount, setAmount] = useState<number | "">("");
   const [category, setCategory] = useState("");
   const [month, setMonth] = useState("");
+  const [formType, setFormType] = useState<"expense" | "income">("expense");
 
-  const [expenses, setExpenses] = useState<
-    { category: string; month: string; amount: number }[]
-  >([]);
-  const [incomes, setIncomes] = useState<
-    Record<string, Record<string, number>>
-  >({});
-
+  const [entries, setEntries] = useState<Entry[]>([]);
+  const [incomes, setIncomes] = useState<Record<string, Record<string, number>>>(
+    {}
+  );
   const [expenseGoals, setExpenseGoals] = useState<Record<string, number>>({});
   const [incomeGoals, setIncomeGoals] = useState<Record<string, number>>({});
 
-  const [formType, setFormType] = useState<"expense" | "income">("expense");
-
-  const expensesForTable: Record<string, Record<string, number>> = expenses.reduce(
-    (acc, e) => {
+  const expensesForTable: Record<string, Record<string, number>> = entries
+    .filter((e) => e.type === "expense")
+    .reduce((acc, e) => {
       if (!acc[e.category]) acc[e.category] = {};
       acc[e.category][e.month] = (acc[e.category][e.month] || 0) + e.amount;
       return acc;
-    },
-    {} as Record<string, Record<string, number>>
-  );
+    }, {} as Record<string, Record<string, number>>);
 
   return (
     <div className="min-h-screen bg-gray-200">
@@ -41,7 +42,7 @@ export default function App() {
             <Form
               amount={amount}
               setAmount={setAmount}
-              setExpenses={setExpenses}
+              setEntries={setEntries}
               setIncomes={setIncomes}
               category={category}
               setCategory={setCategory}
@@ -70,7 +71,7 @@ export default function App() {
             />
           </section>
 
-          <ExpensesList expenses={expenses} />
+          <ExpensesList entries={entries} />
         </div>
       </main>
     </div>
