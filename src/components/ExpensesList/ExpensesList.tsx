@@ -20,7 +20,7 @@ export const ExpensesList = ({ expenses }: ExpensesListProps) => {
         <ul className="space-y-2">
           {expenseItems.map((item, index) => (
             <li key={index} className="border border-gray-300 p-2 rounded">
-              <strong>Kategoria:</strong> {item.category}, <strong>Miesiąc:</strong> {item.month}, <strong>Kwota:</strong> {item.amount} zł
+              <strong>{index + 1}. Kategoria:</strong> {item.category}, <strong>Miesiąc:</strong> {item.month}, <strong>Kwota:</strong> {item.amount} zł
             </li>
           ))}
         </ul>
