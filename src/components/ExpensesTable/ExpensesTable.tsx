@@ -7,15 +7,20 @@ interface ExpensesTableProps {
   setGoals: React.Dispatch<React.SetStateAction<Record<string, number>>>;
 }
 
-export const ExpensesTable = ({ expenses, goals, setGoals }: ExpensesTableProps) => {
-
-  const getAverageForCategory = (category: string) => {
+export const ExpensesTable = ({
+  expenses,
+  goals,
+  setGoals,
+}: ExpensesTableProps) => {
+  const getAverageForCategory = (category: string): number | null => {
     const monthsData = expenses[category];
-    if (!monthsData) return 0;
-    const positiveExpenses = Object.values(monthsData).filter((expense) => expense > 0);
-    if (positiveExpenses.length === 0) return 0;
+    if (!monthsData) return null;
+    const positiveExpenses = Object.values(monthsData).filter(
+      (expense) => expense > 0,
+    );
+    if (positiveExpenses.length === 0) return null;
     const total = positiveExpenses.reduce((sum, expense) => sum + expense, 0);
-    return (total / positiveExpenses.length).toFixed(2);
+    return total / positiveExpenses.length;
   };
 
   return (
@@ -47,13 +52,17 @@ export const ExpensesTable = ({ expenses, goals, setGoals }: ExpensesTableProps)
 
       <tbody>
         {categories.map((category) => {
-          const average = Number(getAverageForCategory(category));
+          const average = getAverageForCategory(category);
           const goal = goals[category];
-          const difference = goal !== undefined ? average - goal : null;
+          const difference =
+            average !== null && goal !== undefined ? average - goal : null;
 
           let bgClass = "";
-          if (goal !== undefined) {
-            bgClass = average > goal ? "bg-red-200 text-red-800" : "bg-green-200 text-green-800";
+          if (average !== null && goal !== undefined) {
+            bgClass =
+              average > goal
+                ? "bg-red-200 text-red-800"
+                : "bg-green-200 text-green-800";
           }
 
           return (
@@ -75,10 +84,12 @@ export const ExpensesTable = ({ expenses, goals, setGoals }: ExpensesTableProps)
               ))}
 
               <td className="px-3 py-2 text-center border border-gray-300 bg-gray-200 text-gray-800 font-medium">
-                {average.toFixed(2)}
+                {average !== null ? average.toFixed(2) : ""}
               </td>
 
-              <td className={`px-3 py-2 text-center border border-gray-300 font-semibold ${bgClass}`}>
+              <td
+                className={`px-3 py-2 text-center border border-gray-300 font-semibold ${bgClass}`}
+              >
                 <div className="flex flex-col items-center">
                   <input
                     type="number"
@@ -94,7 +105,9 @@ export const ExpensesTable = ({ expenses, goals, setGoals }: ExpensesTableProps)
                   />
                   {difference !== null && (
                     <span className="text-xs">
-                      {difference > 0 ? `+${difference.toFixed(2)}` : difference.toFixed(2)}
+                      {difference > 0
+                        ? `+${difference.toFixed(2)}`
+                        : difference.toFixed(2)}
                     </span>
                   )}
                 </div>
