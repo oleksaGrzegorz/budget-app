@@ -10,17 +10,22 @@ export default function App() {
   const [amount, setAmount] = useState<number | "">("");
   const [category, setCategory] = useState("");
   const [month, setMonth] = useState("");
+
   const [expenses, setExpenses] = useState<Record<string, Record<string, number>>>({});
   const [incomes, setIncomes] = useState<Record<string, Record<string, number>>>({});
+
   const [expenseGoals, setExpenseGoals] = useState<Record<string, number>>({});
   const [incomeGoals, setIncomeGoals] = useState<Record<string, number>>({});
+  
   const [formType, setFormType] = useState<"expense" | "income">("expense");
 
   return (
     <div className="min-h-screen bg-gray-200">
+      
       <main className="mx-auto max-w-7xl px-6 py-8 bg-amber-300">
         <Header />
         <div className="space-y-8">
+
           <div className="bg-white rounded-lg shadow-md p-6 w-full">
             <Form
               amount={amount}
