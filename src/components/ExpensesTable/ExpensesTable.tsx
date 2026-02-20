@@ -8,15 +8,14 @@ interface ExpensesTableProps {
 }
 
 export const ExpensesTable = ({ expenses, goals, setGoals }: ExpensesTableProps) => {
+
   const getAverageForCategory = (category: string) => {
     const monthsData = expenses[category];
     if (!monthsData) return 0;
-
-    const values = Object.values(monthsData).filter((v) => v > 0);
-    if (values.length === 0) return 0;
-
-    const sum = values.reduce((acc, val) => acc + val, 0);
-    return (sum / values.length).toFixed(2);
+    const positiveExpenses = Object.values(monthsData).filter((expense) => expense > 0);
+    if (positiveExpenses.length === 0) return 0;
+    const total = positiveExpenses.reduce((sum, expense) => sum + expense, 0);
+    return (total / positiveExpenses.length).toFixed(2);
   };
 
   return (
@@ -90,7 +89,7 @@ export const ExpensesTable = ({ expenses, goals, setGoals }: ExpensesTableProps)
                         [category]: Number(e.target.value),
                       }))
                     }
-                    className="w-20 text-center bg-transparent outline-none mb-1"
+                    className="w-20 text-center bg-amber-100 outline-none mb-1"
                     placeholder=""
                   />
                   {difference !== null && (
