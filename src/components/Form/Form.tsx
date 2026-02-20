@@ -1,4 +1,5 @@
 import type { Dispatch, SetStateAction } from "react";
+
 import { categories } from "../../data/categories";
 import { budgetSummaryLabels as incomeCategories } from "../../data/budgetSummaryLabels";
 import { months } from "../../data/months";
@@ -39,19 +40,18 @@ export const Form = ({
         <button
           onClick={() => setFormType("expense")}
           className={`px-4 py-2 rounded-md text-sm font-medium transition 
-                ${formType === "expense" ? "bg-red-500 text-white" : "bg-gray-100 text-gray-700"}`}
-        >
+            ${formType === "expense" ? "bg-red-500 text-white" : "bg-gray-100 text-gray-700"}`}>
           Wydatki
         </button>
 
         <button
           onClick={() => setFormType("income")}
           className={`px-4 py-2 rounded-md text-sm font-medium transition 
-                ${formType === "income" ? "bg-green-500 text-white" : "bg-gray-100 text-gray-700"}`}
-        >
+                ${formType === "income" ? "bg-green-500 text-white" : "bg-gray-100 text-gray-700"}`}>
           Przychody
         </button>
       </div>{" "}
+
       <form
         className={`p-4 border border-gray-300 rounded-md space-y-2 w-64 mx-auto ${bgColor}`}
         onSubmit={(e) => {
@@ -89,9 +89,9 @@ export const Form = ({
           onChange={(e) => setCategory(e.target.value)}
         >
           <option value="">-- wybierz kategorię --</option>
-          {categoriesToShow.map((c) => (
-            <option key={c} value={c}>
-              {c}
+          {categoriesToShow.map((category) => (
+            <option key={category} value={category}>
+              {category}
             </option>
           ))}
         </select>
@@ -102,9 +102,9 @@ export const Form = ({
           onChange={(e) => setMonth(e.target.value)}
         >
           <option value="">-- wybierz miesiąc --</option>
-          {months.map((m) => (
-            <option key={m} value={m}>
-              {m}
+          {months.map((month) => (
+            <option key={month} value={month}>
+              {month}
             </option>
           ))}
         </select>
