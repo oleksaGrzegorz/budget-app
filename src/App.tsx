@@ -8,12 +8,7 @@ import { ExpensesList } from "./components/ExpensesList/ExpensesList";
 
 import { sumExpenses } from "./utils/sumExpenses";
 
-export type Entry = {
-  type: "expense" | "income";
-  category: string;
-  month: string;
-  amount: number;
-};
+import type { Entry } from "./types/entry";
 
 export default function App() {
   const [amount, setAmount] = useState<number | null>(null);

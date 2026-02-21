@@ -1,4 +1,4 @@
-import type { Entry } from "../App";
+import type { Entry } from "../types/entry";
 
 export type MonthlyCategoryMap = Record<string, Record<string, number>>;
 
