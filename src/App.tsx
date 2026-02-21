@@ -13,7 +13,7 @@ export type Entry = {
 };
 
 export default function App() {
-  const [amount, setAmount] = useState<number | "">("");
+  const [amount, setAmount] = useState<number | null>(null);
   const [category, setCategory] = useState("");
   const [month, setMonth] = useState("");
   const [formType, setFormType] = useState<"expense" | "income">("expense");

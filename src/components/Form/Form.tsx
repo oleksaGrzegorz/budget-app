@@ -5,8 +5,8 @@ import { months } from "../../data/months";
 import type { Entry } from "../../App";
 
 interface FormProps {
-  amount: number | "";
-  setAmount: Dispatch<SetStateAction<number | "">>;
+  amount: number | null;
+  setAmount: Dispatch<SetStateAction<number | null>>;
   setEntries: Dispatch<SetStateAction<Entry[]>>;
   setIncomes: Dispatch<SetStateAction<Record<string, Record<string, number>>>>;
   category: string;
@@ -41,7 +41,9 @@ export const Form = ({
         <button
           onClick={() => setFormType("expense")}
           className={`px-4 py-2 rounded-md text-sm font-medium transition ${
-            formType === "expense" ? "bg-red-500 text-white" : "bg-gray-100 text-gray-700"
+            formType === "expense"
+              ? "bg-red-500 text-white"
+              : "bg-gray-100 text-gray-700"
           }`}
         >
           Wydatki
@@ -49,7 +51,9 @@ export const Form = ({
         <button
           onClick={() => setFormType("income")}
           className={`px-4 py-2 rounded-md text-sm font-medium transition ${
-            formType === "income" ? "bg-green-500 text-white" : "bg-gray-100 text-gray-700"
+            formType === "income"
+              ? "bg-green-500 text-white"
+              : "bg-gray-100 text-gray-700"
           }`}
         >
           Przychody
@@ -60,7 +64,7 @@ export const Form = ({
         className={`p-4 border border-gray-300 rounded-md space-y-2 w-64 mx-auto ${bgColor}`}
         onSubmit={(e) => {
           e.preventDefault();
-          if (!category || !month || amount === "" || amount <= 0) return;
+          if (!category || !month || amount === null || amount <= 0) return;
 
           setEntries((prev) => [...prev, { type, category, month, amount }]);
 
@@ -74,7 +78,7 @@ export const Form = ({
             }));
           }
 
-          setAmount("");
+          setAmount(null);
           setCategory("");
           setMonth("");
         }}
@@ -87,8 +91,11 @@ export const Form = ({
           className="border border-gray-300 rounded p-1 text-sm w-full"
           type="number"
           placeholder="Kwota"
-          value={amount}
-          onChange={(e) => setAmount(Number(e.target.value))}
+          value={amount !== null ? amount : ""}
+          onChange={(e) => {
+            const value = e.target.value;
+            setAmount(value === "" ? null : Number(value));
+          }}
         />
 
         <select
@@ -119,7 +126,7 @@ export const Form = ({
 
         <button
           type="submit"
-          disabled={!category || !month || amount === "" || amount <= 0}
+          disabled={!category || !month || amount === null || amount <= 0}
           className={`${btnColor} text-white rounded p-1 w-full text-sm disabled:opacity-50 disabled:cursor-not-allowed`}
         >
           Dodaj
