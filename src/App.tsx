@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
+
 import { Header } from "./components/Header/Header";
 import { Form } from "./components/Form/Form";
 import { ExpensesTable } from "./components/ExpensesTable/ExpensesTable";
 import { BudgetSummaryTable } from "./components/BudgetSummaryTable/BudgetSummaryTable";
 import { ExpensesList } from "./components/ExpensesList/ExpensesList";
+
+import { sumExpenses } from "./utils/sumExpenses";
 
 export type Entry = {
   type: "expense" | "income";
@@ -25,13 +28,10 @@ export default function App() {
   const [expenseGoals, setExpenseGoals] = useState<Record<string, number>>({});
   const [incomeGoals, setIncomeGoals] = useState<Record<string, number>>({});
 
-  const expensesForTable: Record<string, Record<string, number>> = entries
-    .filter((e) => e.type === "expense")
-    .reduce((acc, e) => {
-      if (!acc[e.category]) acc[e.category] = {};
-      acc[e.category][e.month] = (acc[e.category][e.month] || 0) + e.amount;
-      return acc;
-    }, {} as Record<string, Record<string, number>>);
+const expensesForTable = useMemo(
+  () => sumExpenses(entries),
+  [entries]
+);
 
   return (
     <div className="min-h-screen bg-gray-200">
