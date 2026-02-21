@@ -17,16 +17,13 @@ export default function App() {
   const [formType, setFormType] = useState<"expense" | "income">("expense");
 
   const [entries, setEntries] = useState<Entry[]>([]);
-  const [incomes, setIncomes] = useState<Record<string, Record<string, number>>>(
-    {}
-  );
+  const [incomes, setIncomes] = useState<
+    Record<string, Record<string, number>>
+  >({});
   const [expenseGoals, setExpenseGoals] = useState<Record<string, number>>({});
   const [incomeGoals, setIncomeGoals] = useState<Record<string, number>>({});
 
-const expensesForTable = useMemo(
-  () => sumExpenses(entries),
-  [entries]
-);
+  const expensesForTable = useMemo(() => sumExpenses(entries), [entries]);
 
   return (
     <div className="min-h-screen bg-gray-200">
@@ -43,7 +40,6 @@ const expensesForTable = useMemo(
               setCategory={setCategory}
               month={month}
               setMonth={setMonth}
-              type={formType}
               setFormType={setFormType}
               formType={formType}
             />

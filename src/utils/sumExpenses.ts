@@ -6,7 +6,7 @@ export function sumExpenses(entries: Entry[]): MonthlyCategoryMap {
   const result: MonthlyCategoryMap = {};
 
   for (const entry of entries) {
-    if (entry.type !== "expense") continue;
+    if (entry.formType !== "expense") continue;
 
     if (!result[entry.category]) {
       result[entry.category] = {};

@@ -1,5 +1,5 @@
 export type Entry = {
-  type: "expense" | "income";
+  formType: "expense" | "income";
   category: string;
   month: string;
   amount: number;

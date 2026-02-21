@@ -2,7 +2,8 @@ import type { Dispatch, SetStateAction } from "react";
 import { categories } from "../../data/categories";
 import { budgetSummaryLabels as incomeCategories } from "../../data/budgetSummaryLabels";
 import { months } from "../../data/months";
-import type { Entry } from "../../App";
+
+import type { Entry } from "../../types/entry";
 
 interface FormProps {
   amount: number | null;
@@ -13,7 +14,6 @@ interface FormProps {
   setCategory: Dispatch<SetStateAction<string>>;
   month: string;
   setMonth: Dispatch<SetStateAction<string>>;
-  type: "expense" | "income";
   formType: "expense" | "income";
   setFormType: Dispatch<SetStateAction<"expense" | "income">>;
 }
@@ -27,13 +27,13 @@ export const Form = ({
   setCategory,
   month,
   setMonth,
-  type,
   formType,
   setFormType,
 }: FormProps) => {
-  const categoriesToShow = type === "expense" ? categories : incomeCategories;
-  const bgColor = type === "expense" ? "bg-red-50" : "bg-green-50";
-  const btnColor = type === "expense" ? "bg-red-500" : "bg-green-500";
+  const categoriesToShow =
+    formType === "expense" ? categories : incomeCategories;
+  const bgColor = formType === "expense" ? "bg-red-50" : "bg-green-50";
+  const btnColor = formType === "expense" ? "bg-red-500" : "bg-green-500";
 
   return (
     <>
@@ -66,9 +66,12 @@ export const Form = ({
           e.preventDefault();
           if (!category || !month || amount === null || amount <= 0) return;
 
-          setEntries((prev) => [...prev, { type, category, month, amount }]);
+          setEntries((prev) => [
+            ...prev,
+            { formType, category, month, amount },
+          ]);
 
-          if (type === "income") {
+          if (formType === "income") {
             setIncomes((prev) => ({
               ...prev,
               [category]: {
@@ -84,7 +87,7 @@ export const Form = ({
         }}
       >
         <h2 className="text-md font-semibold text-gray-700 text-center">
-          {type === "expense" ? "Dodaj wydatek" : "Dodaj przychód"}
+          {formType === "expense" ? "Dodaj wydatek" : "Dodaj przychód"}
         </h2>
 
         <input
