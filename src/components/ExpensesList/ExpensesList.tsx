@@ -1,4 +1,4 @@
-import type { Entry } from "../../App";
+import type { Entry } from "../../types/entry";
 
 interface ExpensesListProps {
   entries: Entry[];
@@ -16,10 +16,10 @@ export const ExpensesList = ({ entries }: ExpensesListProps) => {
             <li
               key={index}
               className={`border border-gray-300 p-2 rounded ${
-                item.type === "expense" ? "bg-red-50 text-red-600" : "bg-green-50 text-green-600"
+                item.formType === "expense" ? "bg-red-50 text-red-600" : "bg-green-50 text-green-600"
               }`}
             >
-              <strong>{index + 1}. [{item.type === "expense" ? "Wydatek" : "Przychód"}]</strong>{" "}
+              <strong>{index + 1}. [{item.formType === "expense" ? "Wydatek" : "Przychód"}]</strong>{" "}
               {item.category}, <strong>Miesiąc:</strong> {item.month},{" "}
               <strong>Kwota:</strong> {item.amount} zł
             </li>
