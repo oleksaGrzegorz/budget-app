@@ -14,18 +14,32 @@ export const BudgetSummaryTable = ({
   incomeGoals,
   setIncomeGoals,
 }: BudgetSummaryTableProps) => {
-  const getTotalExpenses = (month: string) =>
-    Object.values(expenses).reduce((sum, cat) => sum + (cat[month] || 0), 0);
+  const getTotalExpenses = (month: string): number | null => {
+    const total = Object.values(expenses ?? {}).reduce(
+      (sum, cat) => sum + (cat?.[month] || 0),
+      0,
+    );
+    return total === 0 ? null : total;
+  };
 
-  const getTotalIncome = (month: string) =>
-    Object.values(incomes).reduce((sum, cat) => sum + (cat[month] || 0), 0);
+  const getTotalIncome = (month: string): number | null => {
+    const total = Object.values(incomes).reduce(
+      (sum, cat) => sum + (cat[month] || 0),
+      0,
+    );
+    return total === 0 ? null : total;
+  };
 
-  const getSavings = (month: string) =>
-    getTotalIncome(month) - getTotalExpenses(month);
+  const getSavings = (month: string): number | null => {
+    const income = getTotalIncome(month);
+    const expenses = getTotalExpenses(month);
+    if (income === null && expenses === null) return null;
+    return (income ?? 0) - (expenses ?? 0);
+  };
 
   const getAverageIncomeForCategory = (category: string) => {
     const monthsData = incomes[category];
-    if (!monthsData) return 0;
+    if (!monthsData) return null;
 
     const values = Object.values(monthsData).filter((v) => v > 0);
     if (values.length === 0) return 0;
@@ -34,12 +48,16 @@ export const BudgetSummaryTable = ({
     return (sum / values.length).toFixed(2);
   };
 
-  const getAverageSavings = () => {
-    const savings = months.map((month) => getSavings(month));
-    const activeMonths = savings.filter((val) => val !== 0);
-    if (activeMonths.length === 0) return 0;
-    const sum = activeMonths.reduce((acc, val) => acc + val, 0);
-    return (sum / activeMonths.length).toFixed(2);
+  const getAverageSavings = (): string | null => {
+    const validMonths = months.filter(
+      (m) => getTotalIncome(m) != null || getTotalExpenses(m) != null,
+    );
+
+    if (validMonths.length === 0) return null;
+
+    const sum = validMonths.reduce((acc, m) => acc + (getSavings(m) ?? 0), 0);
+
+    return (sum / validMonths.length).toFixed(2);
   };
 
   return (
@@ -79,7 +97,7 @@ export const BudgetSummaryTable = ({
                 key={month}
                 className="px-3 py-2 text-center border border-gray-300"
               >
-                {incomes[category]?.[month] || 0}
+                {incomes[category]?.[month] || null}
               </td>
             ))}
             <td className="px-3 py-2 text-center border border-gray-300 bg-gray-200 text-gray-800 font-medium">
@@ -92,8 +110,8 @@ export const BudgetSummaryTable = ({
                   incomeGoals[category]
                   ? "bg-red-200 text-red-800"
                   : incomeGoals[category]
-                    ? "bg-green-200 text-green-800"
-                    : "bg-amber-200 text-amber-900"
+                  ? "bg-green-200 text-green-800"
+                  : "bg-amber-200 text-amber-900"
               }`}
             >
               <input
@@ -106,7 +124,6 @@ export const BudgetSummaryTable = ({
                   }))
                 }
                 className="w-20 text-center bg-transparent outline-none"
-                placeholder="0"
               />
             </td>
           </tr>
@@ -119,13 +136,13 @@ export const BudgetSummaryTable = ({
           {months.map((month) => (
             <td
               key={month}
-              className="px-3 py-2 text-center border border-gray-300 "
+              className="px-3 py-2 text-center border border-gray-300"
             >
               {getTotalIncome(month)}
             </td>
           ))}
-          <td className="px-3 py-2 text-center border border-gray-300">0</td>
-          <td className="px-3 py-2 text-center border border-gray-300">0</td>
+          <td className="px-3 py-2 text-center border border-gray-300"></td>
+          <td className="px-3 py-2 text-center border border-gray-300"></td>
         </tr>
 
         <tr className="bg-gray-100 font-semibold">
@@ -135,13 +152,13 @@ export const BudgetSummaryTable = ({
           {months.map((month) => (
             <td
               key={month}
-              className="px-3 py-2 text-center border border-gray-300 "
+              className="px-3 py-2 text-center border border-gray-300"
             >
               {getTotalExpenses(month)}
             </td>
           ))}
-          <td className="px-3 py-2 text-center border border-gray-300">0</td>
-          <td className="px-3 py-2 text-center border border-gray-300">0</td>
+          <td className="px-3 py-2 text-center border border-gray-300"></td>
+          <td className="px-3 py-2 text-center border border-gray-300"></td>
         </tr>
 
         <tr className="bg-gray-200 font-semibold">
@@ -154,7 +171,7 @@ export const BudgetSummaryTable = ({
               <td
                 key={month}
                 className={`px-3 py-2 text-center border border-gray-300 ${
-                  savings < 0
+                  savings != null && savings < 0
                     ? "bg-red-200 text-red-800"
                     : "bg-green-200 text-green-800"
                 }`}
@@ -166,7 +183,7 @@ export const BudgetSummaryTable = ({
           <td className="px-3 py-2 text-center border border-gray-300">
             {getAverageSavings()}
           </td>
-          <td className="px-3 py-2 text-center border border-gray-300">0</td>
+          <td className="px-3 py-2 text-center border border-gray-300"></td>
         </tr>
 
         <tr className="bg-gray-100 font-semibold">
@@ -176,39 +193,46 @@ export const BudgetSummaryTable = ({
           {months.map((month) => {
             const savings = getSavings(month);
             const totalIncome = getTotalIncome(month);
-            const percentage = totalIncome
-              ? Number(((savings / totalIncome) * 100).toFixed(1))
-              : 0;
+
+            const percentage =
+              totalIncome != null && savings != null
+                ? Number(((savings / totalIncome) * 100).toFixed(1))
+                : null;
+
             return (
               <td
                 key={month}
                 className={`px-3 py-2 text-center border border-gray-300 ${
-                  percentage < 0
+                  percentage != null && percentage < 0
                     ? "bg-red-200 text-red-800"
                     : "bg-green-200 text-green-800"
                 }`}
               >
-                {percentage}%
+                {percentage != null ? percentage + "%" : null}
               </td>
             );
           })}
           <td className="px-3 py-2 text-center border border-gray-300">
             {(() => {
               const totalSavings = months.reduce(
-                (acc, m) => acc + getSavings(m),
+                (acc, m) => acc + (getSavings(m) ?? 0),
                 0,
               );
               const totalIncome = months.reduce(
-                (acc, m) => acc + getTotalIncome(m),
+                (acc, m) => acc + (getTotalIncome(m) ?? 0),
                 0,
               );
-              const avgPercentage = totalIncome
-                ? Number(((totalSavings / totalIncome) * 100).toFixed(1))
-                : 0;
+
+              if (!totalIncome) return null;
+
+              const avgPercentage = Number(
+                ((totalSavings / totalIncome) * 100).toFixed(1),
+              );
+
               return avgPercentage + "%";
             })()}
           </td>
-          <td className="px-3 py-2 text-center border border-gray-300">0</td>
+          <td className="px-3 py-2 text-center border border-gray-300"></td>
         </tr>
       </tbody>
     </table>
