@@ -2,7 +2,6 @@ import type { Dispatch, SetStateAction } from "react";
 import { categories } from "../../data/categories";
 import { budgetSummaryLabels as incomeCategories } from "../../data/budgetSummaryLabels";
 import { months } from "../../data/months";
-
 import type { Entry } from "../../types/entry";
 
 interface FormProps {
@@ -32,28 +31,27 @@ export const Form = ({
 }: FormProps) => {
   const categoriesToShow =
     formType === "expense" ? categories : incomeCategories;
-  const bgColor = formType === "expense" ? "bg-red-50" : "bg-green-50";
-  const btnColor = formType === "expense" ? "bg-red-500" : "bg-green-500";
 
   return (
     <>
-      <div className="flex gap-3 mb-6 justify-center">
+      <div className="flex justify-center gap-4 mb-8">
         <button
           onClick={() => setFormType("expense")}
-          className={`px-4 py-2 rounded-md text-sm font-medium transition ${
+          className={`px-5 py-2 rounded-lg text-sm font-medium transition ${
             formType === "expense"
-              ? "bg-red-500 text-white"
-              : "bg-gray-100 text-gray-700"
+              ? "bg-rose-500 text-white"
+              : "bg-slate-100 text-slate-600 hover:bg-slate-200"
           }`}
         >
           Wydatki
         </button>
+
         <button
           onClick={() => setFormType("income")}
-          className={`px-4 py-2 rounded-md text-sm font-medium transition ${
+          className={`px-5 py-2 rounded-lg text-sm font-medium transition ${
             formType === "income"
-              ? "bg-green-500 text-white"
-              : "bg-gray-100 text-gray-700"
+              ? "bg-emerald-500 text-white"
+              : "bg-slate-100 text-slate-600 hover:bg-slate-200"
           }`}
         >
           Przychody
@@ -61,7 +59,7 @@ export const Form = ({
       </div>
 
       <form
-        className={`p-4 border border-gray-300 rounded-md space-y-2 w-64 mx-auto ${bgColor}`}
+        className="max-w-md mx-auto space-y-4"
         onSubmit={(e) => {
           e.preventDefault();
           if (!category || !month || amount === null || amount <= 0) return;
@@ -86,51 +84,50 @@ export const Form = ({
           setMonth("");
         }}
       >
-        <h2 className="text-md font-semibold text-gray-700 text-center">
+        <h2 className="text-lg font-semibold text-center text-slate-700">
           {formType === "expense" ? "Dodaj wydatek" : "Dodaj przychód"}
         </h2>
 
         <input
-          className="border border-gray-300 rounded p-1 text-sm w-full"
           type="number"
           placeholder="Kwota"
-          value={amount !== null ? amount : ""}
-          onChange={(e) => {
-            const value = e.target.value;
-            setAmount(value === "" ? null : Number(value));
-          }}
+          value={amount ?? ""}
+          onChange={(e) =>
+            setAmount(e.target.value === "" ? null : Number(e.target.value))
+          }
+          className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:outline-none"
         />
 
         <select
-          className="border border-gray-300 rounded p-1 text-sm w-full"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
+          className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:outline-none"
         >
           <option value="">-- wybierz kategorię --</option>
           {categoriesToShow.map((cat) => (
-            <option key={cat} value={cat}>
-              {cat}
-            </option>
+            <option key={cat} value={cat}>{cat}</option>
           ))}
         </select>
 
         <select
-          className="border border-gray-300 rounded p-1 text-sm w-full"
           value={month}
           onChange={(e) => setMonth(e.target.value)}
+          className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:outline-none"
         >
           <option value="">-- wybierz miesiąc --</option>
           {months.map((m) => (
-            <option key={m} value={m}>
-              {m}
-            </option>
+            <option key={m} value={m}>{m}</option>
           ))}
         </select>
 
         <button
           type="submit"
           disabled={!category || !month || amount === null || amount <= 0}
-          className={`${btnColor} text-white rounded p-1 w-full text-sm disabled:opacity-50 disabled:cursor-not-allowed`}
+          className={`w-full py-2 rounded-lg font-medium transition ${
+            formType === "expense"
+              ? "bg-rose-500 text-white"
+              : "bg-emerald-500 text-white"
+          } disabled:opacity-40`}
         >
           Dodaj
         </button>
