@@ -6,22 +6,33 @@ interface ExpensesListProps {
 
 export const ExpensesList = ({ entries }: ExpensesListProps) => {
   return (
-    <div className="p-10">
-      <h2 className="text-xl font-bold mb-4">Lista wpisów</h2>
+    <div>
+      <h2 className="text-lg font-semibold text-slate-700 mb-6">
+        Lista wpisów
+      </h2>
+
       {entries.length === 0 ? (
-        <p>Brak wpisów</p>
+        <div className="text-sm text-slate-400">Brak wpisów</div>
       ) : (
-        <ul className="space-y-2">
+        <ul className="space-y-3">
           {entries.map((item, index) => (
             <li
               key={index}
-              className={`border border-gray-300 p-2 rounded ${
-                item.formType === "expense" ? "bg-red-50 text-red-600" : "bg-green-50 text-green-600"
+              className={`p-4 rounded-xl border flex justify-between items-center text-sm ${
+                item.formType === "expense"
+                  ? "bg-rose-50 border-rose-200 text-rose-700"
+                  : "bg-emerald-50 border-emerald-200 text-emerald-700"
               }`}
             >
-              <strong>{index + 1}. [{item.formType === "expense" ? "Wydatek" : "Przychód"}]</strong>{" "}
-              {item.category}, <strong>Miesiąc:</strong> {item.month},{" "}
-              <strong>Kwota:</strong> {item.amount} zł
+              <div>
+                <div className="font-semibold">
+                  {index + 1}. {item.category}
+                </div>
+                <div className="text-xs opacity-70">
+                  {item.month} • {item.formType === "expense" ? "Wydatek" : "Przychód"}
+                </div>
+              </div>
+              <div className="font-bold">{item.amount} zł</div>
             </li>
           ))}
         </ul>
