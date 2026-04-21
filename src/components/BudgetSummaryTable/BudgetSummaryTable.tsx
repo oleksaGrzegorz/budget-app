@@ -52,13 +52,46 @@ export const BudgetSummaryTable = ({
     const validMonths = months.filter(
       (m) => getTotalIncome(m) != null || getTotalExpenses(m) != null,
     );
-
     if (validMonths.length === 0) return null;
-
     const sum = validMonths.reduce((acc, m) => acc + (getSavings(m) ?? 0), 0);
-
     return (sum / validMonths.length).toFixed(2);
   };
+
+  const getAverageIncome = () => {
+    let sum = 0;
+    let count = 0;
+
+    months.forEach((month) => {
+      const totalIncome = getTotalIncome(month);
+
+      if (totalIncome != null) {
+        sum += totalIncome;
+        count++;
+      }
+    });
+
+    if (count === 0) return null;
+
+    return (sum / count).toFixed(2);
+  };
+
+  const getAverageExpense = () => {
+    let sum = 0;
+    let count = 0;
+
+    months.forEach((month) => {
+      const totalExpense = getTotalExpenses(month);
+
+      if (totalExpense != null) {
+        sum += totalExpense;
+        count++;
+      }
+    });
+
+    if (count === 0) return null;
+
+    return (sum / count).toFixed(2);
+  }; 
 
   return (
     <table className="w-full text-xs border border-gray-300 border-collapse">
@@ -110,8 +143,8 @@ export const BudgetSummaryTable = ({
                   incomeGoals[category]
                   ? "bg-red-200 text-red-800"
                   : incomeGoals[category]
-                  ? "bg-green-200 text-green-800"
-                  : "bg-amber-200 text-amber-900"
+                    ? "bg-green-200 text-green-800"
+                    : "bg-amber-200 text-amber-900"
               }`}
             >
               <input
@@ -133,6 +166,7 @@ export const BudgetSummaryTable = ({
           <th className="px-4 py-2 text-left border border-gray-300">
             Łącznie wpływy
           </th>
+
           {months.map((month) => (
             <td
               key={month}
@@ -141,8 +175,12 @@ export const BudgetSummaryTable = ({
               {getTotalIncome(month)}
             </td>
           ))}
-          <td className="px-3 py-2 text-center border border-gray-300"></td>
-          <td className="px-3 py-2 text-center border border-gray-300"></td>
+
+          <td className="px-3 py-2 text-center border border-gray-300 bg-gray-200 text-gray-800">
+            {getAverageIncome()}
+          </td>
+
+          <td className="px-3 py-2 text-center border border-gray-300 bg-amber-200 text-amber-900"></td>
         </tr>
 
         <tr className="bg-gray-100 font-semibold">
@@ -157,9 +195,9 @@ export const BudgetSummaryTable = ({
               {getTotalExpenses(month)}
             </td>
           ))}
-          <td className="px-3 py-2 text-center border border-gray-300"></td>
-          <td className="px-3 py-2 text-center border border-gray-300"></td>
-        </tr>
+          <td className="px-3 py-2 text-center border border-gray-300 bg-gray-200 text-gray-800">{getAverageExpense()}</td>
+          <td className="px-3 py-2 text-center border border-gray-300 bg-amber-200 text-amber-900"></td>
+        </tr> 
 
         <tr className="bg-gray-200 font-semibold">
           <th className="px-4 py-2 text-left border border-gray-300">
@@ -180,10 +218,10 @@ export const BudgetSummaryTable = ({
               </td>
             );
           })}
-          <td className="px-3 py-2 text-center border border-gray-300">
+          <td className="px-3 py-2 text-center border border-gray-300 ">
             {getAverageSavings()}
           </td>
-          <td className="px-3 py-2 text-center border border-gray-300"></td>
+          <td className="px-3 py-2 text-center border border-gray-300 bg-amber-200 text-amber-900"></td>
         </tr>
 
         <tr className="bg-gray-100 font-semibold">
@@ -212,7 +250,7 @@ export const BudgetSummaryTable = ({
               </td>
             );
           })}
-          <td className="px-3 py-2 text-center border border-gray-300">
+          <td className="px-3 py-2 text-center border border-gray-300 bg-gray-200 text-gray-800">
             {(() => {
               const totalSavings = months.reduce(
                 (acc, m) => acc + (getSavings(m) ?? 0),
@@ -232,7 +270,7 @@ export const BudgetSummaryTable = ({
               return avgPercentage + "%";
             })()}
           </td>
-          <td className="px-3 py-2 text-center border border-gray-300"></td>
+          <td className="px-3 py-2 text-center border border-gray-300 bg-amber-200 text-amber-900"></td>
         </tr>
       </tbody>
     </table>
