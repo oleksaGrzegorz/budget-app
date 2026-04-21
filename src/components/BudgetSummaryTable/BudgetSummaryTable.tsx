@@ -1,5 +1,8 @@
 import { months } from "../../data/months";
 import { budgetSummaryLabels as incomeCategories } from "../../data/budgetSummaryLabels";
+import { SavingsSection } from "./sections/SavingsSection";
+import { IncomeSection } from "./sections/IncomeSection";
+import { TotalsSection } from "./sections/TotalsSection";
 
 interface BudgetSummaryTableProps {
   expenses: Record<string, Record<string, number>>;
@@ -91,7 +94,7 @@ export const BudgetSummaryTable = ({
     if (count === 0) return null;
 
     return (sum / count).toFixed(2);
-  }; 
+  };
 
   return (
     <table className="w-full text-xs border border-gray-300 border-collapse">
@@ -117,6 +120,7 @@ export const BudgetSummaryTable = ({
         </tr>
       </thead>
       <tbody>
+        <IncomeSection />
         {incomeCategories.map((category) => (
           <tr key={category} className="even:bg-gray-50">
             <th
@@ -161,8 +165,9 @@ export const BudgetSummaryTable = ({
             </td>
           </tr>
         ))}
-
+<TotalsSection />
         <tr className="bg-gray-100 font-semibold">
+          
           <th className="px-4 py-2 text-left border border-gray-300">
             Łącznie wpływy
           </th>
@@ -195,10 +200,12 @@ export const BudgetSummaryTable = ({
               {getTotalExpenses(month)}
             </td>
           ))}
-          <td className="px-3 py-2 text-center border border-gray-300 bg-gray-200 text-gray-800">{getAverageExpense()}</td>
+          <td className="px-3 py-2 text-center border border-gray-300 bg-gray-200 text-gray-800">
+            {getAverageExpense()}
+          </td>
           <td className="px-3 py-2 text-center border border-gray-300 bg-amber-200 text-amber-900"></td>
-        </tr> 
-
+        </tr>
+<SavingsSection />
         <tr className="bg-gray-200 font-semibold">
           <th className="px-4 py-2 text-left border border-gray-300">
             Oszczędności
