@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { Header } from "./components/Header/Header";
 import { Form } from "./components/Form/Form";
 import { ExpensesTable } from "./components/ExpensesTable/ExpensesTable";
@@ -12,11 +12,40 @@ export default function App() {
   const [category, setCategory] = useState("");
   const [month, setMonth] = useState("");
   const [formType, setFormType] = useState<"expense" | "income">("expense");
-  const [entries, setEntries] = useState<Entry[]>([]);
-  const [incomes, setIncomes] = useState<Record<string, Record<string, number>>>({});
-  const [expenseGoals, setExpenseGoals] = useState<Record<string, number>>({});
-  const [incomeGoals, setIncomeGoals] = useState<Record<string, number>>({});
+
+  const [entries, setEntries] = useState<Entry[]>(
+  JSON.parse(localStorage.getItem("entries") || "[]")
+);
+
+const [incomes, setIncomes] = useState<Record<string, Record<string, number>>>(
+  JSON.parse(localStorage.getItem("incomes") || "{}")
+);
+
+const [expenseGoals, setExpenseGoals] = useState<Record<string, number>>(
+  JSON.parse(localStorage.getItem("expenseGoals") || "{}")
+);
+
+const [incomeGoals, setIncomeGoals] = useState<Record<string, number>>(
+  JSON.parse(localStorage.getItem("incomeGoals") || "{}")
+);
+
   const expensesForTable = useMemo(() => sumExpenses(entries), [entries]);
+
+  useEffect(() => {
+  localStorage.setItem("entries", JSON.stringify(entries));
+}, [entries]);
+
+useEffect(() => {
+  localStorage.setItem("incomes", JSON.stringify(incomes));
+}, [incomes]);
+
+useEffect(() => {
+  localStorage.setItem("expenseGoals", JSON.stringify(expenseGoals));
+}, [expenseGoals]);
+
+useEffect(() => {
+  localStorage.setItem("incomeGoals", JSON.stringify(incomeGoals));
+}, [incomeGoals]);
 
   return (
     <div className="min-h-screen bg-slate-100 text-slate-800">
