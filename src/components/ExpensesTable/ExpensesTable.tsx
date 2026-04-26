@@ -4,8 +4,8 @@ import { GoalCell } from "../BudgetSummaryTable/GoalCell";
 
 interface ExpensesTableProps {
   expenses: Record<string, Record<string, number>>;
-  goals: Record<string, number>;
-  setGoals: React.Dispatch<React.SetStateAction<Record<string, number>>>;
+goals: Record<string, number | null>;
+setGoals: React.Dispatch<React.SetStateAction<Record<string, number | null>>>;
 }
 
 export const ExpensesTable = ({

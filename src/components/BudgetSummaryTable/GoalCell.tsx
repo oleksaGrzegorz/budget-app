@@ -1,6 +1,6 @@
 interface GoalCellProps {
   value: number | null;
-  onChange: (val: number) => void;
+  onChange: (val: number | null) => void;
   average: number | null;
 }
 
@@ -26,7 +26,7 @@ export const GoalCell = ({ value, onChange, average }: GoalCellProps) => {
           value={value ?? ""}
           onChange={(e) => {
             const v = e.target.value;
-            onChange(v === "" ? 0 : Number(v));
+            onChange(v === "" ? null : Number(v));
           }}
           className="w-20 text-center bg-amber-100 outline-none mb-1"
         />
