@@ -1,15 +1,15 @@
 interface GoalCellProps {
-  value?: number;
+  value: number | null;
   onChange: (val: number) => void;
   average: number | null;
 }
 
 export const GoalCell = ({ value, onChange, average }: GoalCellProps) => {
   const difference =
-    average !== null && value !== undefined ? average - value : null;
+    average !== null && value != null ? average - value : null;
 
   const bgClass =
-    average !== null && value !== undefined
+    average !== null && value !== null
       ? average > value
         ? "bg-red-200 text-red-800"
         : "bg-green-200 text-green-800"
