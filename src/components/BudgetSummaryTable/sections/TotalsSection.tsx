@@ -52,7 +52,7 @@ export const TotalsSection = ({
                 <td className="px-3 py-2 text-center border border-gray-300 bg-gray-200 text-gray-800">
                   {getAverageExpense()}
                 </td>
-                <td className="px-3 py-2 text-center border border-gray-300 bg-amber-200 text-amber-900"></td>
+                <td className="px-3 py-2 text-center border border-gray-300 bg-amber-200 text-amber-900">5</td>
               </tr>
     </>
   );
