@@ -1,5 +1,6 @@
 import { categories } from "../../data/categories";
 import { months } from "../../data/months";
+import { GoalCell } from "../BudgetSummaryTable/GoalCell";
 
 interface ExpensesTableProps {
   expenses: Record<string, Record<string, number>>;
@@ -53,17 +54,6 @@ export const ExpensesTable = ({
       <tbody>
         {categories.map((category) => {
           const average = getAverageForCategory(category);
-          const goal = goals[category];
-          const difference =
-            average !== null && goal !== undefined ? average - goal : null;
-
-          let bgClass = "";
-          if (average !== null && goal !== undefined) {
-            bgClass =
-              average > goal
-                ? "bg-red-200 text-red-800"
-                : "bg-green-200 text-green-800";
-          }
 
           return (
             <tr key={category} className="even:bg-gray-50">
@@ -87,31 +77,16 @@ export const ExpensesTable = ({
                 {average !== null ? average.toFixed(2) : ""}
               </td>
 
-              <td
-                className={`px-3 py-2 text-center border border-gray-300 font-semibold ${bgClass}`}
-              >
-                <div className="flex flex-col items-center">
-                  <input
-                    type="number"
-                    value={goal || ""}
-                    onChange={(e) =>
-                      setGoals((prev) => ({
-                        ...prev,
-                        [category]: Number(e.target.value),
-                      }))
-                    }
-                    className="w-20 text-center bg-amber-100 outline-none mb-1"
-                    placeholder=""
-                  />
-                  {difference !== null && (
-                    <span className="text-xs">
-                      {difference > 0
-                        ? `+${difference.toFixed(2)}`
-                        : difference.toFixed(2)}
-                    </span>
-                  )}
-                </div>
-              </td>
+              <GoalCell
+                value={goals[category]}
+                onChange={(val) =>
+                  setGoals((prev) => ({
+                    ...prev,
+                    [category]: val,
+                  }))
+                }
+                average={average}
+              />
             </tr>
           );
         })}
