@@ -2,7 +2,7 @@ import { months } from "../../data/months";
 import { SavingsSection } from "./sections/SavingsSection";
 import { TotalsSection } from "./sections/TotalsSection";
 import { useBudgetMetrics } from "../../hooks/useBudgetMetrics";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Goals } from "../../types/goals";
 
 interface BudgetSummaryTableProps {
@@ -27,12 +27,18 @@ export const BudgetSummaryTable = ({
     getAverageExpense,
   } = useBudgetMetrics(expenses, incomes);
 
-  const [goals, setGoals] = useState<Goals>({
+const [goals, setGoals] = useState<Goals>(
+  JSON.parse(localStorage.getItem("budgetGoals") || "null") ?? {
     income: null,
     expenses: null,
     savings: null,
     savingsPercentage: null,
-  });
+  }
+);
+
+useEffect(() => {
+  localStorage.setItem("budgetGoals", JSON.stringify(goals));
+}, [goals]);
 
   return (
     <table className="w-full text-xs border border-gray-300 border-collapse">
