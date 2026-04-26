@@ -1,6 +1,5 @@
 import { months } from "../../data/months";
 import { SavingsSection } from "./sections/SavingsSection";
-import { IncomeSection } from "./sections/IncomeSection";
 import { TotalsSection } from "./sections/TotalsSection";
 import { useBudgetMetrics } from "../../hooks/useBudgetMetrics";
 
@@ -14,8 +13,6 @@ interface BudgetSummaryTableProps {
 export const BudgetSummaryTable = ({
   expenses,
   incomes,
-  incomeGoals,
-  setIncomeGoals,
 }: BudgetSummaryTableProps) => {
   const {
     getTotalExpenses,
@@ -24,7 +21,6 @@ export const BudgetSummaryTable = ({
     getSavingsPercentage,
     getAverageSavings,
     getAverageSavingsPercentage,
-    getAverageIncomeForCategory,
     getAverageIncome,
     getAverageExpense,
   } = useBudgetMetrics(expenses, incomes);
@@ -45,7 +41,7 @@ export const BudgetSummaryTable = ({
             </th>
           ))}
           <th className="px-3 py-2 text-center font-semibold border border-gray-300 bg-gray-300 text-gray-800">
-            Śr
+            Średnia
           </th>
           <th className="px-3 py-2 text-center font-semibold border border-gray-300 bg-amber-300 text-amber-900">
             Cel
@@ -53,12 +49,7 @@ export const BudgetSummaryTable = ({
         </tr>
       </thead>
       <tbody>
-        <IncomeSection
-          incomes={incomes}
-          incomeGoals={incomeGoals}
-          setIncomeGoals={setIncomeGoals}
-          getAverageIncomeForCategory={getAverageIncomeForCategory}
-        />
+
 
         <TotalsSection
           getTotalIncome={getTotalIncome}
