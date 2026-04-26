@@ -5,8 +5,8 @@ import type { Goals } from "../../../types/goals";
 interface TotalsSectionProps {
   getTotalIncome: (month: string) => number | null;
   getTotalExpenses: (month: string) => number | null;
-  getAverageIncome: () => string | null;
-  getAverageExpense: () => string | null;
+  getAverageIncome: () => number | null;
+  getAverageExpense: () => number | null;
   goals: Goals;
   setGoals: React.Dispatch<React.SetStateAction<Goals>>;
 }
@@ -42,7 +42,7 @@ export const TotalsSection = ({
         <GoalCell
           value={goals.income}
           onChange={(val) => setGoals((prev) => ({ ...prev, income: val }))}
-          average={Number(getAverageIncome())}
+          average={getAverageIncome()}
         />
       </tr>
 
@@ -65,7 +65,7 @@ export const TotalsSection = ({
         <GoalCell
           value={goals.expenses}
           onChange={(val) => setGoals((prev) => ({ ...prev, expenses: val }))}
-          average={Number(getAverageExpense())}
+          average={getAverageExpense()}
         />
       </tr>
     </>
