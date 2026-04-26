@@ -9,7 +9,7 @@ export const useIncomesMetrics = (
     if (values.length === 0) return null;
 
     const sum = values.reduce((acc, val) => acc + val, 0);
-    return (sum / values.length).toFixed(2);
+    return sum / values.length;
   };
 
   return {

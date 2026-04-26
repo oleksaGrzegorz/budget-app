@@ -78,7 +78,7 @@ export const ExpensesTable = ({
               </td>
 
               <GoalCell
-                value={goals[category]}
+                value={goals[category] ?? null}
                 onChange={(val) =>
                   setGoals((prev) => ({
                     ...prev,

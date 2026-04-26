@@ -5,8 +5,8 @@ import { GoalCell } from "../BudgetSummaryTable/GoalCell";
 
 interface IncomesTableProps {
   incomes: Record<string, Record<string, number>>;
-  incomeGoals: Record<string, number>;
-  setIncomeGoals: React.Dispatch<React.SetStateAction<Record<string, number>>>;
+incomeGoals: Record<string, number | null>;
+setIncomeGoals: React.Dispatch<React.SetStateAction<Record<string, number | null>>>;
 }
 
 export const IncomesTable = ({
@@ -72,7 +72,7 @@ export const IncomesTable = ({
                     [category]: val,
                   }))
                 }
-                average={Number(getAverageIncomeForCategory(category))}
+                average={getAverageIncomeForCategory(category)}
               />
             </tr>
           );
