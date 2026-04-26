@@ -4,9 +4,9 @@ import { GoalCell } from "../GoalCell";
 
 interface SavingsSectionProps {
   getSavings: (month: string) => number | null;
-  getAverageSavings: () => string | null;
+  getAverageSavings: () => number | null;
   getSavingsPercentage: (month: string) => number | null;
-  getAverageSavingsPercentage: () => string | null;
+  getAverageSavingsPercentage: () => number | null;
   goals: Goals;
   setGoals: React.Dispatch<React.SetStateAction<Goals>>;
 }
@@ -49,7 +49,7 @@ export const SavingsSection = ({
         <GoalCell
           value={goals.savings}
           onChange={(val) => setGoals((prev) => ({ ...prev, savings: val }))}
-          average={Number(getAverageSavings())}
+          average={getAverageSavings()}
         />
       </tr>
 
@@ -82,7 +82,7 @@ export const SavingsSection = ({
         <GoalCell
           value={goals.savingsPercentage}
           onChange={(val) => setGoals((prev) => ({ ...prev, savingsPercentage: val }))}
-          average={Number(getAverageSavingsPercentage())}
+          average={getAverageSavingsPercentage()}
         />
       </tr>
     </>
