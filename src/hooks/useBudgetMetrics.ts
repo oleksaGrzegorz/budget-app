@@ -37,7 +37,7 @@ export const useBudgetMetrics = (
     return Number(((savings / totalIncome) * 100).toFixed(1));
   };
 
-  const getAverageSavingsPercentage = (): string | null => {
+  const getAverageSavingsPercentage = (): number | null => {
     const totalSavings = months.reduce(
       (acc, m) => acc + (getSavings(m) ?? 0),
       0,
@@ -50,7 +50,7 @@ export const useBudgetMetrics = (
 
     if (!totalIncome) return null;
 
-    return ((totalSavings / totalIncome) * 100).toFixed(1);
+    return ((totalSavings / totalIncome) * 100);
   };
 
   const getAverageIncomeForCategory = (category: string) => {
@@ -64,13 +64,13 @@ export const useBudgetMetrics = (
     return (sum / values.length).toFixed(2);
   };
 
-  const getAverageSavings = (): string | null => {
+  const getAverageSavings = (): number | null => {
     const validMonths = months.filter(
       (m) => getTotalIncome(m) != null || getTotalExpenses(m) != null,
     );
     if (validMonths.length === 0) return null;
     const sum = validMonths.reduce((acc, m) => acc + (getSavings(m) ?? 0), 0);
-    return (sum / validMonths.length).toFixed(2);
+    return sum / validMonths.length;
   };
 
   const getAverageIncome = () => {
