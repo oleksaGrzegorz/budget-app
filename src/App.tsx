@@ -6,6 +6,7 @@ import { BudgetSummaryTable } from "./components/BudgetSummaryTable/BudgetSummar
 import { ExpensesList } from "./components/ExpensesList/ExpensesList";
 import { sumExpenses } from "./utils/sumExpenses";
 import type { Entry } from "./types/entry";
+import { IncomesTable } from "./components/IncomesTable/IncomesTable";
 
 export default function App() {
   const [amount, setAmount] = useState<number | null>(null);
@@ -14,38 +15,38 @@ export default function App() {
   const [formType, setFormType] = useState<"expense" | "income">("expense");
 
   const [entries, setEntries] = useState<Entry[]>(
-  JSON.parse(localStorage.getItem("entries") || "[]")
-);
+    JSON.parse(localStorage.getItem("entries") || "[]"),
+  );
 
-const [incomes, setIncomes] = useState<Record<string, Record<string, number>>>(
-  JSON.parse(localStorage.getItem("incomes") || "{}")
-);
+  const [incomes, setIncomes] = useState<
+    Record<string, Record<string, number>>
+  >(JSON.parse(localStorage.getItem("incomes") || "{}"));
 
-const [expenseGoals, setExpenseGoals] = useState<Record<string, number>>(
-  JSON.parse(localStorage.getItem("expenseGoals") || "{}")
-);
+  const [expenseGoals, setExpenseGoals] = useState<Record<string, number>>(
+    JSON.parse(localStorage.getItem("expenseGoals") || "{}"),
+  );
 
-const [incomeGoals, setIncomeGoals] = useState<Record<string, number>>(
-  JSON.parse(localStorage.getItem("incomeGoals") || "{}")
-);
+  const [incomeGoals, setIncomeGoals] = useState<Record<string, number>>(
+    JSON.parse(localStorage.getItem("incomeGoals") || "{}"),
+  );
 
   const expensesForTable = useMemo(() => sumExpenses(entries), [entries]);
 
   useEffect(() => {
-  localStorage.setItem("entries", JSON.stringify(entries));
-}, [entries]);
+    localStorage.setItem("entries", JSON.stringify(entries));
+  }, [entries]);
 
-useEffect(() => {
-  localStorage.setItem("incomes", JSON.stringify(incomes));
-}, [incomes]);
+  useEffect(() => {
+    localStorage.setItem("incomes", JSON.stringify(incomes));
+  }, [incomes]);
 
-useEffect(() => {
-  localStorage.setItem("expenseGoals", JSON.stringify(expenseGoals));
-}, [expenseGoals]);
+  useEffect(() => {
+    localStorage.setItem("expenseGoals", JSON.stringify(expenseGoals));
+  }, [expenseGoals]);
 
-useEffect(() => {
-  localStorage.setItem("incomeGoals", JSON.stringify(incomeGoals));
-}, [incomeGoals]);
+  useEffect(() => {
+    localStorage.setItem("incomeGoals", JSON.stringify(incomeGoals));
+  }, [incomeGoals]);
 
   return (
     <div className="min-h-screen bg-slate-100 text-slate-800">
@@ -74,7 +75,13 @@ useEffect(() => {
             setGoals={setExpenseGoals}
           />
         </section>
-
+        <section className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 overflow-x-auto">
+          <IncomesTable
+            incomes={incomes}
+            incomeGoals={incomeGoals}
+            setIncomeGoals={setIncomeGoals}
+          />
+        </section>
         <section className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 overflow-x-auto">
           <BudgetSummaryTable
             expenses={expensesForTable}
