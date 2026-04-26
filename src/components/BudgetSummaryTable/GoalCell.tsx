@@ -8,12 +8,12 @@ export const GoalCell = ({ value, onChange, average }: GoalCellProps) => {
   const difference =
     average !== null && value != null ? average - value : null;
 
-  const bgClass =
-    average !== null && value !== null
-      ? average > value
-        ? "bg-red-200 text-red-800"
-        : "bg-green-200 text-green-800"
-      : "";
+const bgClass =
+  average !== null && value !== null
+    ? average > value
+      ? "bg-red-200 text-red-800"
+      : "bg-green-200 text-green-800"
+    : "bg-gray-50 text-gray-400";
 
   return (
     <td
