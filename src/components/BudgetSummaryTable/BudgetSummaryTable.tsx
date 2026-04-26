@@ -2,6 +2,8 @@ import { months } from "../../data/months";
 import { SavingsSection } from "./sections/SavingsSection";
 import { TotalsSection } from "./sections/TotalsSection";
 import { useBudgetMetrics } from "../../hooks/useBudgetMetrics";
+import { useState } from "react";
+import type { Goals } from "../../types/goals";
 
 interface BudgetSummaryTableProps {
   expenses: Record<string, Record<string, number>>;
@@ -24,6 +26,13 @@ export const BudgetSummaryTable = ({
     getAverageIncome,
     getAverageExpense,
   } = useBudgetMetrics(expenses, incomes);
+
+  const [goals, setGoals] = useState<Goals>({
+    income: null,
+    expenses: null,
+    savings: null,
+    savingsPercentage: null,
+  });
 
   return (
     <table className="w-full text-xs border border-gray-300 border-collapse">
@@ -56,6 +65,9 @@ export const BudgetSummaryTable = ({
           getTotalExpenses={getTotalExpenses}
           getAverageIncome={getAverageIncome}
           getAverageExpense={getAverageExpense}
+          goals={goals}
+          setGoals={setGoals}
+          
         />
 
         <SavingsSection
@@ -63,6 +75,8 @@ export const BudgetSummaryTable = ({
           getAverageSavings={getAverageSavings}
           getSavingsPercentage={getSavingsPercentage}
           getAverageSavingsPercentage={getAverageSavingsPercentage}
+          goals={goals}
+          setGoals={setGoals}
         />
       </tbody>
     </table>

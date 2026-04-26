@@ -1,10 +1,14 @@
 import { months } from "../../../data/months";
+import type { Goals } from "../../../types/goals";
+import { GoalCell } from "../GoalCell";
 
 interface SavingsSectionProps {
   getSavings: (month: string) => number | null;
   getAverageSavings: () => string | null;
   getSavingsPercentage: (month: string) => number | null;
   getAverageSavingsPercentage: () => string | null;
+  goals: Goals;
+  setGoals: React.Dispatch<React.SetStateAction<Goals>>;
 }
 
 export const SavingsSection = ({
@@ -12,6 +16,8 @@ export const SavingsSection = ({
   getAverageSavings,
   getSavingsPercentage,
   getAverageSavingsPercentage,
+  goals,
+  setGoals,
 }: SavingsSectionProps) => {
   return (
     <>
@@ -40,7 +46,11 @@ export const SavingsSection = ({
         <td className="px-3 py-2 text-center border border-gray-300 bg-gray-200 text-gray-800">
           {getAverageSavings()}
         </td>
-        <td className="px-3 py-2 text-center border border-gray-300 bg-amber-200 text-amber-900"></td>
+        <GoalCell
+          value={goals.savings}
+          onChange={(val) => setGoals((prev) => ({ ...prev, savings: val }))}
+          average={Number(getAverageSavings())}
+        />
       </tr>
 
       <tr>
@@ -69,7 +79,11 @@ export const SavingsSection = ({
         <td className="px-3 py-2 text-center border border-gray-300 bg-gray-200 text-gray-800">
           {getAverageSavingsPercentage()}
         </td>
-        <td className="px-3 py-2 text-center border border-gray-300 bg-amber-200 text-amber-900"></td>
+        <GoalCell
+          value={goals.savingsPercentage}
+          onChange={(val) => setGoals((prev) => ({ ...prev, savingsPercentage: val }))}
+          average={Number(getAverageSavingsPercentage())}
+        />
       </tr>
     </>
   );
