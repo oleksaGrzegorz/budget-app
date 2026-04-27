@@ -43,6 +43,7 @@ export const TotalsSection = ({
           value={goals.income}
           onChange={(val) => setGoals((prev) => ({ ...prev, income: val }))}
           average={getAverageIncome()}
+          isHigherBetter={true}
         />
       </tr>
 
@@ -66,6 +67,7 @@ export const TotalsSection = ({
           value={goals.expenses}
           onChange={(val) => setGoals((prev) => ({ ...prev, expenses: val }))}
           average={getAverageExpense()}
+          isHigherBetter={false}
         />
       </tr>
     </>

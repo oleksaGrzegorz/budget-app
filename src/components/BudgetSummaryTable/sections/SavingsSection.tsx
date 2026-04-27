@@ -50,6 +50,7 @@ export const SavingsSection = ({
           value={goals.savings}
           onChange={(val) => setGoals((prev) => ({ ...prev, savings: val }))}
           average={getAverageSavings()}
+          isHigherBetter={true}
         />
       </tr>
 
@@ -83,6 +84,7 @@ export const SavingsSection = ({
           value={goals.savingsPercentage}
           onChange={(val) => setGoals((prev) => ({ ...prev, savingsPercentage: val }))}
           average={getAverageSavingsPercentage()}
+          isHigherBetter={true}
         />
       </tr>
     </>

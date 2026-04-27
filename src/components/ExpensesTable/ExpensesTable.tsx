@@ -86,6 +86,7 @@ export const ExpensesTable = ({
                   }))
                 }
                 average={average}
+                isHigherBetter={false}
               />
             </tr>
           );

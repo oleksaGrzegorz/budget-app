@@ -73,6 +73,7 @@ export const IncomesTable = ({
                   }))
                 }
                 average={getAverageIncomeForCategory(category)}
+                isHigherBetter={true}
               />
             </tr>
           );
