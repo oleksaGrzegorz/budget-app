@@ -50,7 +50,7 @@ export const useBudgetMetrics = (
 
     if (!totalIncome) return null;
 
-    return ((totalSavings / totalIncome) * 100);
+    return (totalSavings / totalIncome) * 100;
   };
 
   const getAverageIncomeForCategory = (category: string) => {
@@ -73,7 +73,7 @@ export const useBudgetMetrics = (
     return sum / validMonths.length;
   };
 
-  const getAverageIncome = () => {
+  const getAverageIncome = (): number | null => {
     let sum = 0;
     let count = 0;
 
@@ -88,10 +88,10 @@ export const useBudgetMetrics = (
 
     if (count === 0) return null;
 
-    return (sum / count).toFixed(2);
+    return sum / count;
   };
 
-  const getAverageExpense = () => {
+  const getAverageExpense = (): number | null => {
     let sum = 0;
     let count = 0;
 
@@ -106,7 +106,7 @@ export const useBudgetMetrics = (
 
     if (count === 0) return null;
 
-    return (sum / count).toFixed(2);
+    return sum / count;
   };
 
   return {
