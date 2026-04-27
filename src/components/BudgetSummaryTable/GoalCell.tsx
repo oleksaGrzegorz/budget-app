@@ -2,18 +2,33 @@ interface GoalCellProps {
   value: number | null;
   onChange: (val: number | null) => void;
   average: number | null;
+  isHigherBetter: boolean;
 }
 
-export const GoalCell = ({ value, onChange, average }: GoalCellProps) => {
+export const GoalCell = ({
+  value,
+  onChange,
+  average,
+  isHigherBetter,
+}: GoalCellProps) => {
   const difference =
-    average !== null && value != null ? average - value : null;
+    average !== null && value != null
+      ? isHigherBetter
+        ? average - value
+        : value - average
+      : null;
 
-const bgClass =
-  average !== null && value !== null
-    ? average > value
-      ? "bg-red-200 text-red-800"
-      : "bg-green-200 text-green-800"
-    : "bg-gray-50 text-gray-400";
+  const isGood =
+    average !== null &&
+    value !== null &&
+    (isHigherBetter ? average >= value : average <= value);
+
+  const bgClass =
+    average !== null && value !== null
+      ? isGood
+        ? "bg-green-200 text-green-800"
+        : "bg-red-200 text-red-800"
+      : "bg-gray-50 text-gray-400";
 
   return (
     <td
@@ -21,7 +36,6 @@ const bgClass =
     >
       <div className="flex flex-col items-center">
         <input
-        placeholder="cel"
           type="number"
           value={value ?? ""}
           onChange={(e) => {
@@ -34,8 +48,8 @@ const bgClass =
         {difference !== null && (
           <span className="text-xs">
             {difference > 0
-              ? `+${difference.toFixed(2)}`
-              : difference.toFixed(2)}
+              ? `+${difference}`
+              : difference}
           </span>
         )}
       </div>
