@@ -1,11 +1,12 @@
 import { categories } from "../../data/categories";
 import { months } from "../../data/months";
 import { GoalCell } from "../BudgetSummaryTable/GoalCell";
+import { calculateAverage } from "../../utils/calculateAverage";
 
 interface ExpensesTableProps {
   expenses: Record<string, Record<string, number>>;
-goals: Record<string, number | null>;
-setGoals: React.Dispatch<React.SetStateAction<Record<string, number | null>>>;
+  goals: Record<string, number | null>;
+  setGoals: React.Dispatch<React.SetStateAction<Record<string, number | null>>>;
 }
 
 export const ExpensesTable = ({
@@ -13,17 +14,6 @@ export const ExpensesTable = ({
   goals,
   setGoals,
 }: ExpensesTableProps) => {
-  const getAverageForCategory = (category: string): number | null => {
-    const monthsData = expenses[category];
-    if (!monthsData) return null;
-    const positiveExpenses = Object.values(monthsData).filter(
-      (expense) => expense > 0,
-    );
-    if (positiveExpenses.length === 0) return null;
-    const total = positiveExpenses.reduce((sum, expense) => sum + expense, 0);
-    return total / positiveExpenses.length;
-  };
-
   return (
     <table className="w-full text-xs border border-gray-300 border-collapse">
       <thead className="bg-gray-100">
@@ -53,7 +43,9 @@ export const ExpensesTable = ({
 
       <tbody>
         {categories.map((category) => {
-          const average = getAverageForCategory(category);
+          const average = calculateAverage(
+            Object.values(expenses[category] || {}),
+          );
 
           return (
             <tr key={category} className="even:bg-gray-50">
