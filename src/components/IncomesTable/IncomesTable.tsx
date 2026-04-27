@@ -1,7 +1,7 @@
 import { months } from "../../data/months";
-import { useIncomesMetrics } from "../../hooks/useIncomesMetrics";
 import { budgetSummaryLabels as incomeCategories } from "../../data/budgetSummaryLabels";
 import { GoalCell } from "../BudgetSummaryTable/GoalCell";
+import { calculateAverage } from "../../utils/calculateAverage";
 
 interface IncomesTableProps {
   incomes: Record<string, Record<string, number>>;
@@ -14,7 +14,6 @@ export const IncomesTable = ({
   incomeGoals,
   setIncomeGoals,
 }: IncomesTableProps) => {
-  const { getAverageIncomeForCategory } = useIncomesMetrics(incomes);
 
   return (
     <table className="w-full text-xs border border-gray-300 border-collapse">
@@ -61,7 +60,7 @@ export const IncomesTable = ({
               ))}
 
               <td className="px-3 py-2 text-center border border-gray-300 bg-gray-200 text-gray-800 font-medium">
-                {getAverageIncomeForCategory(category)}
+                {calculateAverage(Object.values(incomes[category] || {}))}
               </td>
 
               <GoalCell
@@ -72,7 +71,7 @@ export const IncomesTable = ({
                     [category]: val,
                   }))
                 }
-                average={getAverageIncomeForCategory(category)}
+                average={calculateAverage(Object.values(incomes[category] || {}))}
                 isHigherBetter={true}
               />
             </tr>
