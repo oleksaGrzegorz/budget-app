@@ -32,7 +32,7 @@ export const SavingsSection = ({
               key={month}
               className={`px-3 py-2 text-center border border-gray-300 ${
                 savings == null
-                  ? "bg-gray-100 text-gray-500"
+                  ? "text-gray-500"
                   : savings < 0
                     ? "bg-red-200 text-red-800"
                     : "bg-green-200 text-green-800"
@@ -65,13 +65,13 @@ export const SavingsSection = ({
       key={month}
       className={`px-3 py-2 text-center border border-gray-300 ${
         percentage == null
-          ? "bg-gray-100 text-gray-500"
+          ? "text-gray-500"
           : percentage < 0
             ? "bg-red-200 text-red-800"
             : "bg-green-200 text-green-800"
       }`}
     >
-      {percentage != null ? `${percentage}%` : "-"}
+      {percentage != null ? `${percentage}%` : ""}
     </td>
   );
 })}
