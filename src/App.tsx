@@ -7,6 +7,7 @@ import { ExpensesList } from "./components/ExpensesList/ExpensesList";
 import { sumExpenses } from "./utils/sumExpenses";
 import type { Entry } from "./types/entry";
 import { IncomesTable } from "./components/IncomesTable/IncomesTable";
+import { sumIncomes } from "./utils/sumIncomes";
 
 export default function App() {
   const [amount, setAmount] = useState<number | null>(null);
@@ -18,27 +19,20 @@ export default function App() {
     JSON.parse(localStorage.getItem("entries") || "[]"),
   );
 
-  const [incomes, setIncomes] = useState<
-    Record<string, Record<string, number>>
-  >(JSON.parse(localStorage.getItem("incomes") || "{}"));
-
-  const [expenseGoals, setExpenseGoals] = useState<Record<string, number>>(
+  const [expenseGoals, setExpenseGoals] = useState<Record<string, number | null>>(
     JSON.parse(localStorage.getItem("expenseGoals") || "{}"),
   );
 
-  const [incomeGoals, setIncomeGoals] = useState<Record<string, number>>(
+  const [incomeGoals, setIncomeGoals] = useState<Record<string, number | null>>(
     JSON.parse(localStorage.getItem("incomeGoals") || "{}"),
   );
 
   const expensesForTable = useMemo(() => sumExpenses(entries), [entries]);
+  const incomesForTable = useMemo(() => sumIncomes(entries), [entries]);
 
   useEffect(() => {
     localStorage.setItem("entries", JSON.stringify(entries));
   }, [entries]);
-
-  useEffect(() => {
-    localStorage.setItem("incomes", JSON.stringify(incomes));
-  }, [incomes]);
 
   useEffect(() => {
     localStorage.setItem("expenseGoals", JSON.stringify(expenseGoals));
@@ -58,7 +52,6 @@ export default function App() {
             amount={amount}
             setAmount={setAmount}
             setEntries={setEntries}
-            setIncomes={setIncomes}
             category={category}
             setCategory={setCategory}
             month={month}
@@ -77,7 +70,7 @@ export default function App() {
         </section>
         <section className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 overflow-x-auto">
           <IncomesTable
-            incomes={incomes}
+            incomes={incomesForTable}
             incomeGoals={incomeGoals}
             setIncomeGoals={setIncomeGoals}
           />
@@ -85,7 +78,7 @@ export default function App() {
         <section className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 overflow-x-auto">
           <BudgetSummaryTable
             expenses={expensesForTable}
-            incomes={incomes}
+            incomes={incomesForTable}
             incomeGoals={incomeGoals}
             setIncomeGoals={setIncomeGoals}
           />
