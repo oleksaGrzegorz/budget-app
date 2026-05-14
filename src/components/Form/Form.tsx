@@ -8,7 +8,6 @@ interface FormProps {
   amount: number | null;
   setAmount: Dispatch<SetStateAction<number | null>>;
   setEntries: Dispatch<SetStateAction<Entry[]>>;
-  setIncomes: Dispatch<SetStateAction<Record<string, Record<string, number>>>>;
   category: string;
   setCategory: Dispatch<SetStateAction<string>>;
   month: string;
@@ -21,7 +20,6 @@ export const Form = ({
   amount,
   setAmount,
   setEntries,
-  setIncomes,
   category,
   setCategory,
   month,
@@ -69,16 +67,6 @@ export const Form = ({
             { formType, category, month, amount },
           ]);
 
-          if (formType === "income") {
-            setIncomes((prev) => ({
-              ...prev,
-              [category]: {
-                ...prev[category],
-                [month]: (prev[category]?.[month] || 0) + amount,
-              },
-            }));
-          }
-
           setAmount(null);
           setCategory("");
           setMonth("");
@@ -105,7 +93,9 @@ export const Form = ({
         >
           <option value="">-- wybierz kategorię --</option>
           {categoriesToShow.map((cat) => (
-            <option key={cat} value={cat}>{cat}</option>
+            <option key={cat} value={cat}>
+              {cat}
+            </option>
           ))}
         </select>
 
@@ -116,7 +106,9 @@ export const Form = ({
         >
           <option value="">-- wybierz miesiąc --</option>
           {months.map((m) => (
-            <option key={m} value={m}>{m}</option>
+            <option key={m} value={m}>
+              {m}
+            </option>
           ))}
         </select>
 
