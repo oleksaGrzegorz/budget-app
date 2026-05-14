@@ -8,8 +8,8 @@ import type { Goals } from "../../types/goals";
 interface BudgetSummaryTableProps {
   expenses: Record<string, Record<string, number>>;
   incomes: Record<string, Record<string, number>>;
-  incomeGoals: Record<string, number>;
-  setIncomeGoals: React.Dispatch<React.SetStateAction<Record<string, number>>>;
+  incomeGoals: Record<string, number | null>;
+  setIncomeGoals: React.Dispatch<React.SetStateAction<Record<string, number | null>>>;
 }
 
 export const BudgetSummaryTable = ({

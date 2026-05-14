@@ -61,7 +61,7 @@ export const ExpensesTable = ({
                   key={month}
                   className="px-3 py-2 text-center border border-gray-300"
                 >
-                  {expenses[category]?.[month] || null}
+                  {expenses[category]?.[month] ?? ""}
                 </td>
               ))}
 
