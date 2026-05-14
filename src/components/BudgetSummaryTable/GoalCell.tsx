@@ -42,16 +42,20 @@ export const GoalCell = ({
             const v = e.target.value;
             onChange(v === "" ? null : Number(v));
           }}
-          className="w-20 text-center bg-amber-100 outline-none mb-1"
+          className="w-20 rounded-md border border-slate-300 bg-white px-1 py-0.5 text-center outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 mb-1"
         />
 
-        {difference !== null && (
-          <span className="text-xs">
-            {difference > 0
-              ? `+${difference}`
-              : difference}
-          </span>
-        )}
+{difference !== null && (
+  <span
+    className={`text-[11px] font-normal ${
+      isGood ? "text-green-600" : "text-red-500"
+    }`}
+  >
+    {difference > 0
+      ? `+ ${difference.toFixed(2)} zł`
+      : `${difference.toFixed(2)} zł`}
+  </span>
+)}
       </div>
     </td>
   );
