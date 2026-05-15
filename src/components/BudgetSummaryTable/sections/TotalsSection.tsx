@@ -55,12 +55,12 @@ export const TotalsSection = ({
             key={month}
             className="px-3 py-2 text-center border border-gray-300"
           >
-            {getTotalExpenses(month)}
+            {(getTotalExpenses(month))?.toFixed(2)}
           </td>
         ))}
 
         <td className="px-3 py-2 text-center border border-gray-300 bg-gray-200 text-gray-800">
-          {getAverageExpense()}
+          {(getAverageExpense())?.toFixed(2)}
         </td>
 
         <GoalCell

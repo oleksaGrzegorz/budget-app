@@ -38,13 +38,13 @@ export const SavingsSection = ({
                     : "bg-green-200 text-green-800"
               }`}
             >
-              {savings}
+              {savings?.toFixed(2)}
             </td>
           );
         })}
 
         <td className="px-3 py-2 text-center border border-gray-300 bg-gray-200 text-gray-800">
-          {getAverageSavings()}
+          {(getAverageSavings())?.toFixed(2)}
         </td>
         <GoalCell
           value={goals.savings}
@@ -72,13 +72,13 @@ export const SavingsSection = ({
             : "bg-green-200 text-green-800"
       }`}
     >
-      {percentage != null ? `${percentage}%` : ""}
+      {percentage != null ? `${percentage.toFixed(2)}%` : ""}
     </td>
   );
 })}
 
         <td className="px-3 py-2 text-center border border-gray-300 bg-gray-200 text-gray-800">
-          {getAverageSavingsPercentage()}
+          {(getAverageSavingsPercentage())?.toFixed(2) ?? ""}
         </td>
         <GoalCell
           value={goals.savingsPercentage}
