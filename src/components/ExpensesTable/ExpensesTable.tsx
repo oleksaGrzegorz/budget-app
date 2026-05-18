@@ -1,4 +1,8 @@
-import { categories } from "../../data/categories";
+import {
+  categories,
+  categoryEmojis,
+  categoryIconClassNames,
+} from "../../data/categories";
 import { months } from "../../data/months";
 import { GoalCell } from "../BudgetSummaryTable/GoalCell";
 import { calculateAverage } from "../../utils/calculateAverage";
@@ -53,7 +57,19 @@ export const ExpensesTable = ({
                 className="px-4 py-2 text-left font-medium border border-gray-300 bg-gray-50"
                 scope="row"
               >
-                {category}
+                <div className="flex items-center gap-3">
+                  <span
+                    className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-base ${
+                      categoryIconClassNames[category] ??
+                      "bg-slate-100 text-slate-600"
+                    }`}
+                    aria-hidden="true"
+                  >
+                    {categoryEmojis[category] ?? "🏷️"}
+                  </span>
+
+                  <span>{category}</span>
+                </div>
               </th>
 
               {months.map((month) => (
