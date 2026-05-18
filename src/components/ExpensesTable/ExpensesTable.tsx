@@ -36,7 +36,7 @@ export const ExpensesTable = ({
           </th>
 
           <th className="px-3 py-2 text-center font-semibold border border-gray-300 bg-amber-300 text-amber-900">
-            Cel
+            Wykorzystanie celu
           </th>
         </tr>
       </thead>
