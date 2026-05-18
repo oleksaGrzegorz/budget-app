@@ -18,7 +18,8 @@ export const GoalCell = ({
     Number.isFinite(value) &&
     value > 0;
 
-  const progress = hasData ? Math.round((average / value) * 100) : null;
+  const rawProgress = hasData ? (average / value) * 100 : null;
+  const progress = rawProgress !== null ? Math.round(rawProgress) : null;
   const difference = hasData ? average - value : null;
 
   const problemAmount =
@@ -30,12 +31,19 @@ export const GoalCell = ({
 
   const isProblem = problemAmount >= 0.01;
 
+  const isStrongProblem =
+    isProblem &&
+    rawProgress !== null &&
+    (isHigherBetter ? rawProgress < 95 : rawProgress > 110);
+
   const problemText = isHigherBetter
     ? `-${problemAmount.toFixed(2)} zł`
     : `+${problemAmount.toFixed(2)} zł`;
 
   const progressWidth =
-    progress !== null ? `${Math.min(Math.max(progress, 0), 100)}%` : "0%";
+    rawProgress !== null
+      ? `${Math.min(Math.max(rawProgress, 0), 100)}%`
+      : "0%";
 
   return (
     <td className="min-w-[220px] border border-gray-300 px-2.5 py-2">
@@ -56,17 +64,9 @@ export const GoalCell = ({
             }
 
             const parsed = Number(v);
-
             onChange(Number.isFinite(parsed) && parsed >= 0 ? parsed : null);
           }}
-          className={[
-            "h-7 w-16 rounded-md border bg-white px-1.5 text-right text-xs font-semibold outline-none transition",
-            "placeholder:text-slate-300",
-            "focus:ring-1",
-            isProblem
-              ? "border-rose-300 text-rose-700 focus:border-rose-400 focus:ring-rose-200"
-              : "border-slate-300 text-slate-800 focus:border-slate-400 focus:ring-slate-300",
-          ].join(" ")}
+          className="h-7 w-16 rounded-md border border-slate-300 bg-white px-1.5 text-right text-xs font-semibold text-slate-800 outline-none transition placeholder:text-slate-300 focus:border-slate-400 focus:ring-1 focus:ring-slate-300"
         />
 
         <div className="flex-1">
@@ -75,23 +75,29 @@ export const GoalCell = ({
               className={`text-xs font-bold tabular-nums ${
                 progress === null
                   ? "text-slate-300"
-                  : isProblem
+                  : isStrongProblem
                     ? "text-rose-600"
-                    : "text-slate-700"
+                    : isProblem
+                      ? "text-rose-500"
+                      : "text-slate-600"
               }`}
             >
               {progress !== null ? `${progress}%` : "—"}
             </span>
 
             {isProblem && (
-              <span className="shrink-0 rounded-full bg-rose-50 px-1.5 py-0.5 text-[10px] font-bold leading-none text-rose-600 ring-1 ring-rose-100">
+              <span
+                className={`shrink-0 text-[10px] font-bold leading-none ${
+                  isStrongProblem ? "text-rose-600" : "text-rose-500"
+                }`}
+              >
                 {problemText}
               </span>
             )}
           </div>
 
           <div
-            className="h-1.5 w-full overflow-hidden rounded-full bg-slate-200"
+            className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100"
             title={
               !hasData
                 ? "Brak ustawionego celu"
@@ -104,7 +110,11 @@ export const GoalCell = ({
           >
             <div
               className={`h-1.5 rounded-full transition-all duration-300 ${
-                isProblem ? "bg-rose-500" : "bg-slate-400"
+                isStrongProblem
+                  ? "bg-rose-500"
+                  : isProblem
+                    ? "bg-rose-300"
+                    : "bg-slate-300"
               }`}
               style={{ width: progressWidth }}
             />
