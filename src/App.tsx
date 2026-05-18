@@ -37,7 +37,7 @@ export default function App() {
       <main className="mx-auto max-w-7xl space-y-10 px-6 py-10">
         <Header />
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+
           <Form
             amount={amount}
             setAmount={setAmount}
@@ -49,7 +49,7 @@ export default function App() {
             setFormType={setFormType}
             formType={formType}
           />
-        </div>
+
 
         <section className="overflow-x-auto rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
           <ExpensesTable
