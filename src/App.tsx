@@ -9,6 +9,7 @@ import { sumExpenses } from "./utils/sumExpenses";
 import { sumIncomes } from "./utils/sumIncomes";
 import { useLocalStorageState } from "./hooks/useLocalStorageState";
 import type { Entry } from "./types/entry";
+import { initialEntries } from "./data/initialEntries";
 
 export default function App() {
   const [amount, setAmount] = useState<number | null>(null);
@@ -18,7 +19,7 @@ export default function App() {
 
   const [entries, setEntries] = useLocalStorageState<Entry[]>(
     "budget.entries",
-    [],
+    initialEntries,
   );
 
   const [expenseGoals, setExpenseGoals] = useLocalStorageState<
