@@ -3,8 +3,9 @@ export const categoryGroups = [
     name: "Kredyt",
     emoji: "🏦",
     iconClassName: "bg-violet-200 ring-violet-300",
-    categories: ["Kredyt"],
+    categories: ["Kredyt", "Podatek od nieruchomości"],
   },
+
   {
     name: "Jedzenie",
     emoji: "🛒",
