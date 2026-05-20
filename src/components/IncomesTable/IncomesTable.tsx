@@ -5,8 +5,10 @@ import { calculateAverage } from "../../utils/calculateAverage";
 
 interface IncomesTableProps {
   incomes: Record<string, Record<string, number>>;
-incomeGoals: Record<string, number | null>;
-setIncomeGoals: React.Dispatch<React.SetStateAction<Record<string, number | null>>>;
+  incomeGoals: Record<string, number | null>;
+  setIncomeGoals: React.Dispatch<
+    React.SetStateAction<Record<string, number | null>>
+  >;
 }
 
 export const IncomesTable = ({
@@ -14,7 +16,6 @@ export const IncomesTable = ({
   incomeGoals,
   setIncomeGoals,
 }: IncomesTableProps) => {
-
   return (
     <table className="w-full text-xs border border-gray-300 border-collapse">
       <thead className="bg-gray-100">
@@ -22,6 +23,7 @@ export const IncomesTable = ({
           <th className="px-4 py-2 text-left font-semibold border border-gray-300">
             Kategoria
           </th>
+
           {months.map((month) => (
             <th
               key={month}
@@ -30,9 +32,11 @@ export const IncomesTable = ({
               {month}
             </th>
           ))}
+
           <th className="px-3 py-2 text-center font-semibold border border-gray-300 bg-gray-300 text-gray-800">
             Śr
           </th>
+
           <th className="px-3 py-2 text-center font-semibold border border-gray-300 bg-amber-300 text-amber-900">
             Cel
           </th>
@@ -41,6 +45,10 @@ export const IncomesTable = ({
 
       <tbody>
         {incomeCategories.map((category) => {
+          const average = calculateAverage(
+            months.map((month) => incomes[category]?.[month] ?? 0)
+          );
+
           return (
             <tr key={category} className="even:bg-gray-50">
               <th
@@ -60,18 +68,18 @@ export const IncomesTable = ({
               ))}
 
               <td className="px-3 py-2 text-center border border-gray-300 bg-gray-200 text-gray-800 font-medium">
-                {calculateAverage(Object.values(incomes[category] || {}))}
+                {average !== null ? average.toFixed(2) : ""}
               </td>
 
               <GoalCell
-                value={incomeGoals[category]}
+                value={incomeGoals[category] ?? null}
                 onChange={(val) =>
                   setIncomeGoals((prev) => ({
                     ...prev,
                     [category]: val,
                   }))
                 }
-                average={calculateAverage(Object.values(incomes[category] || {}))}
+                average={average}
                 isHigherBetter={true}
               />
             </tr>

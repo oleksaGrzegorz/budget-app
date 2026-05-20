@@ -48,7 +48,7 @@ export const ExpensesTable = ({
       <tbody>
         {categories.map((category) => {
           const average = calculateAverage(
-            Object.values(expenses[category] || {}),
+            months.map((month) => expenses[category]?.[month] ?? 0)
           );
 
           return (
