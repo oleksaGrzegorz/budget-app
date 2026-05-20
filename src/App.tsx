@@ -10,6 +10,7 @@ import { sumIncomes } from "./utils/sumIncomes";
 import { useLocalStorageState } from "./hooks/useLocalStorageState";
 import type { Entry } from "./types/entry";
 import { initialEntries } from "./data/initialEntries";
+import { BitcoinPrice } from "./components/BitcoinPrice";
 
 export default function App() {
   const [amount, setAmount] = useState<number | null>(null);
@@ -38,6 +39,7 @@ export default function App() {
       <main className="mx-auto max-w-7xl space-y-10 px-6 py-10">
         <Header />
 
+<BitcoinPrice />
 
           <Form
             amount={amount}
