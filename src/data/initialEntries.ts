@@ -21,32 +21,6 @@ export const initialEntries: Entry[] = [
   { formType: "expense", category: "Jedzenie - miasto", month: "04", amount: 62.55 },
   { formType: "expense", category: "Jedzenie - miasto", month: "05", amount: 49.5 },
 
-  { formType: "expense", category: "Dziecko", month: "01", amount: 126.75 },
-  { formType: "expense", category: "Dziecko", month: "02", amount: 449.21 },
-  { formType: "expense", category: "Dziecko", month: "03", amount: 106.07 },
-  { formType: "expense", category: "Dziecko", month: "04", amount: 64.92 },
-
-  { formType: "expense", category: "Pies", month: "02", amount: 22.04 },
-  { formType: "expense", category: "Pies", month: "03", amount: 36 },
-  { formType: "expense", category: "Pies", month: "04", amount: 183.15 },
-
-  { formType: "expense", category: "Ubezpieczenie zdr", month: "01", amount: 299.8 },
-  { formType: "expense", category: "Ubezpieczenie zdr", month: "02", amount: 299.8 },
-  { formType: "expense", category: "Ubezpieczenie zdr", month: "03", amount: 482.91 },
-  { formType: "expense", category: "Ubezpieczenie zdr", month: "04", amount: 299.8 },
-
-  { formType: "expense", category: "Dentyści leki itd", month: "01", amount: 29.99 },
-  { formType: "expense", category: "Dentyści leki itd", month: "04", amount: 2.52 },
-
-  { formType: "expense", category: "Fryzjer", month: "01", amount: 35 },
-  { formType: "expense", category: "Fryzjer", month: "02", amount: 35 },
-  { formType: "expense", category: "Fryzjer", month: "03", amount: 35 },
-  { formType: "expense", category: "Fryzjer", month: "05", amount: 25 },
-
-  { formType: "expense", category: "Ciuchy/obuwie", month: "01", amount: 179.94 },
-  { formType: "expense", category: "Ciuchy/obuwie", month: "03", amount: 160.97 },
-  { formType: "expense", category: "Ciuchy/obuwie", month: "05", amount: 120 },
-
   { formType: "expense", category: "Paliwo - dacia", month: "01", amount: 194.15 },
   { formType: "expense", category: "Paliwo - dacia", month: "02", amount: 228.88 },
   { formType: "expense", category: "Paliwo - dacia", month: "03", amount: 291.33 },
@@ -112,9 +86,13 @@ export const initialEntries: Entry[] = [
   { formType: "expense", category: "Karty ing", month: "04", amount: 12 },
   { formType: "expense", category: "Karty ing", month: "05", amount: 12 },
 
-  { formType: "expense", category: "Siłownia", month: "02", amount: 55.91 },
-  { formType: "expense", category: "Siłownia", month: "03", amount: 220 },
-  { formType: "expense", category: "Siłownia", month: "05", amount: 26.77 },
+  { formType: "expense", category: "Ubezpieczenie zdr", month: "01", amount: 299.8 },
+  { formType: "expense", category: "Ubezpieczenie zdr", month: "02", amount: 299.8 },
+  { formType: "expense", category: "Ubezpieczenie zdr", month: "03", amount: 482.91 },
+  { formType: "expense", category: "Ubezpieczenie zdr", month: "04", amount: 299.8 },
+
+  { formType: "expense", category: "Dentyści leki itd", month: "01", amount: 29.99 },
+  { formType: "expense", category: "Dentyści leki itd", month: "04", amount: 2.52 },
 
   { formType: "expense", category: "Remonty", month: "01", amount: 23.19 },
   { formType: "expense", category: "Remonty", month: "03", amount: 53.05 },
@@ -122,6 +100,28 @@ export const initialEntries: Entry[] = [
   { formType: "expense", category: "Remonty", month: "05", amount: 184.05 },
 
   { formType: "expense", category: "Rzeczy do domu", month: "04", amount: 527.69 },
+
+  { formType: "expense", category: "Dziecko", month: "01", amount: 126.75 },
+  { formType: "expense", category: "Dziecko", month: "02", amount: 449.21 },
+  { formType: "expense", category: "Dziecko", month: "03", amount: 106.07 },
+  { formType: "expense", category: "Dziecko", month: "04", amount: 64.92 },
+
+  { formType: "expense", category: "Pies", month: "02", amount: 22.04 },
+  { formType: "expense", category: "Pies", month: "03", amount: 36 },
+  { formType: "expense", category: "Pies", month: "04", amount: 183.15 },
+
+  { formType: "expense", category: "Fryzjer", month: "01", amount: 35 },
+  { formType: "expense", category: "Fryzjer", month: "02", amount: 35 },
+  { formType: "expense", category: "Fryzjer", month: "03", amount: 35 },
+  { formType: "expense", category: "Fryzjer", month: "05", amount: 25 },
+
+  { formType: "expense", category: "Ciuchy/obuwie", month: "01", amount: 179.94 },
+  { formType: "expense", category: "Ciuchy/obuwie", month: "03", amount: 160.97 },
+  { formType: "expense", category: "Ciuchy/obuwie", month: "05", amount: 120 },
+
+  { formType: "expense", category: "Siłownia", month: "02", amount: 55.91 },
+  { formType: "expense", category: "Siłownia", month: "03", amount: 220 },
+  { formType: "expense", category: "Siłownia", month: "05", amount: 26.77 },
 
   { formType: "expense", category: "Rozrywka", month: "01", amount: 63.48 },
   { formType: "expense", category: "Rozrywka", month: "02", amount: 13.64 },
