@@ -9,7 +9,9 @@ interface BudgetSummaryTableProps {
   expenses: Record<string, Record<string, number>>;
   incomes: Record<string, Record<string, number>>;
   incomeGoals: Record<string, number | null>;
-  setIncomeGoals: React.Dispatch<React.SetStateAction<Record<string, number | null>>>;
+  setIncomeGoals: React.Dispatch<
+    React.SetStateAction<Record<string, number | null>>
+  >;
 }
 
 export const BudgetSummaryTable = ({
@@ -27,45 +29,47 @@ export const BudgetSummaryTable = ({
     getAverageExpense,
   } = useBudgetMetrics(expenses, incomes);
 
-const [goals, setGoals] = useState<Goals>(
-  JSON.parse(localStorage.getItem("budgetGoals") || "null") ?? {
-    income: null,
-    expenses: null,
-    savings: null,
-    savingsPercentage: null,
-  }
-);
+  const [goals, setGoals] = useState<Goals>(
+    JSON.parse(localStorage.getItem("budgetGoals") || "null") ?? {
+      income: null,
+      expenses: null,
+      savings: null,
+      savingsPercentage: null,
+    },
+  );
 
-useEffect(() => {
-  localStorage.setItem("budgetGoals", JSON.stringify(goals));
-}, [goals]);
+  useEffect(() => {
+    localStorage.setItem("budgetGoals", JSON.stringify(goals));
+  }, [goals]);
 
   return (
-    <table className="w-full text-xs border border-gray-300 border-collapse">
-      <thead className="bg-gray-100">
+    <table className="w-full border-collapse border border-slate-200 text-xs">
+      <thead className="bg-slate-50">
         <tr>
-          <th className="px-4 py-2 text-left font-semibold border border-gray-300">
+          <th className="border border-slate-200 px-4 py-2 text-left font-semibold text-slate-700">
             Kategoria
           </th>
+
           {months.map((month) => (
             <th
               key={month}
-              className="px-3 py-2 text-center font-semibold border border-gray-300"
+              className="border border-slate-200 px-3 py-2 text-center font-semibold text-slate-700"
             >
               {month}
             </th>
           ))}
-          <th className="px-3 py-2 text-center font-semibold border border-gray-300 bg-gray-300 text-gray-800">
+
+          <th className="border border-slate-200 bg-sky-50 px-3 py-2 text-center font-semibold text-sky-900">
             Średnia
           </th>
-          <th className="px-3 py-2 text-center font-semibold border border-gray-300 bg-amber-300 text-amber-900">
+
+          <th className="border border-slate-200 bg-amber-50 px-3 py-2 text-center font-semibold text-amber-900">
             Cel
           </th>
         </tr>
       </thead>
+
       <tbody>
-
-
         <TotalsSection
           getTotalIncome={getTotalIncome}
           getTotalExpenses={getTotalExpenses}
@@ -73,7 +77,6 @@ useEffect(() => {
           getAverageExpense={getAverageExpense}
           goals={goals}
           setGoals={setGoals}
-          
         />
 
         <SavingsSection

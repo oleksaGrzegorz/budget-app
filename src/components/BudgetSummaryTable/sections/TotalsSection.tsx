@@ -21,22 +21,26 @@ export const TotalsSection = ({
 }: TotalsSectionProps) => {
   return (
     <>
-      <tr className="font-semibold">
-        <th className="px-4 py-2 text-left border border-gray-300">
+      <tr className="font-semibold hover:bg-slate-50">
+        <th className="border border-slate-200 bg-slate-50 px-4 py-2 text-left text-slate-800">
           Łącznie wpływy
         </th>
 
-        {months.map((month) => (
-          <td
-            key={month}
-            className="px-3 py-2 text-center border border-gray-300"
-          >
-            {getTotalIncome(month)}
-          </td>
-        ))}
+        {months.map((month) => {
+          const income = getTotalIncome(month);
 
-        <td className="px-3 py-2 text-center border border-gray-300 bg-gray-200 text-gray-800">
-          {getAverageIncome()}
+          return (
+            <td
+              key={month}
+              className="border border-slate-200 px-3 py-2 text-center text-slate-700"
+            >
+              {income != null ? income.toFixed(2) : "-"}
+            </td>
+          );
+        })}
+
+        <td className="border border-slate-200 bg-sky-50 px-3 py-2 text-center font-semibold text-sky-900">
+          {getAverageIncome() != null ? getAverageIncome()?.toFixed(2) : "-"}
         </td>
 
         <GoalCell
@@ -47,20 +51,26 @@ export const TotalsSection = ({
         />
       </tr>
 
-      <tr className="font-semibold">
-        <th className="px-4 py-2 text-left border border-gray-300">Wydatki</th>
+      <tr className="font-semibold hover:bg-slate-50">
+        <th className="border border-slate-200 bg-slate-50 px-4 py-2 text-left text-slate-800">
+          Wydatki
+        </th>
 
-        {months.map((month) => (
-          <td
-            key={month}
-            className="px-3 py-2 text-center border border-gray-300"
-          >
-            {(getTotalExpenses(month))?.toFixed(2)}
-          </td>
-        ))}
+        {months.map((month) => {
+          const expenses = getTotalExpenses(month);
 
-        <td className="px-3 py-2 text-center border border-gray-300 bg-gray-200 text-gray-800">
-          {(getAverageExpense())?.toFixed(2)}
+          return (
+            <td
+              key={month}
+              className="border border-slate-200 px-3 py-2 text-center text-slate-700"
+            >
+              {expenses != null ? expenses.toFixed(2) : "-"}
+            </td>
+          );
+        })}
+
+        <td className="border border-slate-200 bg-sky-50 px-3 py-2 text-center font-semibold text-sky-900">
+          {getAverageExpense() != null ? getAverageExpense()?.toFixed(2) : "-"}
         </td>
 
         <GoalCell

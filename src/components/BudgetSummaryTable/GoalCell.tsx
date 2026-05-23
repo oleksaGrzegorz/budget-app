@@ -66,7 +66,7 @@ export const GoalCell = ({
             const parsed = Number(v);
             onChange(Number.isFinite(parsed) && parsed >= 0 ? parsed : null);
           }}
-          className="h-7 w-16 rounded-md border border-slate-300 bg-white px-1.5 text-right text-xs font-semibold text-slate-800 outline-none transition placeholder:text-slate-300 focus:border-slate-400 focus:ring-1 focus:ring-slate-300"
+          className="h-7 w-20 rounded-md border border-slate-300 bg-white px-2 text-right text-xs font-semibold text-slate-800 outline-none transition placeholder:text-slate-300 focus:border-slate-400 focus:ring-1 focus:ring-slate-300"
         />
 
         <div className="flex-1">

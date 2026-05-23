@@ -19,27 +19,27 @@ export const ExpensesTable = ({
   setGoals,
 }: ExpensesTableProps) => {
   return (
-    <table className="w-full text-xs border border-gray-300 border-collapse">
-      <thead className="bg-gray-100">
+    <table className="w-full border-collapse border border-slate-200 text-xs">
+      <thead className="bg-slate-50">
         <tr>
-          <th className="px-4 py-2 text-left font-semibold border border-gray-300">
+          <th className="border border-slate-200 px-4 py-2 text-left font-semibold text-slate-700">
             Kategoria
           </th>
 
           {months.map((month) => (
             <th
               key={month}
-              className="px-3 py-2 text-center font-semibold border border-gray-300"
+              className="border border-slate-200 px-3 py-2 text-center font-semibold text-slate-700"
             >
               {month}
             </th>
           ))}
 
-          <th className="px-3 py-2 text-center font-semibold border border-gray-300 bg-gray-300 text-gray-800">
+          <th className="border border-slate-200 bg-sky-50 px-3 py-2 text-center font-semibold text-sky-900">
             Średnia
           </th>
 
-          <th className="px-3 py-2 text-center font-semibold border border-gray-300 bg-amber-300 text-amber-900">
+          <th className="border border-slate-200 bg-amber-50 px-3 py-2 text-center font-semibold text-amber-900">
             Wykorzystanie celu
           </th>
         </tr>
@@ -48,13 +48,13 @@ export const ExpensesTable = ({
       <tbody>
         {categories.map((category) => {
           const average = calculateAverage(
-            months.map((month) => expenses[category]?.[month] ?? 0)
+            months.map((month) => expenses[category]?.[month] ?? 0),
           );
 
           return (
-            <tr key={category} className="even:bg-gray-50">
+            <tr key={category} className="hover:bg-slate-50">
               <th
-                className="px-4 py-2 text-left font-medium border border-gray-300 bg-gray-50"
+                className="border border-slate-200 bg-slate-50 px-4 py-2 text-left font-medium text-slate-800"
                 scope="row"
               >
                 <div className="flex items-center gap-3">
@@ -75,14 +75,16 @@ export const ExpensesTable = ({
               {months.map((month) => (
                 <td
                   key={month}
-                  className="px-3 py-2 text-center border border-gray-300"
+                  className="border border-slate-200 px-3 py-2 text-center text-slate-700"
                 >
-                  {expenses[category]?.[month] ?? ""}
+                  {expenses[category]?.[month] ?? (
+                    <span className="text-slate-400">-</span>
+                  )}
                 </td>
               ))}
 
-              <td className="px-3 py-2 text-center border border-gray-300 bg-gray-200 text-gray-800 font-medium">
-                {average !== null ? average.toFixed(2) : ""}
+              <td className="border border-slate-200 bg-sky-50 px-3 py-2 text-center font-semibold text-sky-900">
+                {average !== null ? average.toFixed(2) : "-"}
               </td>
 
               <GoalCell
