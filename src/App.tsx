@@ -11,6 +11,7 @@ import { useLocalStorageState } from "./hooks/useLocalStorageState";
 import type { Entry } from "./types/entry";
 import { initialEntries } from "./data/initialEntries";
 import { BitcoinPrice } from "./components/BitcoinPrice";
+import { BudgetUsageSummary } from "./components/BudgetUsageSummary/BudgetUsageSummary";
 
 export default function App() {
   const [amount, setAmount] = useState<number | null>(null);
@@ -52,6 +53,11 @@ export default function App() {
             setFormType={setFormType}
             formType={formType}
           />
+
+          <BudgetUsageSummary
+  expenses={expensesForTable}
+  expenseGoals={expenseGoals}
+/>
 
 
         <section className="overflow-x-auto rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
