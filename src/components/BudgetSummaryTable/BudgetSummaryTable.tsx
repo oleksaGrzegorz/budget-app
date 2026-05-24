@@ -47,7 +47,7 @@ export const BudgetSummaryTable = ({
       <thead className="bg-slate-50">
         <tr>
           <th className="border border-slate-200 px-4 py-2 text-left font-semibold text-slate-700">
-            Kategoria
+            Category
           </th>
 
           {months.map((month) => (
@@ -60,11 +60,11 @@ export const BudgetSummaryTable = ({
           ))}
 
           <th className="border border-slate-200 bg-sky-50 px-3 py-2 text-center font-semibold text-sky-900">
-            Średnia
+            Average
           </th>
 
           <th className="border border-slate-200 bg-amber-50 px-3 py-2 text-center font-semibold text-amber-900">
-            Cel
+            Goal
           </th>
         </tr>
       </thead>

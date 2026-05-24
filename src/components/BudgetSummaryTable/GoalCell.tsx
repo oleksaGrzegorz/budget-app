@@ -46,7 +46,7 @@ export const GoalCell = ({
       : "0%";
 
   return (
-    <td className="min-w-[220px] border border-gray-300 px-2.5 py-2">
+    <td className="min-w-[220px] border border-slate-200 px-2.5 py-2">
       <div className="flex items-center gap-2.5">
         <input
           type="number"
@@ -82,7 +82,7 @@ export const GoalCell = ({
                       : "text-slate-600"
               }`}
             >
-              {progress !== null ? `${progress}%` : "—"}
+              {progress !== null ? `${progress}%` : "-"}
             </span>
 
             {isProblem && (
@@ -100,12 +100,12 @@ export const GoalCell = ({
             className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100"
             title={
               !hasData
-                ? "Brak ustawionego celu"
+                ? "No goal set"
                 : isProblem
                   ? isHigherBetter
-                    ? `Brakuje ${problemAmount.toFixed(2)} zł do celu`
-                    : `Przekroczono cel o ${problemAmount.toFixed(2)} zł`
-                  : "Cel w normie"
+                    ? `Missing ${problemAmount.toFixed(2)} zł to reach the goal`
+                    : `Goal exceeded by ${problemAmount.toFixed(2)} zł`
+                  : "Goal on track"
             }
           >
             <div
