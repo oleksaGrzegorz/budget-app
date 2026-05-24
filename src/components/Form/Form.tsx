@@ -28,7 +28,6 @@ export const Form = ({
   setFormType,
 }: FormProps) => {
   const isExpense = formType === "expense";
-
   const categoriesToShow = isExpense ? categories : incomeCategories;
 
   const accent = isExpense
@@ -65,7 +64,7 @@ export const Form = ({
               isExpense ? accent.activeTab : accent.inactiveTab
             }`}
           >
-            Wydatki
+            Expenses
           </button>
 
           <button
@@ -75,7 +74,7 @@ export const Form = ({
               !isExpense ? accent.activeTab : accent.inactiveTab
             }`}
           >
-            Przychody
+            Income
           </button>
         </div>
       </div>
@@ -107,13 +106,13 @@ export const Form = ({
 
           <div>
             <h2 className="text-lg font-bold text-slate-800">
-              {isExpense ? "Dodaj wydatek" : "Dodaj przychód"}
+              {isExpense ? "Add expense" : "Add income"}
             </h2>
 
             <p className="mt-1 text-sm leading-5 text-slate-500">
               {isExpense
-                ? "Dodaj nowy wydatek, aby śledzić swoje finanse."
-                : "Dodaj nowy przychód, aby śledzić swoje finanse."}
+                ? "Add a new expense to track your finances."
+                : "Add new income to track your finances."}
             </p>
           </div>
         </div>
@@ -121,13 +120,13 @@ export const Form = ({
         <div className="grid gap-4 md:grid-cols-3">
           <label className="space-y-1.5">
             <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-              Kwota
+              Amount
             </span>
 
             <div className="relative">
               <input
                 type="number"
-                placeholder="np. 250"
+                placeholder="e.g. 250"
                 value={amount ?? ""}
                 onChange={(e) =>
                   setAmount(
@@ -145,7 +144,7 @@ export const Form = ({
 
           <label className="space-y-1.5">
             <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-              Kategoria
+              Category
             </span>
 
             <select
@@ -153,7 +152,7 @@ export const Form = ({
               onChange={(e) => setCategory(e.target.value)}
               className={`h-11 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-800 outline-none transition focus:ring-2 ${accent.focus}`}
             >
-              <option value="">Wybierz kategorię</option>
+              <option value="">Choose category</option>
 
               {categoriesToShow.map((cat) => (
                 <option key={cat} value={cat}>
@@ -165,7 +164,7 @@ export const Form = ({
 
           <label className="space-y-1.5">
             <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-              Miesiąc
+              Month
             </span>
 
             <select
@@ -173,7 +172,7 @@ export const Form = ({
               onChange={(e) => setMonth(e.target.value)}
               className={`h-11 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-800 outline-none transition focus:ring-2 ${accent.focus}`}
             >
-              <option value="">Wybierz miesiąc</option>
+              <option value="">Choose month</option>
 
               {months.map((m) => (
                 <option key={m} value={m}>
@@ -191,7 +190,7 @@ export const Form = ({
             isSubmitDisabled ? "" : accent.button
           }`}
         >
-          Dodaj
+          Add
         </button>
       </form>
     </section>

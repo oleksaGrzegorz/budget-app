@@ -1,14 +1,15 @@
 export const Header = () => {
   const today = new Date();
 
-  const formattedDate = today.toLocaleDateString("pl-PL", {
+  const formattedDate = today.toLocaleDateString("en-US", {
     day: "numeric",
     month: "long",
     year: "numeric",
   });
+
   return (
     <header>
-      <h1 className="text-2xl font-bold text-center">Budżet domowy</h1>
+      <h1 className="text-center text-2xl font-bold">Home Budget</h1>
       <p className="text-center text-sm text-gray-600">{formattedDate}</p>
     </header>
   );
