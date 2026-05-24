@@ -91,7 +91,9 @@ export default function App() {
         </section>
 
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-          <ExpensesList entries={entries} />
+          <ExpensesList 
+          entries={entries}
+          setEntries={setEntries} />
         </div>
       </main>
     </div>

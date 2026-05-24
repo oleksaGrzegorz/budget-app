@@ -1,3 +1,5 @@
+import { useRef, useState } from "react";
+
 interface GoalCellProps {
   value: number | null;
   onChange: (val: number | null) => void;
@@ -11,111 +13,167 @@ export const GoalCell = ({
   average,
   isHigherBetter,
 }: GoalCellProps) => {
-  const hasData =
-    average !== null &&
-    value !== null &&
-    Number.isFinite(average) &&
-    Number.isFinite(value) &&
-    value > 0;
+  const [isEditing, setIsEditing] = useState(false);
 
-  const rawProgress = hasData ? (average / value) * 100 : null;
+  const skipBlurSave = useRef(false);
+
+  const [draftValue, setDraftValue] = useState(
+    value !== null ? String(value) : "",
+  );
+
+  const formatMoney = (amount: number) =>
+    amount.toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+
+  const goal = value ?? 0;
+  const avg = average ?? 0;
+
+  const hasGoal = value !== null && Number.isFinite(value) && value > 0;
+  const hasAverage = average !== null && Number.isFinite(average);
+  const hasData = hasGoal && hasAverage;
+
+  const rawProgress = hasData ? (avg / goal) * 100 : null;
   const progress = rawProgress !== null ? Math.round(rawProgress) : null;
-  const difference = hasData ? average - value : null;
 
-  const problemAmount =
-    hasData && difference !== null
-      ? isHigherBetter
-        ? Math.max(value - average, 0)
-        : Math.max(average - value, 0)
-      : 0;
+  const signedDifference = hasData ? avg - goal : 0;
+  const absDifference = Math.abs(signedDifference);
+  const isOnTarget = hasData && absDifference < 0.01;
 
-  const isProblem = problemAmount >= 0.01;
+  const isProblem = hasData && (isHigherBetter ? avg < goal : avg > goal);
 
   const isStrongProblem =
     isProblem &&
     rawProgress !== null &&
     (isHigherBetter ? rawProgress < 95 : rawProgress > 110);
 
-  const problemText = isHigherBetter
-    ? `-${problemAmount.toFixed(2)} zł`
-    : `+${problemAmount.toFixed(2)} zł`;
+  const isSoftProblem = isProblem && !isStrongProblem;
+
+  const statusText = !hasData
+    ? "-"
+    : isOnTarget
+      ? "0 zł"
+      : `${signedDifference > 0 ? "+" : "-"}${formatMoney(absDifference)} zł`;
+
+  const statusClass = !hasData
+    ? "text-slate-300"
+    : isStrongProblem
+      ? "text-rose-600"
+      : isSoftProblem
+        ? "text-amber-600"
+        : "text-slate-500";
+
+  const progressBarClass = !hasData
+    ? "bg-slate-200"
+    : isStrongProblem
+      ? "bg-rose-500"
+      : isSoftProblem
+        ? "bg-amber-400"
+        : "bg-slate-300";
 
   const progressWidth =
-    rawProgress !== null
-      ? `${Math.min(Math.max(rawProgress, 0), 100)}%`
-      : "0%";
+    rawProgress !== null ? `${Math.min(Math.max(rawProgress, 0), 100)}%` : "0%";
+
+  const formattedValue =
+    value !== null ? `${formatMoney(value)} zł` : "+ Set target";
+
+  const tooltip = !hasGoal
+    ? "No goal set"
+    : !hasAverage
+      ? "No average data"
+      : [
+          `Average: ${formatMoney(avg)} zł`,
+          `Goal: ${formatMoney(goal)} zł`,
+          `Usage: ${progress}%`,
+        ].join("\n");
+
+  const saveValue = () => {
+    const normalized = draftValue.trim().replace(",", ".");
+
+    if (normalized === "") {
+      onChange(null);
+      setIsEditing(false);
+      return;
+    }
+
+    const parsed = Number(normalized);
+
+    if (Number.isFinite(parsed) && parsed > 0) {
+      onChange(parsed);
+    } else {
+      setDraftValue(value !== null ? String(value) : "");
+    }
+
+    setIsEditing(false);
+  };
+
+  const cancelEditing = () => {
+    skipBlurSave.current = true;
+    setDraftValue(value !== null ? String(value) : "");
+    setIsEditing(false);
+  };
 
   return (
-    <td className="min-w-[220px] border border-slate-200 px-2.5 py-2">
-      <div className="flex items-center gap-2.5">
-        <input
-          type="number"
-          inputMode="decimal"
-          min={0}
-          step="0.01"
-          value={value ?? ""}
-          placeholder="0"
-          onChange={(e) => {
-            const v = e.target.value;
+    <td className="min-w-[250px] border border-slate-200 px-2.5 py-2">
+      <div className="flex items-center gap-3">
+        {isEditing ? (
+          <div className="relative">
+            <input
+              autoFocus
+              type="text"
+              inputMode="decimal"
+              value={draftValue}
+              placeholder="0"
+              onFocus={(e) => e.currentTarget.select()}
+              onChange={(e) => setDraftValue(e.target.value)}
+              onBlur={() => {
+                if (skipBlurSave.current) {
+                  skipBlurSave.current = false;
+                  return;
+                }
 
-            if (v === "") {
-              onChange(null);
-              return;
-            }
+                saveValue();
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") saveValue();
+                if (e.key === "Escape") cancelEditing();
+              }}
+              className="h-8 w-28 rounded-lg border border-slate-300 bg-white px-2 pr-7 text-right text-xs font-semibold text-slate-800 outline-none transition placeholder:text-slate-300 focus:border-slate-400 focus:ring-1 focus:ring-slate-300"
+            />
 
-            const parsed = Number(v);
-            onChange(Number.isFinite(parsed) && parsed >= 0 ? parsed : null);
-          }}
-          className="h-7 w-20 rounded-md border border-slate-300 bg-white px-2 text-right text-xs font-semibold text-slate-800 outline-none transition placeholder:text-slate-300 focus:border-slate-400 focus:ring-1 focus:ring-slate-300"
-        />
-
-        <div className="flex-1">
-          <div className="mb-1 flex h-4 items-center justify-between gap-2">
-            <span
-              className={`text-xs font-bold tabular-nums ${
-                progress === null
-                  ? "text-slate-300"
-                  : isStrongProblem
-                    ? "text-rose-600"
-                    : isProblem
-                      ? "text-rose-500"
-                      : "text-slate-600"
-              }`}
-            >
-              {progress !== null ? `${progress}%` : "-"}
+            <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[10px] font-semibold text-slate-400">
+              zł
             </span>
+          </div>
+        ) : (
+          <button
+            type="button"
+            onClick={() => setIsEditing(true)}
+            className={`flex h-8 w-28 items-center justify-between rounded-lg px-2 text-xs font-semibold transition ${
+              value !== null
+                ? "border border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300 hover:bg-white hover:text-slate-900"
+                : "border border-dashed border-slate-300 bg-white text-slate-400 hover:border-slate-400 hover:bg-slate-50 hover:text-slate-600"
+            }`}
+          >
+            <span className="truncate">{formattedValue}</span>
 
-            {isProblem && (
-              <span
-                className={`shrink-0 text-[10px] font-bold leading-none ${
-                  isStrongProblem ? "text-rose-600" : "text-rose-500"
-                }`}
-              >
-                {problemText}
-              </span>
-            )}
+            {value !== null && <span className="ml-1 text-slate-400">✎</span>}
+          </button>
+        )}
+
+        <div className="flex-1" title={tooltip}>
+          <div className="mb-1 flex justify-end">
+            <span
+              className={`text-[11px] font-medium tabular-nums tracking-tight ${statusClass}`}
+            >
+              {statusText}
+            </span>
           </div>
 
-          <div
-            className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100"
-            title={
-              !hasData
-                ? "No goal set"
-                : isProblem
-                  ? isHigherBetter
-                    ? `Missing ${problemAmount.toFixed(2)} zł to reach the goal`
-                    : `Goal exceeded by ${problemAmount.toFixed(2)} zł`
-                  : "Goal on track"
-            }
-          >
+          <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
             <div
-              className={`h-1.5 rounded-full transition-all duration-300 ${
-                isStrongProblem
-                  ? "bg-rose-500"
-                  : isProblem
-                    ? "bg-rose-300"
-                    : "bg-slate-300"
-              }`}
+              className={`h-1.5 rounded-full transition-all duration-300 ${progressBarClass}`}
               style={{ width: progressWidth }}
             />
           </div>
