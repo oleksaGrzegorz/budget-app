@@ -13,16 +13,8 @@ export const BudgetInsights = ({
 }: BudgetInsightsProps) => {
   return (
     <section className="grid gap-4 lg:grid-cols-3">
-      <BiggestOverspendingCard
-        expenses={expenses}
-        expenseGoals={expenseGoals}
-      />
-
-      <BiggestSavingsCard
-        expenses={expenses}
-        expenseGoals={expenseGoals}
-      />
-
+      <BiggestOverspendingCard expenses={expenses} expenseGoals={expenseGoals} />
+      <BiggestSavingsCard expenses={expenses} expenseGoals={expenseGoals} />
       <MonthProgressCard />
     </section>
   );

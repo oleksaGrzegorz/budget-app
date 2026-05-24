@@ -7,10 +7,7 @@ interface Props {
   expenseGoals: Record<string, number | null>;
 }
 
-export const BiggestSavingsCard = ({
-  expenses,
-  expenseGoals,
-}: Props) => {
+export const BiggestSavingsCard = ({ expenses, expenseGoals }: Props) => {
   const items = categories
     .map((category) => {
       const average = calculateAverage(
@@ -37,7 +34,7 @@ export const BiggestSavingsCard = ({
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
       <h3 className="mb-7 text-base font-bold text-slate-800">
-        Największe oszczędności
+        Biggest savings
       </h3>
 
       <div className="space-y-5">
@@ -65,9 +62,7 @@ export const BiggestSavingsCard = ({
         ))}
 
         {!items.length && (
-          <div className="text-sm text-slate-400">
-            Brak oszczędności
-          </div>
+          <div className="text-sm text-slate-400">No savings</div>
         )}
       </div>
     </div>

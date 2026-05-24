@@ -37,7 +37,7 @@ export const BiggestOverspendingCard = ({
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
       <h3 className="mb-7 text-base font-bold text-slate-800">
-        Największe przekroczenia
+        Biggest overspending
       </h3>
 
       <div className="space-y-5">
@@ -65,9 +65,7 @@ export const BiggestOverspendingCard = ({
         ))}
 
         {!items.length && (
-          <div className="text-sm text-slate-400">
-            Brak przekroczeń
-          </div>
+          <div className="text-sm text-slate-400">No overspending</div>
         )}
       </div>
     </div>
