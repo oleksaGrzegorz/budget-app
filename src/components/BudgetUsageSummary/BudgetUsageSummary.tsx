@@ -25,62 +25,68 @@ export const BudgetUsageSummary = ({
   }, 0);
 
   const usagePercent =
-    plannedBudget > 0
-      ? Math.round((spentAverage / plannedBudget) * 100)
-      : null;
+    plannedBudget > 0 ? Math.round((spentAverage / plannedBudget) * 100) : null;
 
   const remaining = plannedBudget - spentAverage;
 
+  const isOverBudget = remaining < 0;
+
   return (
     <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-      <h2 className="mb-4 text-sm font-bold text-slate-700">
-        Wykorzystanie zaplanowanego budżetu
-      </h2>
+      <div className="flex items-center justify-between">
+        <h2 className="text-sm font-bold text-slate-700">
+          Wykorzystanie budżetu
+        </h2>
 
-      <div className="grid gap-4 sm:grid-cols-4">
-        <div>
-          <p className="text-xs text-slate-500">Zaplanowano</p>
-          <p className="text-lg font-bold">{plannedBudget.toFixed(2)} zł</p>
+        <span
+          className={`text-sm font-semibold ${
+            isOverBudget
+              ? "text-rose-600"
+              : "text-emerald-600"
+          }`}
+        >
+          Pozostało {remaining.toFixed(2)} zł
+        </span>
+      </div>
+
+      <div className="mt-6">
+        <div className="text-3xl font-bold tracking-tight text-slate-900">
+          {spentAverage.toFixed(2)}
+          <span className="mx-2 text-slate-300">/</span>
+          {plannedBudget.toFixed(2)} zł
         </div>
 
-        <div>
-          <p className="text-xs text-slate-500">Średnio wydano</p>
-          <p className="text-lg font-bold">{spentAverage.toFixed(2)} zł</p>
-        </div>
-
-        <div>
-          <p className="text-xs text-slate-500">Wykorzystano</p>
-          <p className="text-lg font-bold">
-            {usagePercent !== null ? `${usagePercent}%` : "—"}
-          </p>
-        </div>
-
-        <div>
-          <p className="text-xs text-slate-500">Pozostało</p>
-          <p
-            className={`text-lg font-bold ${
-              remaining < 0 ? "text-rose-600" : "text-emerald-600"
-            }`}
-          >
-            {remaining.toFixed(2)} zł
-          </p>
+        <div className="mt-1 text-sm text-slate-500">
+          średnio wydane / zaplanowano
         </div>
       </div>
 
-      <div className="mt-4 h-2 overflow-hidden rounded-full bg-slate-100">
-        <div
-          className={`h-full ${
-            usagePercent !== null && usagePercent > 100
-              ? "bg-rose-500"
-              : "bg-emerald-500"
+      <div className="mt-6 flex items-center gap-4">
+        <div className="h-2 flex-1 overflow-hidden rounded-full bg-slate-100">
+          <div
+            className={`h-full rounded-full transition-all duration-500 ${
+              isOverBudget
+                ? "bg-rose-500"
+                : "bg-emerald-500"
+            }`}
+            style={{
+              width:
+                usagePercent !== null
+                  ? `${Math.min(Math.max(usagePercent, 0), 100)}%`
+                  : "0%",
+            }}
+          />
+        </div>
+
+        <span
+          className={`min-w-[50px] text-right text-sm font-bold ${
+            isOverBudget
+              ? "text-rose-600"
+              : "text-slate-700"
           }`}
-          style={{
-            width:
-              usagePercent !== null
-                ? `${Math.min(Math.max(usagePercent, 0), 100)}%`
-                : "0%",
-          }}
-        />
+        >
+          {usagePercent !== null ? `${usagePercent}%` : "-"}
+        </span>
       </div>
     </section>
   );
