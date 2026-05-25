@@ -65,7 +65,7 @@ export const ExpensesList = ({
                       : "text-emerald-600"
                   }`}
                 >
-                  {item.amount.toFixed(2)} zł
+                  {item.amount.toFixed(2)} euro
                 </div>
 
                 <button

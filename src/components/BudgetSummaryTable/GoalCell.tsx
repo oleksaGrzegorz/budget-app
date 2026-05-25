@@ -53,8 +53,8 @@ export const GoalCell = ({
   const statusText = !hasData
     ? "-"
     : isOnTarget
-      ? "0 zł"
-      : `${signedDifference > 0 ? "+" : "-"}${formatMoney(absDifference)} zł`;
+      ? "0 euro"
+      : `${signedDifference > 0 ? "+" : "-"}${formatMoney(absDifference)} euro`;
 
   const statusClass = !hasData
     ? "text-slate-300"
@@ -76,15 +76,15 @@ export const GoalCell = ({
     rawProgress !== null ? `${Math.min(Math.max(rawProgress, 0), 100)}%` : "0%";
 
   const formattedValue =
-    value !== null ? `${formatMoney(value)} zł` : "+ Set target";
+    value !== null ? `${formatMoney(value)} euro` : "+ Set target";
 
   const tooltip = !hasGoal
     ? "No goal set"
     : !hasAverage
       ? "No average data"
       : [
-          `Average: ${formatMoney(avg)} zł`,
-          `Goal: ${formatMoney(goal)} zł`,
+          `Average: ${formatMoney(avg)} euro`,
+          `Goal: ${formatMoney(goal)} euro`,
           `Usage: ${progress}%`,
         ].join("\n");
 
@@ -143,7 +143,7 @@ export const GoalCell = ({
             />
 
             <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[10px] font-semibold text-slate-400">
-              zł
+              euro
             </span>
           </div>
         ) : (

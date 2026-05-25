@@ -52,7 +52,7 @@ export const BudgetUsageSummary = ({
               : "text-emerald-600"
           }`}
         >
-          Remaining {remaining.toFixed(2)} zł
+          Remaining {remaining.toFixed(2)} euro
         </span>
       </div>
 
@@ -64,7 +64,7 @@ export const BudgetUsageSummary = ({
             /
           </span>
 
-          {plannedBudget.toFixed(2)} zł
+          {plannedBudget.toFixed(2)} euro
         </div>
 
         <div className="mt-1 text-sm text-slate-500">
