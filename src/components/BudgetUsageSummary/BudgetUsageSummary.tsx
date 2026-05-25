@@ -25,48 +25,98 @@ export const BudgetUsageSummary = ({
   }, 0);
 
   const usagePercent =
-    plannedBudget > 0 ? Math.round((spentAverage / plannedBudget) * 100) : null;
+    plannedBudget > 0
+      ? Math.round((spentAverage / plannedBudget) * 100)
+      : null;
 
   const remaining = plannedBudget - spentAverage;
   const isOverBudget = remaining < 0;
 
   const overPercent =
-    usagePercent !== null && usagePercent > 100 ? usagePercent - 100 : 0;
+    usagePercent !== null && usagePercent > 100
+      ? usagePercent - 100
+      : 0;
 
   const progress =
-    usagePercent !== null ? Math.min(Math.max(usagePercent, 0), 100) : 0;
+    usagePercent !== null
+      ? Math.min(Math.max(usagePercent, 0), 100)
+      : 0;
+
+  const plannedStyles =
+    usagePercent !== null && usagePercent > 110
+      ? {
+          box: "border-rose-100 bg-rose-50",
+          icon: "ring-rose-200",
+          value: "text-rose-900",
+          label: "text-rose-700",
+        }
+      : usagePercent !== null && usagePercent > 100
+        ? {
+            box: "border-amber-100 bg-amber-50",
+            icon: "ring-amber-200",
+            value: "text-amber-900",
+            label: "text-amber-700",
+          }
+        : {
+            box: "border-emerald-100 bg-emerald-50",
+            icon: "ring-emerald-200",
+            value: "text-emerald-900",
+            label: "text-emerald-700",
+          };
 
   return (
     <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-      <div className="flex items-start justify-between gap-6">
-        <h2 className="text-sm font-bold text-slate-700">Budget usage</h2>
+      <div className="flex items-center justify-between border-b border-slate-100 pb-6">
+        <div className="flex items-center gap-4">
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-900 shadow-sm">
+            <span className="flex h-7 w-7 items-center justify-center rounded-md bg-white text-xl font-bold text-slate-900">
+              ↗
+            </span>
+          </div>
 
-        <span
-          className={`text-sm font-semibold ${
-            isOverBudget ? "text-rose-600" : "text-emerald-600"
-          }`}
-        >
-          {isOverBudget
-            ? `Over budget by ${Math.abs(remaining).toFixed(
-                2,
-              )} euro (+${overPercent}%)`
-            : `Remaining ${remaining.toFixed(2)} euro`}
-        </span>
-      </div>
+          <h2 className="text-2xl font-bold tracking-tight text-slate-900">
+            Budget usage
+          </h2>
 
-      <div className="mt-6 flex flex-wrap items-center gap-4">
-        <div
-          className={`flex items-center gap-4 rounded-xl px-4 py-3 ${
-            isOverBudget ? "bg-rose-50" : "bg-emerald-50"
-          }`}
-        >
-          <div
-            className={`flex h-12 w-12 items-center justify-center rounded-xl text-2xl ${
+          <div className="h-8 w-px bg-slate-200" />
+
+          <p className="text-sm font-medium text-slate-500">
+            Track your average spending against your monthly budget
+          </p>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <span
+            className={`rounded-xl px-4 py-2 text-sm font-bold ${
               isOverBudget
-                ? "bg-rose-100 text-rose-500"
-                : "bg-emerald-100 text-emerald-500"
+                ? "bg-rose-50 text-rose-600"
+                : "bg-emerald-50 text-emerald-600"
             }`}
           >
+            {isOverBudget ? "Over budget" : "Remaining"}
+          </span>
+
+          <span
+            className={`text-xl font-bold ${
+              isOverBudget
+                ? "text-rose-600"
+                : "text-emerald-600"
+            }`}
+          >
+            {Math.abs(remaining).toFixed(2)} euro
+          </span>
+
+          {isOverBudget && (
+            <span className="text-base font-bold text-rose-600">
+              (+{overPercent}%)
+            </span>
+          )}
+        </div>
+      </div>
+
+      <div className="mt-7 flex flex-wrap items-center gap-6">
+        <div className="flex items-center gap-4 rounded-xl border border-slate-100 bg-slate-50 px-5 py-4">
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white text-2xl text-slate-500 ring-1 ring-slate-200">
             ↗
           </div>
 
@@ -74,25 +124,32 @@ export const BudgetUsageSummary = ({
             <div className="text-3xl font-bold tracking-tight text-slate-900">
               {spentAverage.toFixed(2)}
             </div>
+
             <div className="text-sm font-medium text-slate-500">
               average spent
             </div>
           </div>
         </div>
 
-        <div className="text-2xl font-semibold text-slate-300">/</div>
+        <div className="text-3xl font-semibold text-slate-300">/</div>
 
-        <div className="flex items-center gap-4 rounded-xl border border-amber-100 bg-amber-50 px-4 py-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white text-2xl ring-1 ring-amber-200">
+        <div
+          className={`flex items-center gap-4 rounded-xl border px-5 py-4 ${plannedStyles.box}`}
+        >
+          <div
+            className={`flex h-12 w-12 items-center justify-center rounded-xl bg-white text-2xl ring-1 ${plannedStyles.icon}`}
+          >
             🎯
           </div>
 
           <div>
-            <div className="text-3xl font-bold tracking-tight text-amber-900">
+            <div
+              className={`text-3xl font-bold tracking-tight ${plannedStyles.value}`}
+            >
               {plannedBudget.toFixed(2)}
             </div>
 
-            <div className="text-sm font-medium text-amber-700">
+            <div className={`text-sm font-medium ${plannedStyles.label}`}>
               planned budget
             </div>
           </div>
@@ -100,20 +157,26 @@ export const BudgetUsageSummary = ({
       </div>
 
       <div className="mt-8">
-        <div className="mb-2 flex items-center justify-end">
+        <div className="mb-2 flex justify-end">
           <span
-            className={`text-sm font-bold tabular-nums ${
-              isOverBudget ? "text-rose-600" : "text-slate-700"
+            className={`text-sm font-bold ${
+              isOverBudget
+                ? "text-rose-600"
+                : "text-slate-700"
             }`}
           >
-            {usagePercent !== null ? `${usagePercent}%` : "-"}
+            {usagePercent !== null
+              ? `${usagePercent}%`
+              : "-"}
           </span>
         </div>
 
         <div className="relative h-2 overflow-visible rounded-full bg-slate-100">
           <div
             className={`absolute inset-y-0 left-0 rounded-full transition-all duration-500 ${
-              isOverBudget ? "bg-rose-500" : "bg-emerald-500"
+              isOverBudget
+                ? "bg-rose-500"
+                : "bg-emerald-500"
             }`}
             style={{
               width: `${progress}%`,
