@@ -30,7 +30,6 @@ export const BudgetUsageSummary = ({
       : null;
 
   const remaining = plannedBudget - spentAverage;
-
   const isOverBudget = remaining < 0;
 
   const overPercent =
@@ -109,44 +108,44 @@ export const BudgetUsageSummary = ({
         </div>
       </div>
 
-      <div className="mt-7 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-6">
-        <div className="flex w-full items-center gap-4 rounded-xl border border-slate-100 bg-slate-50 px-4 py-4 sm:w-auto sm:px-5">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-2xl text-slate-500 ring-1 ring-slate-200 sm:h-12 sm:w-12">
+      <div className="mt-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-center lg:gap-8">
+        <div className="flex w-full items-center gap-4 rounded-xl border border-slate-100 bg-slate-50 px-4 py-4 sm:px-5 lg:w-auto lg:min-w-[270px] lg:px-6 lg:py-5">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-2xl text-slate-500 ring-1 ring-slate-200 sm:h-12 sm:w-12 lg:h-14 lg:w-14 lg:text-3xl">
             ↗
           </div>
 
           <div>
-            <div className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+            <div className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
               {spentAverage.toFixed(2)}
             </div>
 
-            <div className="text-sm font-medium text-slate-500">
+            <div className="text-sm font-medium text-slate-500 lg:text-base">
               average spent
             </div>
           </div>
         </div>
 
-        <div className="hidden text-3xl font-semibold text-slate-300 sm:block">
+        <div className="hidden text-4xl font-semibold text-slate-300 lg:block">
           /
         </div>
 
         <div
-          className={`flex w-full items-center gap-4 rounded-xl border px-4 py-4 sm:w-auto sm:px-5 ${plannedStyles.box}`}
+          className={`flex w-full items-center gap-4 rounded-xl border px-4 py-4 sm:px-5 lg:w-auto lg:min-w-[270px] lg:px-6 lg:py-5 ${plannedStyles.box}`}
         >
           <div
-            className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-2xl ring-1 sm:h-12 sm:w-12 ${plannedStyles.icon}`}
+            className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-2xl ring-1 sm:h-12 sm:w-12 lg:h-14 lg:w-14 lg:text-3xl ${plannedStyles.icon}`}
           >
             🎯
           </div>
 
           <div>
             <div
-              className={`text-2xl font-bold tracking-tight sm:text-3xl ${plannedStyles.value}`}
+              className={`text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl ${plannedStyles.value}`}
             >
               {plannedBudget.toFixed(2)}
             </div>
 
-            <div className={`text-sm font-medium ${plannedStyles.label}`}>
+            <div className={`text-sm font-medium lg:text-base ${plannedStyles.label}`}>
               planned budget
             </div>
           </div>
@@ -162,9 +161,7 @@ export const BudgetUsageSummary = ({
                 : "text-slate-700"
             }`}
           >
-            {usagePercent !== null
-              ? `${usagePercent}%`
-              : "-"}
+            {usagePercent !== null ? `${usagePercent}%` : "-"}
           </span>
         </div>
 
