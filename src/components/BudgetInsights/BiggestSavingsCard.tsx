@@ -1,4 +1,4 @@
-import { categories } from "../../data/categories";
+import { categories, categoryEmojis } from "../../data/categories";
 import { months } from "../../data/months";
 import { calculateAverage } from "../../utils/calculateAverage";
 
@@ -22,10 +22,13 @@ export const BiggestSavingsCard = ({ expenses, expenseGoals }: Props) => {
 
       return {
         category,
+        emoji: categoryEmojis[category] ?? "",
         diff: goal - average,
       };
     })
-    .filter((v): v is { category: string; diff: number } => v !== null)
+    .filter(
+      (v): v is { category: string; emoji: string; diff: number } => v !== null,
+    )
     .sort((a, b) => b.diff - a.diff)
     .slice(0, 3);
 
@@ -42,11 +45,12 @@ export const BiggestSavingsCard = ({ expenses, expenseGoals }: Props) => {
           <div key={item.category}>
             <div className="mb-2 flex justify-between">
               <span className="text-sm font-medium text-slate-700">
+                <span className="mr-1">{item.emoji}</span>
                 {item.category}
               </span>
 
               <span className="text-sm font-bold text-emerald-500">
-                +{item.diff.toFixed(2)} zł
+                +{item.diff.toFixed(2)} euro
               </span>
             </div>
 
