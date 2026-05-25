@@ -39,11 +39,21 @@ export const BiggestOverspendingCard = ({
 
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <h3 className="mb-7 text-base font-bold text-slate-800">
-        Biggest overspending
-      </h3>
+      <div className="flex items-center gap-3 pb-5">
+        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-900 shadow-sm">
+          <span className="flex h-7 w-7 items-center justify-center rounded-md bg-white text-xl font-bold text-slate-900">
+            ↓
+          </span>
+        </div>
 
-      <div className="space-y-5">
+        <h3 className="text-base font-bold text-slate-800">
+          Biggest overspending
+        </h3>
+      </div>
+
+      <div className="h-px bg-slate-100" />
+
+      <div className="mt-5 space-y-5">
         {items.map((item) => (
           <div key={item.category}>
             <div className="mb-2 flex justify-between">
