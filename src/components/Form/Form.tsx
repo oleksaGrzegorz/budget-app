@@ -70,23 +70,23 @@ export const Form = ({
   };
 
   return (
-    <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-      <div className="flex items-center justify-between pb-6">
-        <div className="flex items-center gap-4">
-<div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-900 shadow-sm">
-  <div className="flex h-7 w-7 items-center justify-center rounded-md bg-white">
-    <span className="-mt-px text-[22px] leading-none text-slate-900">
-      ✎
-    </span>
-  </div>
-</div>
+    <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+      <div className="flex flex-col gap-5 pb-6 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex min-w-0 items-center gap-3 sm:gap-4">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-slate-900 shadow-sm sm:h-12 sm:w-12">
+            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-white">
+              <span className="-mt-px text-[22px] leading-none text-slate-900">
+                ✎
+              </span>
+            </div>
+          </div>
 
-          <h2 className="text-2xl font-bold tracking-tight text-slate-900">
+          <h2 className="min-w-0 truncate text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
             Add transaction
           </h2>
         </div>
 
-        <div className="relative inline-grid grid-cols-2 rounded-xl bg-slate-100 p-1">
+        <div className="relative grid w-full grid-cols-2 rounded-xl bg-slate-100 p-1 sm:w-auto">
           <div
             className={`absolute bottom-1 top-1 w-[calc(50%-4px)] rounded-lg shadow-sm transition-all duration-300 ease-out ${
               isExpense
