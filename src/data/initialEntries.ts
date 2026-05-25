@@ -135,24 +135,24 @@ export const initialEntries: Entry[] = [
 
 
 
-  { formType: "income", category: "ZAROBKI - GRZESIEK", month: "01", amount: 2888.91 },
-  { formType: "income", category: "ZAROBKI - GRZESIEK", month: "02", amount: 2651.38 },
-  { formType: "income", category: "ZAROBKI - GRZESIEK", month: "03", amount: 6522.7 },
-  { formType: "income", category: "ZAROBKI - GRZESIEK", month: "04", amount: 4281.12 },
-  { formType: "income", category: "ZAROBKI - GRZESIEK", month: "05", amount: 3505.6 },
+{ formType: "income", category: "Salary - Grzesiek", month: "01", amount: 2888.91 },
+{ formType: "income", category: "Salary - Grzesiek", month: "02", amount: 2651.38 },
+{ formType: "income", category: "Salary - Grzesiek", month: "03", amount: 6522.7 },
+{ formType: "income", category: "Salary - Grzesiek", month: "04", amount: 4281.12 },
+{ formType: "income", category: "Salary - Grzesiek", month: "05", amount: 2836.03 },
 
-  { formType: "income", category: "ZAROBKI - G - INNE", month: "01", amount: 18.26 },
+{ formType: "income", category: "Salary - Other", month: "01", amount: 18.26 },
 
-  { formType: "income", category: "ZAROBKI - MARTA", month: "01", amount: 1667.9 },
-  { formType: "income", category: "ZAROBKI - MARTA", month: "02", amount: 1327.9 },
-  { formType: "income", category: "ZAROBKI - MARTA", month: "03", amount: 1418 },
-  { formType: "income", category: "ZAROBKI - MARTA", month: "04", amount: 1617.9 },
-  { formType: "income", category: "ZAROBKI - MARTA", month: "05", amount: 150 },
+{ formType: "income", category: "Salary - Marta", month: "01", amount: 1667.9 },
+{ formType: "income", category: "Salary - Marta", month: "02", amount: 1327.9 },
+{ formType: "income", category: "Salary - Marta", month: "03", amount: 1418 },
+{ formType: "income", category: "Salary - Marta", month: "04", amount: 1617.9 },
+{ formType: "income", category: "Salary - Marta", month: "05", amount: 150 },
 
-  { formType: "income", category: "WPŁYWY - INNE", month: "01", amount: 326 },
-  { formType: "income", category: "WPŁYWY - INNE", month: "02", amount: 75 },
-  { formType: "income", category: "WPŁYWY - INNE", month: "03", amount: 75 },
-  { formType: "income", category: "WPŁYWY - INNE", month: "04", amount: 370.07 },
+{ formType: "income", category: "Other income", month: "01", amount: 326 },
+{ formType: "income", category: "Other income", month: "02", amount: 75 },
+{ formType: "income", category: "Other income", month: "03", amount: 75 },
+{ formType: "income", category: "Other income", month: "04", amount: 370.07 },
 
-  { formType: "income", category: "Zwroty", month: "04", amount: 260.55 },
+{ formType: "income", category: "Refunds", month: "04", amount: 260.55 },
 ];

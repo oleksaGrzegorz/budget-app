@@ -1,106 +1,97 @@
 export const categoryGroups = [
   {
-    name: "Kredyt",
+    name: "Mortgage",
     emoji: "🏦",
     iconClassName: "bg-violet-200 ring-violet-300",
-    categories: ["Kredyt", "Podatek od nieruchomości"],
+    categories: ["Mortgage", "Property tax"],
   },
-
   {
-    name: "Jedzenie",
+    name: "Food",
     emoji: "🛒",
     iconClassName: "bg-emerald-200 ring-emerald-300",
-    categories: ["Jedzenie", "Jedzenie - miasto"],
+    categories: ["Groceries", "Eating out"],
   },
-
-    {
-    name: "Auto",
+  {
+    name: "Car",
     emoji: "🚗",
     iconClassName: "bg-blue-200 ring-blue-300",
     categories: [
-      "Paliwo - dacia",
-      "Paliwo - renault",
-      "Podatek auto",
-      "Ubezpieczenie auta",
-      "Naprawy aut i części",
+      "Fuel - Dacia",
+      "Fuel - Renault",
+      "Car tax",
+      "Car insurance",
+      "Car repairs & parts",
     ],
-  }, 
-
-   {
-    name: "Opłaty",
+  },
+  {
+    name: "Bills",
     emoji: "🧾",
     iconClassName: "bg-amber-200 ring-amber-300",
     categories: [
-      "Energia",
-      "Woda",
+      "Electricity",
+      "Water",
       "Internet",
       "RISK",
       "DELA",
-      "PIEC",
-      "Ubezpieczenie cywilne",
-      "Telefon",
-      "Karty ing",
+      "Heating",
+      "Liability insurance",
+      "Phone",
+      "ING cards",
     ],
   },
-
-    {
-    name: "Zdrowie",
+  {
+    name: "Health",
     emoji: "🏥",
     iconClassName: "bg-rose-200 ring-rose-300",
-    categories: ["Ubezpieczenie zdr", "Dentyści leki itd"],
+    categories: ["Health insurance", "Dentist & medicine"],
   },
-
-    {
-    name: "Dom",
+  {
+    name: "Home",
     emoji: "🏠",
     iconClassName: "bg-orange-200 ring-orange-300",
-    categories: ["Remonty", "Rzeczy do domu"],
+    categories: ["Renovations", "Home items"],
   },
   {
-    name: "Dziecko",
+    name: "Child",
     emoji: "👶",
     iconClassName: "bg-pink-200 ring-pink-300",
-    categories: ["Dziecko"],
+    categories: ["Child"],
   },
   {
-    name: "Pies",
+    name: "Dog",
     emoji: "🐶",
     iconClassName: "bg-green-200 ring-green-300",
-    categories: ["Pies"],
+    categories: ["Dog"],
   },
-
   {
-    name: "Osobiste",
+    name: "Personal",
     emoji: "🧍",
     iconClassName: "bg-sky-200 ring-sky-300",
-    categories: ["Fryzjer", "Ciuchy/obuwie"],
+    categories: ["Hairdresser", "Clothes & shoes"],
   },
-
- 
   {
     name: "Sport",
     emoji: "💪",
     iconClassName: "bg-lime-200 ring-lime-300",
-    categories: ["Siłownia"],
+    categories: ["Gym"],
   },
   {
-    name: "Przyjemności",
+    name: "Entertainment",
     emoji: "🎉",
     iconClassName: "bg-fuchsia-200 ring-fuchsia-300",
-    categories: ["Rozrywka", "Samolot", "Parki rozrywki, atrakcje", "Masaze"],
+    categories: ["Entertainment", "Flights", "Theme parks & attractions", "Massage"],
   },
-
   {
-    name: "Waluty",
+    name: "Currency",
     emoji: "💱",
     iconClassName: "bg-cyan-200 ring-cyan-300",
-    categories: ["Wymiana walut"],
+    categories: ["Currency exchange"],
   },
   {
-    name: "Inne",
+    name: "Other",
     emoji: "📦",
     iconClassName: "bg-slate-300 ring-slate-400",
-    categories: ["Inne"],
+    categories: ["Other"],
   },
 ];
 

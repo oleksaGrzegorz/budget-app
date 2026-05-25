@@ -1,7 +1,7 @@
 export const budgetSummaryLabels = [
-  "ZAROBKI - GRZESIEK",
-  "ZAROBKI - G - INNE",
-  "ZAROBKI - MARTA",
-  "WPŁYWY - INNE",
-  "Zwroty",
-];  
+  "Salary - Grzesiek",
+  "Salary - Other",
+  "Salary - Marta",
+  "Other income",
+  "Refunds",
+];
