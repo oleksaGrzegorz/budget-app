@@ -30,6 +30,7 @@ export const BudgetUsageSummary = ({
       : null;
 
   const remaining = plannedBudget - spentAverage;
+
   const isOverBudget = remaining < 0;
 
   const overPercent =
@@ -42,52 +43,46 @@ export const BudgetUsageSummary = ({
       ? Math.min(Math.max(usagePercent, 0), 100)
       : 0;
 
-  const plannedStyles =
-    usagePercent !== null && usagePercent > 110
-      ? {
-          box: "border-rose-100 bg-rose-50",
-          icon: "ring-rose-200",
-          value: "text-rose-900",
-          label: "text-rose-700",
-        }
-      : usagePercent !== null && usagePercent > 100
-        ? {
-            box: "border-amber-100 bg-amber-50",
-            icon: "ring-amber-200",
-            value: "text-amber-900",
-            label: "text-amber-700",
-          }
-        : {
-            box: "border-emerald-100 bg-emerald-50",
-            icon: "ring-emerald-200",
-            value: "text-emerald-900",
-            label: "text-emerald-700",
-          };
+  const plannedStyles = isOverBudget
+    ? {
+        box: "border-rose-100 bg-rose-50",
+        icon: "ring-rose-200",
+        value: "text-rose-900",
+        label: "text-rose-700",
+      }
+    : {
+        box: "border-emerald-100 bg-emerald-50",
+        icon: "ring-emerald-200",
+        value: "text-emerald-900",
+        label: "text-emerald-700",
+      };
 
   return (
-    <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-      <div className="flex items-center justify-between border-b border-slate-100 pb-6">
-        <div className="flex items-center gap-4">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-900 shadow-sm">
-            <span className="flex h-7 w-7 items-center justify-center rounded-md bg-white text-xl font-bold text-slate-900">
-              ↗
-            </span>
+    <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+      <div className="flex flex-col gap-5 border-b border-slate-100 pb-6 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex min-w-0 flex-col gap-4 sm:flex-row sm:items-center">
+          <div className="flex items-center gap-3 sm:gap-4">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-slate-900 shadow-sm sm:h-12 sm:w-12">
+              <span className="flex h-7 w-7 items-center justify-center rounded-md bg-white text-xl font-bold text-slate-900">
+                ↗
+              </span>
+            </div>
+
+            <h2 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
+              Budget usage
+            </h2>
           </div>
 
-          <h2 className="text-2xl font-bold tracking-tight text-slate-900">
-            Budget usage
-          </h2>
-
-          <div className="h-8 w-px bg-slate-200" />
+          <div className="hidden h-8 w-px bg-slate-200 sm:block" />
 
           <p className="text-sm font-medium text-slate-500">
             Track your average spending against your monthly budget
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
           <span
-            className={`rounded-xl px-4 py-2 text-sm font-bold ${
+            className={`rounded-xl px-3 py-2 text-sm font-bold sm:px-4 ${
               isOverBudget
                 ? "bg-rose-50 text-rose-600"
                 : "bg-emerald-50 text-emerald-600"
@@ -97,7 +92,7 @@ export const BudgetUsageSummary = ({
           </span>
 
           <span
-            className={`text-xl font-bold ${
+            className={`text-lg font-bold sm:text-xl ${
               isOverBudget
                 ? "text-rose-600"
                 : "text-emerald-600"
@@ -107,21 +102,21 @@ export const BudgetUsageSummary = ({
           </span>
 
           {isOverBudget && (
-            <span className="text-base font-bold text-rose-600">
+            <span className="text-sm font-bold text-rose-600 sm:text-base">
               (+{overPercent}%)
             </span>
           )}
         </div>
       </div>
 
-      <div className="mt-7 flex flex-wrap items-center gap-6">
-        <div className="flex items-center gap-4 rounded-xl border border-slate-100 bg-slate-50 px-5 py-4">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white text-2xl text-slate-500 ring-1 ring-slate-200">
+      <div className="mt-7 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-6">
+        <div className="flex w-full items-center gap-4 rounded-xl border border-slate-100 bg-slate-50 px-4 py-4 sm:w-auto sm:px-5">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-2xl text-slate-500 ring-1 ring-slate-200 sm:h-12 sm:w-12">
             ↗
           </div>
 
           <div>
-            <div className="text-3xl font-bold tracking-tight text-slate-900">
+            <div className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
               {spentAverage.toFixed(2)}
             </div>
 
@@ -131,20 +126,22 @@ export const BudgetUsageSummary = ({
           </div>
         </div>
 
-        <div className="text-3xl font-semibold text-slate-300">/</div>
+        <div className="hidden text-3xl font-semibold text-slate-300 sm:block">
+          /
+        </div>
 
         <div
-          className={`flex items-center gap-4 rounded-xl border px-5 py-4 ${plannedStyles.box}`}
+          className={`flex w-full items-center gap-4 rounded-xl border px-4 py-4 sm:w-auto sm:px-5 ${plannedStyles.box}`}
         >
           <div
-            className={`flex h-12 w-12 items-center justify-center rounded-xl bg-white text-2xl ring-1 ${plannedStyles.icon}`}
+            className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-2xl ring-1 sm:h-12 sm:w-12 ${plannedStyles.icon}`}
           >
             🎯
           </div>
 
           <div>
             <div
-              className={`text-3xl font-bold tracking-tight ${plannedStyles.value}`}
+              className={`text-2xl font-bold tracking-tight sm:text-3xl ${plannedStyles.value}`}
             >
               {plannedBudget.toFixed(2)}
             </div>
