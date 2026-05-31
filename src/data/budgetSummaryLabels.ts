@@ -4,4 +4,5 @@ export const budgetSummaryLabels = [
   "Salary - Marta",
   "Other income",
   "Refunds",
+  "Rent",
 ];

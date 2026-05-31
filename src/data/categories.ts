@@ -49,7 +49,7 @@ export const categoryGroups = [
     name: "Home",
     emoji: "🏠",
     iconClassName: "bg-orange-200 ring-orange-300",
-    categories: ["Renovations", "Home items"],
+    categories: ["Renovations", "Home items", "Watches & etc"],
   },
   {
     name: "Child",
