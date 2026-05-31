@@ -13,6 +13,7 @@ import { initialEntries } from "./data/initialEntries";
 import { BitcoinPrice } from "./components/BitcoinPrice";
 import { BudgetUsageSummary } from "./components/BudgetUsageSummary/BudgetUsageSummary";
 import { BudgetInsights } from "./components/BudgetInsights/BudgetInsights";
+import { initialExpenseGoals } from "./data/initialExpenseGoals";
 
 export default function App() {
   const [amount, setAmount] = useState<number | null>(null);
@@ -27,7 +28,7 @@ export default function App() {
 
   const [expenseGoals, setExpenseGoals] = useLocalStorageState<
     Record<string, number | null>
-  >("budget.expenseGoals", {});
+  >("budget.expenseGoals", initialExpenseGoals);
 
   const [incomeGoals, setIncomeGoals] = useLocalStorageState<
     Record<string, number | null>
