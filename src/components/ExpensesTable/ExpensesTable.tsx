@@ -5,7 +5,11 @@ import {
 } from "../../data/categories";
 import { months } from "../../data/months";
 import { GoalCell } from "../BudgetSummaryTable/GoalCell";
-import { calculateAverage } from "../../utils/calculateAverage";
+import {
+  getActiveMonths,
+  getCategoryAverage,
+} from "../../utils/budgetAverages";
+import { expenseCategoryAverageTypes } from "../../data/expenseCategoryAverageTypes";
 
 interface ExpensesTableProps {
   expenses: Record<string, Record<string, number>>;
@@ -18,6 +22,8 @@ export const ExpensesTable = ({
   goals,
   setGoals,
 }: ExpensesTableProps) => {
+  const activeMonths = getActiveMonths(expenses);
+
   return (
     <table className="w-full border-collapse border border-slate-200 text-xs">
       <thead className="bg-slate-50">
@@ -47,8 +53,11 @@ export const ExpensesTable = ({
 
       <tbody>
         {categories.map((category) => {
-          const average = calculateAverage(
-            months.map((month) => expenses[category]?.[month] ?? 0),
+          const average = getCategoryAverage(
+            expenses,
+            category,
+            activeMonths,
+            expenseCategoryAverageTypes,
           );
 
           return (
