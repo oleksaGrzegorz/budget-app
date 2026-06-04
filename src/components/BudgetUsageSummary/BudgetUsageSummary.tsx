@@ -1,46 +1,62 @@
 import { categories } from "../../data/categories";
 import { months } from "../../data/months";
-import { calculateAverage } from "../../utils/calculateAverage";
+import { expenseCategoryAverageTypes } from "../../data/expenseCategoryAverageTypes";
+import {
+  getActiveMonths,
+  getCategoriesAverageTotal,
+  getMonthTotal,
+  type PeriodOption,
+} from "../../utils/budgetAverages";
 
 interface BudgetUsageSummaryProps {
   expenses: Record<string, Record<string, number>>;
   expenseGoals: Record<string, number | null>;
+  period: PeriodOption;
+  setPeriod: React.Dispatch<React.SetStateAction<PeriodOption>>;
 }
 
 export const BudgetUsageSummary = ({
   expenses,
   expenseGoals,
+  period,
+  setPeriod,
 }: BudgetUsageSummaryProps) => {
+  const activeMonths = getActiveMonths(expenses);
+
   const plannedBudget = categories.reduce(
     (sum, category) => sum + (expenseGoals[category] ?? 0),
     0,
   );
 
-  const spentAverage = categories.reduce((total, category) => {
-    const average = calculateAverage(
-      months.map((month) => expenses[category]?.[month] ?? 0),
-    );
+  const averageSpent =
+    getCategoriesAverageTotal(
+      expenses,
+      categories,
+      activeMonths,
+      expenseCategoryAverageTypes,
+    ) ?? 0;
 
-    return total + (average ?? 0);
-  }, 0);
+  const selectedSpent =
+    period === "average"
+      ? averageSpent
+      : getMonthTotal(expenses, categories, period);
 
   const usagePercent =
     plannedBudget > 0
-      ? Math.round((spentAverage / plannedBudget) * 100)
+      ? Math.round((selectedSpent / plannedBudget) * 100)
       : null;
 
-  const remaining = plannedBudget - spentAverage;
+  const remaining = plannedBudget - selectedSpent;
   const isOverBudget = remaining < 0;
 
   const overPercent =
-    usagePercent !== null && usagePercent > 100
-      ? usagePercent - 100
-      : 0;
+    usagePercent !== null && usagePercent > 100 ? usagePercent - 100 : 0;
 
   const progress =
-    usagePercent !== null
-      ? Math.min(Math.max(usagePercent, 0), 100)
-      : 0;
+    usagePercent !== null ? Math.min(Math.max(usagePercent, 0), 100) : 0;
+
+  const spentLabel =
+    period === "average" ? "average spent" : `spent in ${period}`;
 
   const plannedStyles = isOverBudget
     ? {
@@ -75,11 +91,27 @@ export const BudgetUsageSummary = ({
           <div className="hidden h-8 w-px bg-slate-200 sm:block" />
 
           <p className="text-sm font-medium text-slate-500">
-            Track your average spending against your monthly budget
+            {period === "average"
+              ? "Track your average spending against your monthly budget"
+              : "Track selected month spending against your monthly budget"}
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+          <select
+            value={period}
+            onChange={(event) => setPeriod(event.target.value)}
+            className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 outline-none transition focus:border-sky-300 focus:ring-4 focus:ring-sky-100"
+          >
+            <option value="average">Average</option>
+
+            {months.map((month) => (
+              <option key={month} value={month}>
+                {month}
+              </option>
+            ))}
+          </select>
+
           <span
             className={`rounded-xl px-3 py-2 text-sm font-bold sm:px-4 ${
               isOverBudget
@@ -92,9 +124,7 @@ export const BudgetUsageSummary = ({
 
           <span
             className={`text-lg font-bold sm:text-xl ${
-              isOverBudget
-                ? "text-rose-600"
-                : "text-emerald-600"
+              isOverBudget ? "text-rose-600" : "text-emerald-600"
             }`}
           >
             {Math.abs(remaining).toFixed(2)} euro
@@ -116,11 +146,11 @@ export const BudgetUsageSummary = ({
 
           <div>
             <div className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
-              {spentAverage.toFixed(2)}
+              {selectedSpent.toFixed(2)}
             </div>
 
             <div className="text-sm font-medium text-slate-500 lg:text-base">
-              average spent
+              {spentLabel}
             </div>
           </div>
         </div>
@@ -145,7 +175,9 @@ export const BudgetUsageSummary = ({
               {plannedBudget.toFixed(2)}
             </div>
 
-            <div className={`text-sm font-medium lg:text-base ${plannedStyles.label}`}>
+            <div
+              className={`text-sm font-medium lg:text-base ${plannedStyles.label}`}
+            >
               planned budget
             </div>
           </div>
@@ -156,9 +188,7 @@ export const BudgetUsageSummary = ({
         <div className="mb-2 flex justify-end">
           <span
             className={`text-sm font-bold ${
-              isOverBudget
-                ? "text-rose-600"
-                : "text-slate-700"
+              isOverBudget ? "text-rose-600" : "text-slate-700"
             }`}
           >
             {usagePercent !== null ? `${usagePercent}%` : "-"}
@@ -168,9 +198,7 @@ export const BudgetUsageSummary = ({
         <div className="relative h-2 overflow-visible rounded-full bg-slate-100">
           <div
             className={`absolute inset-y-0 left-0 rounded-full transition-all duration-500 ${
-              isOverBudget
-                ? "bg-rose-500"
-                : "bg-emerald-500"
+              isOverBudget ? "bg-rose-500" : "bg-emerald-500"
             }`}
             style={{
               width: `${progress}%`,

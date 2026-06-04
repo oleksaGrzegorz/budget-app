@@ -1,29 +1,46 @@
 import { categories, categoryEmojis } from "../../data/categories";
-import { months } from "../../data/months";
-import { calculateAverage } from "../../utils/calculateAverage";
+import { expenseCategoryAverageTypes } from "../../data/expenseCategoryAverageTypes";
+import {
+  getActiveMonths,
+  getCategoryAverage,
+  type PeriodOption,
+} from "../../utils/budgetAverages";
 
 interface Props {
   expenses: Record<string, Record<string, number>>;
   expenseGoals: Record<string, number | null>;
+  period: PeriodOption;
 }
 
-export const BiggestSavingsCard = ({ expenses, expenseGoals }: Props) => {
+export const BiggestSavingsCard = ({
+  expenses,
+  expenseGoals,
+  period,
+}: Props) => {
+  const activeMonths = getActiveMonths(expenses);
+
   const items = categories
     .map((category) => {
-      const average = calculateAverage(
-        months.map((month) => expenses[category]?.[month] ?? 0),
-      );
+      const spent =
+        period === "average"
+          ? getCategoryAverage(
+              expenses,
+              category,
+              activeMonths,
+              expenseCategoryAverageTypes,
+            )
+          : expenses[category]?.[period] ?? 0;
 
       const goal = expenseGoals[category];
 
-      if (!goal || average === null || average >= goal) {
+      if (!goal || spent === null || spent >= goal) {
         return null;
       }
 
       return {
         category,
         emoji: categoryEmojis[category] ?? "",
-        diff: goal - average,
+        diff: goal - spent,
       };
     })
     .filter(

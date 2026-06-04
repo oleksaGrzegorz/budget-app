@@ -14,12 +14,14 @@ import { BitcoinPrice } from "./components/BitcoinPrice";
 import { BudgetUsageSummary } from "./components/BudgetUsageSummary/BudgetUsageSummary";
 import { BudgetInsights } from "./components/BudgetInsights/BudgetInsights";
 import { initialExpenseGoals } from "./data/initialExpenseGoals";
+import type { PeriodOption } from "./utils/budgetAverages";
 
 export default function App() {
   const [amount, setAmount] = useState<number | null>(null);
   const [category, setCategory] = useState("");
   const [month, setMonth] = useState("");
   const [formType, setFormType] = useState<"expense" | "income">("expense");
+  const [budgetPeriod, setBudgetPeriod] = useState<PeriodOption>("average");
 
   const [entries, setEntries] = useLocalStorageState<Entry[]>(
     "budget.entries",
@@ -59,11 +61,14 @@ export default function App() {
         <BudgetUsageSummary
           expenses={expensesForTable}
           expenseGoals={expenseGoals}
+          period={budgetPeriod}
+          setPeriod={setBudgetPeriod}
         />
 
         <BudgetInsights
           expenses={expensesForTable}
           expenseGoals={expenseGoals}
+          period={budgetPeriod}
         />
 
         <section className="overflow-x-auto rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -92,9 +97,7 @@ export default function App() {
         </section>
 
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-          <ExpensesList 
-          entries={entries}
-          setEntries={setEntries} />
+          <ExpensesList entries={entries} setEntries={setEntries} />
         </div>
       </main>
     </div>
