@@ -4,6 +4,7 @@ import { TotalsSection } from "./sections/TotalsSection";
 import { useBudgetMetrics } from "../../hooks/useBudgetMetrics";
 import { useEffect, useState } from "react";
 import type { Goals } from "../../types/goals";
+import type { PeriodOption } from "../../utils/budgetAverages";
 
 interface BudgetSummaryTableProps {
   expenses: Record<string, Record<string, number>>;
@@ -12,11 +13,13 @@ interface BudgetSummaryTableProps {
   setIncomeGoals: React.Dispatch<
     React.SetStateAction<Record<string, number | null>>
   >;
+  period: PeriodOption;
 }
 
 export const BudgetSummaryTable = ({
   expenses,
   incomes,
+  period,
 }: BudgetSummaryTableProps) => {
   const {
     getTotalExpenses,
@@ -50,14 +53,22 @@ export const BudgetSummaryTable = ({
             Category
           </th>
 
-          {months.map((month) => (
-            <th
-              key={month}
-              className="border border-slate-200 px-3 py-2 text-center font-semibold text-slate-700"
-            >
-              {month}
-            </th>
-          ))}
+          {months.map((month) => {
+            const isSelectedMonth = period === month;
+
+            return (
+              <th
+                key={month}
+                className={`border border-slate-200 px-3 py-2 text-center font-semibold ${
+                  isSelectedMonth
+                    ? "bg-sky-100 text-sky-900"
+                    : "text-slate-700"
+                }`}
+              >
+                {month}
+              </th>
+            );
+          })}
 
           <th className="border border-slate-200 bg-sky-50 px-3 py-2 text-center font-semibold text-sky-900">
             Average
@@ -77,6 +88,7 @@ export const BudgetSummaryTable = ({
           getAverageExpense={getAverageExpense}
           goals={goals}
           setGoals={setGoals}
+          period={period}
         />
 
         <SavingsSection
@@ -86,6 +98,7 @@ export const BudgetSummaryTable = ({
           getAverageSavingsPercentage={getAverageSavingsPercentage}
           goals={goals}
           setGoals={setGoals}
+          period={period}
         />
       </tbody>
     </table>

@@ -1,5 +1,6 @@
 import { months } from "../../../data/months";
 import type { Goals } from "../../../types/goals";
+import type { PeriodOption } from "../../../utils/budgetAverages";
 import { GoalCell } from "../GoalCell";
 
 interface SavingsSectionProps {
@@ -9,6 +10,7 @@ interface SavingsSectionProps {
   getAverageSavingsPercentage: () => number | null;
   goals: Goals;
   setGoals: React.Dispatch<React.SetStateAction<Goals>>;
+  period: PeriodOption;
 }
 
 export const SavingsSection = ({
@@ -18,6 +20,7 @@ export const SavingsSection = ({
   getAverageSavingsPercentage,
   goals,
   setGoals,
+  period,
 }: SavingsSectionProps) => {
   return (
     <>
@@ -28,6 +31,7 @@ export const SavingsSection = ({
 
         {months.map((month) => {
           const savings = getSavings(month);
+          const isSelectedMonth = period === month;
 
           return (
             <td
@@ -38,7 +42,7 @@ export const SavingsSection = ({
                   : savings < 0
                     ? "bg-rose-50 text-rose-600"
                     : "bg-emerald-50 text-emerald-700"
-              }`}
+              } ${isSelectedMonth ? "ring-2 ring-inset ring-sky-200" : ""}`}
             >
               {savings != null ? savings.toFixed(2) : "-"}
             </td>
@@ -64,6 +68,7 @@ export const SavingsSection = ({
 
         {months.map((month) => {
           const percentage = getSavingsPercentage(month);
+          const isSelectedMonth = period === month;
 
           return (
             <td
@@ -74,7 +79,7 @@ export const SavingsSection = ({
                   : percentage < 0
                     ? "bg-rose-50 text-rose-600"
                     : "bg-emerald-50 text-emerald-700"
-              }`}
+              } ${isSelectedMonth ? "ring-2 ring-inset ring-sky-200" : ""}`}
             >
               {percentage != null ? `${percentage.toFixed(2)}%` : "-"}
             </td>

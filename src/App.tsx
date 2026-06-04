@@ -76,6 +76,7 @@ export default function App() {
             expenses={expensesForTable}
             goals={expenseGoals}
             setGoals={setExpenseGoals}
+            period={budgetPeriod}
           />
         </section>
 
@@ -84,6 +85,7 @@ export default function App() {
             incomes={incomesForTable}
             incomeGoals={incomeGoals}
             setIncomeGoals={setIncomeGoals}
+            period={budgetPeriod}
           />
         </section>
 
@@ -93,6 +95,7 @@ export default function App() {
             incomes={incomesForTable}
             incomeGoals={incomeGoals}
             setIncomeGoals={setIncomeGoals}
+            period={budgetPeriod}
           />
         </section>
 

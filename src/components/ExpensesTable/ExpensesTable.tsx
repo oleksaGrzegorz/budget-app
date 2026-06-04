@@ -8,6 +8,7 @@ import { GoalCell } from "../BudgetSummaryTable/GoalCell";
 import {
   getActiveMonths,
   getCategoryAverage,
+  type PeriodOption,
 } from "../../utils/budgetAverages";
 import { expenseCategoryAverageTypes } from "../../data/expenseCategoryAverageTypes";
 
@@ -15,12 +16,14 @@ interface ExpensesTableProps {
   expenses: Record<string, Record<string, number>>;
   goals: Record<string, number | null>;
   setGoals: React.Dispatch<React.SetStateAction<Record<string, number | null>>>;
+  period: PeriodOption;
 }
 
 export const ExpensesTable = ({
   expenses,
   goals,
   setGoals,
+  period,
 }: ExpensesTableProps) => {
   const activeMonths = getActiveMonths(expenses);
 
@@ -32,14 +35,22 @@ export const ExpensesTable = ({
             Category
           </th>
 
-          {months.map((month) => (
-            <th
-              key={month}
-              className="border border-slate-200 px-3 py-2 text-center font-semibold text-slate-700"
-            >
-              {month}
-            </th>
-          ))}
+          {months.map((month) => {
+            const isSelectedMonth = period === month;
+
+            return (
+              <th
+                key={month}
+                className={`border border-slate-200 px-3 py-2 text-center font-semibold ${
+                  isSelectedMonth
+                    ? "bg-sky-100 text-sky-900"
+                    : "text-slate-700"
+                }`}
+              >
+                {month}
+              </th>
+            );
+          })}
 
           <th className="border border-slate-200 bg-sky-50 px-3 py-2 text-center font-semibold text-sky-900">
             Average
@@ -81,16 +92,22 @@ export const ExpensesTable = ({
                 </div>
               </th>
 
-              {months.map((month) => (
-                <td
-                  key={month}
-                  className="border border-slate-200 px-3 py-2 text-center text-slate-700"
-                >
-                  {expenses[category]?.[month] ?? (
-                    <span className="text-slate-400">-</span>
-                  )}
-                </td>
-              ))}
+              {months.map((month) => {
+                const isSelectedMonth = period === month;
+
+                return (
+                  <td
+                    key={month}
+                    className={`border border-slate-200 px-3 py-2 text-center text-slate-700 ${
+                      isSelectedMonth ? "bg-sky-50 font-semibold" : ""
+                    }`}
+                  >
+                    {expenses[category]?.[month] ?? (
+                      <span className="text-slate-400">-</span>
+                    )}
+                  </td>
+                );
+              })}
 
               <td className="border border-slate-200 bg-sky-50 px-3 py-2 text-center font-semibold text-sky-900">
                 {average !== null ? average.toFixed(2) : "-"}

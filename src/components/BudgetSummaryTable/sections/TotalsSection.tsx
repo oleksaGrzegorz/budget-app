@@ -1,6 +1,7 @@
 import { months } from "../../../data/months";
-import { GoalCell } from "../GoalCell";
 import type { Goals } from "../../../types/goals";
+import type { PeriodOption } from "../../../utils/budgetAverages";
+import { GoalCell } from "../GoalCell";
 
 interface TotalsSectionProps {
   getTotalIncome: (month: string) => number | null;
@@ -9,6 +10,7 @@ interface TotalsSectionProps {
   getAverageExpense: () => number | null;
   goals: Goals;
   setGoals: React.Dispatch<React.SetStateAction<Goals>>;
+  period: PeriodOption;
 }
 
 export const TotalsSection = ({
@@ -18,6 +20,7 @@ export const TotalsSection = ({
   getAverageExpense,
   goals,
   setGoals,
+  period,
 }: TotalsSectionProps) => {
   return (
     <>
@@ -28,11 +31,14 @@ export const TotalsSection = ({
 
         {months.map((month) => {
           const income = getTotalIncome(month);
+          const isSelectedMonth = period === month;
 
           return (
             <td
               key={month}
-              className="border border-slate-200 px-3 py-2 text-center text-slate-700"
+              className={`border border-slate-200 px-3 py-2 text-center text-slate-700 ${
+                isSelectedMonth ? "bg-sky-50 font-semibold" : ""
+              }`}
             >
               {income != null ? income.toFixed(2) : "-"}
             </td>
@@ -58,11 +64,14 @@ export const TotalsSection = ({
 
         {months.map((month) => {
           const expenses = getTotalExpenses(month);
+          const isSelectedMonth = period === month;
 
           return (
             <td
               key={month}
-              className="border border-slate-200 px-3 py-2 text-center text-slate-700"
+              className={`border border-slate-200 px-3 py-2 text-center text-slate-700 ${
+                isSelectedMonth ? "bg-sky-50 font-semibold" : ""
+              }`}
             >
               {expenses != null ? expenses.toFixed(2) : "-"}
             </td>
