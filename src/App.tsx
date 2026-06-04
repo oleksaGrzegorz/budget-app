@@ -15,6 +15,8 @@ import { BudgetUsageSummary } from "./components/BudgetUsageSummary/BudgetUsageS
 import { BudgetInsights } from "./components/BudgetInsights/BudgetInsights";
 import { initialExpenseGoals } from "./data/initialExpenseGoals";
 import type { PeriodOption } from "./utils/budgetAverages";
+import { ExpensesByCategoryChart } from "./components/ExpensesByCategoryChart/ExpensesByCategoryChart";
+import { ExpensesByIncomeChart } from "./components/ExpensesByIncomeChart/ExpensesByIncomeChart";
 
 export default function App() {
   const [amount, setAmount] = useState<number | null>(null);
@@ -70,6 +72,19 @@ export default function App() {
           expenseGoals={expenseGoals}
           period={budgetPeriod}
         />
+
+<div className="grid gap-4 xl:grid-cols-2">
+  <ExpensesByCategoryChart
+    expenses={expensesForTable}
+    period={budgetPeriod}
+  />
+
+  <ExpensesByIncomeChart
+    expenses={expensesForTable}
+    incomes={incomesForTable}
+    period={budgetPeriod}
+  />
+</div>
 
         <section className="overflow-x-auto rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
           <ExpensesTable
