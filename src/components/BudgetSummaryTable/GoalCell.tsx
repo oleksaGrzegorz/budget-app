@@ -53,8 +53,8 @@ export const GoalCell = ({
   const statusText = !hasData
     ? "-"
     : isOnTarget
-      ? "0 euro"
-      : `${signedDifference > 0 ? "+" : "-"}${formatMoney(absDifference)} euro`;
+      ? "0"
+      : `${signedDifference > 0 ? "+" : "-"}${formatMoney(absDifference)}`;
 
   const statusClass = !hasData
     ? "text-slate-300"
@@ -76,15 +76,15 @@ export const GoalCell = ({
     rawProgress !== null ? `${Math.min(Math.max(rawProgress, 0), 100)}%` : "0%";
 
   const formattedValue =
-    value !== null ? `${formatMoney(value)} euro` : "+ Set target";
+    value !== null ? `${formatMoney(value)}` : "+ Set target";
 
   const tooltip = !hasGoal
     ? "No goal set"
     : !hasAverage
       ? "No average data"
       : [
-          `Average: ${formatMoney(avg)} euro`,
-          `Goal: ${formatMoney(goal)} euro`,
+          `Average: ${formatMoney(avg)}`,
+          `Goal: ${formatMoney(goal)}`,
           `Usage: ${progress}%`,
         ].join("\n");
 
@@ -118,49 +118,49 @@ export const GoalCell = ({
     <td className="min-w-[250px] border border-slate-200 px-2.5 py-2">
       <div className="flex items-center gap-3">
         {isEditing ? (
-          <div className="relative">
-            <input
-              autoFocus
-              type="text"
-              inputMode="decimal"
-              value={draftValue}
-              placeholder="0"
-              onFocus={(e) => e.currentTarget.select()}
-              onChange={(e) => setDraftValue(e.target.value)}
-              onBlur={() => {
-                if (skipBlurSave.current) {
-                  skipBlurSave.current = false;
-                  return;
-                }
+  <div className="relative">
+    <input
+      autoFocus
+      type="text"
+      inputMode="decimal"
+      value={draftValue}
+      placeholder="0"
+      onFocus={(e) => e.currentTarget.select()}
+      onChange={(e) => setDraftValue(e.target.value)}
+      onBlur={() => {
+        if (skipBlurSave.current) {
+          skipBlurSave.current = false;
+          return;
+        }
 
-                saveValue();
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") saveValue();
-                if (e.key === "Escape") cancelEditing();
-              }}
-              className="h-8 w-28 rounded-lg border border-slate-300 bg-white px-2 pr-7 text-right text-xs font-semibold text-slate-800 outline-none transition placeholder:text-slate-300 focus:border-slate-400 focus:ring-1 focus:ring-slate-300"
-            />
+        saveValue();
+      }}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") saveValue();
+        if (e.key === "Escape") cancelEditing();
+      }}
+      className="h-8 w-28 rounded-lg border border-slate-300 bg-white px-2 pr-7 text-center text-xs font-semibold text-slate-800 outline-none transition placeholder:text-slate-300 focus:border-slate-400 focus:ring-1 focus:ring-slate-300"
+    />
+  </div>
+) : (
+  <button
+    type="button"
+    onClick={() => setIsEditing(true)}
+    className={`relative flex h-8 w-28 items-center justify-center rounded-lg px-2 text-xs font-semibold transition ${
+      value !== null
+        ? "border border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300 hover:bg-white hover:text-slate-900"
+        : "border border-dashed border-slate-300 bg-white text-slate-400 hover:border-slate-400 hover:bg-slate-50 hover:text-slate-600"
+    }`}
+  >
+    <span>{formattedValue}</span>
 
-            <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[10px] font-semibold text-slate-400">
-              euro
-            </span>
-          </div>
-        ) : (
-          <button
-            type="button"
-            onClick={() => setIsEditing(true)}
-            className={`flex h-8 w-28 items-center justify-between rounded-lg px-2 text-xs font-semibold transition ${
-              value !== null
-                ? "border border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300 hover:bg-white hover:text-slate-900"
-                : "border border-dashed border-slate-300 bg-white text-slate-400 hover:border-slate-400 hover:bg-slate-50 hover:text-slate-600"
-            }`}
-          >
-            <span className="truncate">{formattedValue}</span>
-
-            {value !== null && <span className="ml-1 text-slate-400">✎</span>}
-          </button>
-        )}
+    {value !== null && (
+      <span className="absolute right-2 text-slate-400">
+        ✎
+      </span>
+    )}
+  </button>
+)}
 
         <div className="flex-1" title={tooltip}>
           <div className="mb-1 flex justify-end">
