@@ -1,6 +1,6 @@
 export const initialExpenseGoals: Record<string, number | null> = {
   Mortgage: 1300.79,
-  "Property tax": 125,
+  "Property tax": 105,
 
   Groceries: 700,
   "Eating out": 50,
