@@ -1,14 +1,6 @@
 import logo from "../../images/logo.jpeg";
 
 export const Header = () => {
-  const today = new Date();
-
-  const formattedDate = today.toLocaleDateString("en-US", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-
   return (
     <header className="mb-8">
       <div
@@ -24,14 +16,11 @@ export const Header = () => {
           shadow-lg
         "
       >
-        {/* Background glow */}
         <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-sky-100/70 blur-3xl" />
         <div className="absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-emerald-100/70 blur-3xl" />
 
         <div className="relative flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
-          {/* Left section */}
           <div className="flex flex-col items-center gap-6 text-center lg:flex-row lg:text-left">
-            {/* Logo */}
             <div className="relative shrink-0">
               <div className="absolute inset-0 scale-110 rounded-full bg-white blur-xl opacity-70" />
 
@@ -65,9 +54,7 @@ export const Header = () => {
                 Personal Finance Dashboard
               </p>
 
-              <p className="mt-1 text-sm text-slate-400">
-                by Grzegorz Oleksa
-              </p>
+              <p className="mt-1 text-sm text-slate-400">by Grzegorz Oleksa</p>
 
               <div className="mt-5 flex flex-wrap justify-center gap-2 lg:justify-start">
                 <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
@@ -82,30 +69,6 @@ export const Header = () => {
                   Planning
                 </span>
               </div>
-            </div>
-          </div>
-
-          {/* Right section */}
-          <div className="flex flex-col items-center gap-4 lg:items-end">
-            <div
-              className="
-                rounded-2xl
-                border
-                border-slate-200
-                bg-white/80
-                px-5
-                py-3
-                shadow-sm
-                backdrop-blur
-              "
-            >
-              <p className="text-xs uppercase tracking-wider text-slate-400">
-                Today
-              </p>
-
-              <p className="mt-1 text-sm font-semibold text-slate-700">
-                {formattedDate}
-              </p>
             </div>
           </div>
         </div>
