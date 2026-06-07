@@ -87,54 +87,55 @@ export const BudgetUsageSummary = ({
               Budget usage
             </h2>
           </div>
-
-          <div className="hidden h-8 w-px bg-slate-200 sm:block" />
-
-          <p className="text-sm font-medium text-slate-500">
-            {period === "average"
-              ? "Track your average spending against your monthly budget"
-              : "Track selected month spending against your monthly budget"}
-          </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-          <select
-            value={period}
-            onChange={(event) => setPeriod(event.target.value)}
-            className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 outline-none transition focus:border-sky-300 focus:ring-4 focus:ring-sky-100"
-          >
-            <option value="average">Average</option>
+        <div className="flex flex-col gap-3 lg:items-end">
+          <div className="flex max-w-full gap-1 overflow-x-auto rounded-xl bg-slate-100 p-1">
+            {(["average", ...months] as PeriodOption[]).map((option) => {
+              const isActive = period === option;
 
-            {months.map((month) => (
-              <option key={month} value={month}>
-                {month}
-              </option>
-            ))}
-          </select>
+              return (
+                <button
+                  key={option}
+                  type="button"
+                  onClick={() => setPeriod(option)}
+                  className={`whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-semibold transition-colors duration-200 ${
+                    isActive
+                      ? "bg-slate-900 text-white shadow-sm"
+                      : "text-slate-500 hover:bg-slate-200 hover:text-slate-900"
+                  }`}
+                >
+                  {option === "average" ? "Average" : option}
+                </button>
+              );
+            })}
+          </div>
 
-          <span
-            className={`rounded-xl px-3 py-2 text-sm font-bold sm:px-4 ${
-              isOverBudget
-                ? "bg-rose-50 text-rose-600"
-                : "bg-emerald-50 text-emerald-600"
-            }`}
-          >
-            {isOverBudget ? "Over budget" : "Remaining"}
-          </span>
-
-          <span
-            className={`text-lg font-bold sm:text-xl ${
-              isOverBudget ? "text-rose-600" : "text-emerald-600"
-            }`}
-          >
-            {Math.abs(remaining).toFixed(2)} euro
-          </span>
-
-          {isOverBudget && (
-            <span className="text-sm font-bold text-rose-600 sm:text-base">
-              (+{overPercent}%)
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+            <span
+              className={`rounded-xl px-3 py-2 text-sm font-bold sm:px-4 ${
+                isOverBudget
+                  ? "bg-rose-50 text-rose-600"
+                  : "bg-emerald-50 text-emerald-600"
+              }`}
+            >
+              {isOverBudget ? "Over budget" : "Remaining"}
             </span>
-          )}
+
+            <span
+              className={`text-lg font-bold sm:text-xl ${
+                isOverBudget ? "text-rose-600" : "text-emerald-600"
+              }`}
+            >
+              {Math.abs(remaining).toFixed(2)} euro
+            </span>
+
+            {isOverBudget && (
+              <span className="text-sm font-bold text-rose-600 sm:text-base">
+                (+{overPercent}%)
+              </span>
+            )}
+          </div>
         </div>
       </div>
 
