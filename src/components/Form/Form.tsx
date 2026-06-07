@@ -66,7 +66,7 @@ export const Form = ({
 
     setAmount(null);
     setCategory("");
-    setMonth("");
+
   };
 
   return (
