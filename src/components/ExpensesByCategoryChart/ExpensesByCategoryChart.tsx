@@ -67,7 +67,7 @@ export const ExpensesByCategoryChart = ({
       <div className="mb-5 flex items-start justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-slate-900 shadow-sm">
-            <span className="flex h-7 w-7 items-center justify-center rounded-md bg-white text-lg font-black text-indigo-600">
+            <span className="flex h-7 w-7 items-center justify-center rounded-md bg-white text-lg font-black text-amber-600">
               ▮
             </span>
           </div>
@@ -131,12 +131,12 @@ export const ExpensesByCategoryChart = ({
 <div
 className={`w-full rounded-t-2xl shadow-sm transition-all duration-500 ${
   index === 0
-    ? "bg-indigo-600"
+    ? "bg-amber-600"
     : index === 1
-      ? "bg-indigo-500"
+      ? "bg-amber-500"
       : index === 2
-        ? "bg-indigo-400"
-        : "bg-indigo-300"
+        ? "bg-amber-400"
+        : "bg-amber-300"
 }`}
   style={{
     height: `${Math.max(height, 6)}%`,
