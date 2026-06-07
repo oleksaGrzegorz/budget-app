@@ -26,7 +26,7 @@ export const initialExpenseGoals: Record<string, number | null> = {
 
   "Renovations": 50,
   "Home items": 50,
-  "Watches & etc": 30,
+  "Watches & accessories": 30,
 
   "Child": 100,
   "Dog": 50,

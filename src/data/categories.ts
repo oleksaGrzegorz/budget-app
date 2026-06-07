@@ -49,8 +49,15 @@ export const categoryGroups = [
     name: "Home",
     emoji: "🏠",
     iconClassName: "bg-orange-200 ring-orange-300",
-    categories: ["Renovations", "Home items", "Watches & etc"],
+    categories: ["Renovations", "Home items"],
   },
+  {
+    name: "Lifestyle",
+    emoji: "💎",
+    iconClassName: "bg-purple-200 ring-purple-300",
+    categories: ["Watches & accessories"],
+  },
+
   {
     name: "Child",
     emoji: "👶",
@@ -67,7 +74,7 @@ export const categoryGroups = [
     name: "Personal",
     emoji: "🧍",
     iconClassName: "bg-sky-200 ring-sky-300",
-    categories: ["Hairdresser", "Clothes & shoes"],
+    categories: ["Hairdresser", "Clothes & shoes", "Massage"],
   },
   {
     name: "Sport",
@@ -79,7 +86,14 @@ export const categoryGroups = [
     name: "Entertainment",
     emoji: "🎉",
     iconClassName: "bg-fuchsia-200 ring-fuchsia-300",
-    categories: ["Entertainment", "Flights", "Theme parks & attractions", "Massage"],
+    categories: ["Entertainment", "Theme parks & attractions"],
+  },
+
+  {
+    name: "Travel",
+    emoji: "✈️",
+    iconClassName: "bg-indigo-200 ring-indigo-300",
+    categories: ["Flights"],
   },
   {
     name: "Currency",
@@ -103,8 +117,9 @@ export const categoryEmojis: Record<string, string> = Object.fromEntries(
   ),
 );
 
-export const categoryIconClassNames: Record<string, string> = Object.fromEntries(
-  categoryGroups.flatMap((group) =>
-    group.categories.map((category) => [category, group.iconClassName]),
-  ),
-);
+export const categoryIconClassNames: Record<string, string> =
+  Object.fromEntries(
+    categoryGroups.flatMap((group) =>
+      group.categories.map((category) => [category, group.iconClassName]),
+    ),
+  );
