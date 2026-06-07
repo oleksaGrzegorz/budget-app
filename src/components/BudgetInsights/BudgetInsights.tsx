@@ -16,7 +16,7 @@ export const BudgetInsights = ({
 }: BudgetInsightsProps) => {
   return (
     <section className="grid gap-4 lg:grid-cols-3">
-      <BiggestOverspendingCard
+      <BiggestSavingsCard
         expenses={expenses}
         expenseGoals={expenseGoals}
         period={period}
@@ -24,7 +24,7 @@ export const BudgetInsights = ({
 
       <MonthProgressCard />
 
-      <BiggestSavingsCard
+      <BiggestOverspendingCard
         expenses={expenses}
         expenseGoals={expenseGoals}
         period={period}
