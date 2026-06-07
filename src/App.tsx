@@ -24,7 +24,7 @@ export default function App() {
 
   const currentMonth = String(new Date().getMonth() + 1).padStart(2, "0");
   const [month, setMonth] = useState(currentMonth);
-  
+
   const [formType, setFormType] = useState<"expense" | "income">("expense");
   const [budgetPeriod, setBudgetPeriod] = useState<PeriodOption>("average");
 
@@ -77,14 +77,14 @@ export default function App() {
         />
 
         <div className="grid gap-4 xl:grid-cols-2">
-          <ExpensesByCategoryChart
-            expenses={expensesForTable}
-            period={budgetPeriod}
-          />
-
           <ExpensesByIncomeChart
             expenses={expensesForTable}
             incomes={incomesForTable}
+            period={budgetPeriod}
+          />
+
+          <ExpensesByCategoryChart
+            expenses={expensesForTable}
             period={budgetPeriod}
           />
         </div>
