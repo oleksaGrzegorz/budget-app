@@ -91,17 +91,23 @@ export const ExpensesByIncomeChart = ({
   ];
 
 return (
-  <section className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-    <div className="mb-5 flex items-start justify-between gap-4">
-      <div>
-        <h2 className="text-lg font-bold tracking-tight text-slate-900">
-          Income balance
-        </h2>
+  <section className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+    <div className="mb-5 flex items-start gap-3">
+      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-slate-900 shadow-sm">
+        <span className="flex h-7 w-7 items-center justify-center rounded-md bg-white text-lg font-black text-emerald-600">
+          €
+        </span>
       </div>
 
-      <span className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-600 shadow-sm">
-        {period === "average" ? "Average" : period}
-      </span>
+      <div>
+        <h3 className="text-base font-black tracking-tight text-slate-900">
+          Income balance
+        </h3>
+
+        <p className="mt-0.5 text-xs font-semibold text-slate-500">
+          {period === "average" ? "Average view" : `Month ${period}`}
+        </p>
+      </div>
     </div>
 
     <div className="h-px bg-slate-100" />
@@ -109,62 +115,68 @@ return (
     {totalIncome > 0 || totalExpenses > 0 ? (
       <>
         <div className="mt-5 flex flex-1 flex-col justify-center gap-5">
-            {rows.map((row) => (
-              <div
-                key={row.label}
-                className={`rounded-2xl border border-slate-100 p-4 ${row.bgClassName}`}
-              >
-                <div className="mb-3 flex items-center justify-between gap-4">
-                  <div className="flex items-center gap-3">
-                    <span
-                      className={`flex h-9 w-9 items-center justify-center rounded-xl bg-white text-lg font-black shadow-sm ${row.textClassName}`}
-                    >
-                      {row.icon}
-                    </span>
+          {rows.map((row) => (
+            <div
+              key={row.label}
+              className={`rounded-2xl border border-slate-100 p-4 ${row.bgClassName}`}
+            >
+              <div className="mb-3 flex items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <span
+                    className={`flex h-9 w-9 items-center justify-center rounded-xl bg-white text-lg font-black shadow-sm ${row.textClassName}`}
+                  >
+                    {row.icon}
+                  </span>
 
-                    <span className="text-sm font-black text-slate-800">
-                      {row.label}
-                    </span>
-                  </div>
-
-                  <span className={`text-lg font-black ${row.textClassName}`}>
-                    {formatMoney(row.value)} euro
+                  <span className="text-sm font-black text-slate-800">
+                    {row.label}
                   </span>
                 </div>
 
-                <div className="h-3 overflow-hidden rounded-full bg-white/80">
-                  <div
-                    className={`h-full rounded-full transition-all duration-500 ${row.barClassName}`}
-                    style={{
-                      width: `${Math.min(Math.max(row.percent, 0), 100)}%`,
-                    }}
-                  />
-                </div>
+                <span className={`text-lg font-black ${row.textClassName}`}>
+                  {formatMoney(row.value)} euro
+                </span>
               </div>
-            ))}
-          </div>
 
-          <div className="my-6 h-px bg-slate-100" />
-
-          <div className="flex items-center justify-between gap-4">
-            <span className="text-base font-bold text-slate-900">
-              Savings rate
-            </span>
-
-            <span
-              className={`text-2xl font-black tracking-tight ${
-                savings < 0 ? "text-rose-600" : "text-emerald-600"
-              }`}
-            >
-              {savingsRate !== null ? `${savingsRate}%` : "-"}
-            </span>
-          </div>
-        </>
-      ) : (
-        <div className="flex flex-1 items-center justify-center rounded-xl bg-slate-50 px-4 py-8 text-center text-sm font-medium text-slate-400">
-          No income or expenses for selected period
+              <div className="h-3 overflow-hidden rounded-full bg-white/80">
+                <div
+                  className={`h-full rounded-full transition-all duration-500 ${row.barClassName}`}
+                  style={{
+                    width: `${Math.min(Math.max(row.percent, 0), 100)}%`,
+                  }}
+                />
+              </div>
+            </div>
+          ))}
         </div>
-      )}
-    </section>
-  );
+
+        <div className="my-6 h-px bg-slate-100" />
+
+        <div className="flex items-center justify-between gap-4">
+          <span className="text-base font-bold text-slate-900">
+            Savings rate
+          </span>
+
+          <span
+            className={`text-2xl font-black tracking-tight ${
+              savings < 0 ? "text-rose-600" : "text-emerald-600"
+            }`}
+          >
+            {savingsRate !== null ? `${savingsRate}%` : "-"}
+          </span>
+        </div>
+      </>
+    ) : (
+      <div className="mt-5 flex flex-1 flex-col items-center justify-center rounded-xl bg-slate-50 px-4 py-8 text-center">
+        <div className="text-sm font-black text-slate-700">
+          No income or expenses
+        </div>
+
+        <div className="mt-1 text-xs font-semibold text-slate-500">
+          No data for selected period
+        </div>
+      </div>
+    )}
+  </section>
+);
 };
