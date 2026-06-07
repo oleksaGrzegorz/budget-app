@@ -28,6 +28,11 @@ export default function App() {
   const [formType, setFormType] = useState<"expense" | "income">("expense");
   const [budgetPeriod, setBudgetPeriod] = useState<PeriodOption>("average");
 
+  const [theme, setTheme] = useLocalStorageState<"light" | "dark">(
+    "budget.theme",
+    "light",
+  );
+
   const [entries, setEntries] = useLocalStorageState<Entry[]>(
     "budget.entries",
     initialEntries,
@@ -45,9 +50,15 @@ export default function App() {
   const incomesForTable = useMemo(() => sumIncomes(entries), [entries]);
 
   return (
-    <div className="min-h-screen bg-slate-100 text-slate-800">
+    <div
+      className={`min-h-screen transition-colors duration-300 ${
+        theme === "dark"
+          ? "bg-slate-950 text-slate-100"
+          : "bg-slate-100 text-slate-800"
+      }`}
+    >
       <main className="mx-auto max-w-7xl space-y-10 px-6 py-10">
-        <Header />
+        <Header theme={theme} setTheme={setTheme} />
 
         <BitcoinPrice />
 
