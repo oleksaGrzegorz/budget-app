@@ -45,12 +45,12 @@ export const ExpensesByIncomeChart = ({
 
   const totalExpenses =
     period === "average"
-      ? getCategoriesAverageTotal(
+      ? (getCategoriesAverageTotal(
           expenses,
           categories,
           activeMonths,
           expenseCategoryAverageTypes,
-        ) ?? 0
+        ) ?? 0)
       : getMonthTotal(expenses, categories, period);
 
   const savings = totalIncome - totalExpenses;
@@ -90,27 +90,25 @@ export const ExpensesByIncomeChart = ({
     },
   ];
 
-  return (
-    <section className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-      <div className="mb-6 flex items-start justify-between gap-4">
-        <div>
-          <h2 className="text-lg font-bold tracking-tight text-slate-900">
-            Income balance
-          </h2>
-
-          <p className="mt-1 text-sm font-medium text-slate-500">
-            Income, expenses and savings overview
-          </p>
-        </div>
-
-        <span className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-600 shadow-sm">
-          {period === "average" ? "Average" : period}
-        </span>
+return (
+  <section className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+    <div className="mb-5 flex items-start justify-between gap-4">
+      <div>
+        <h2 className="text-lg font-bold tracking-tight text-slate-900">
+          Income balance
+        </h2>
       </div>
 
-      {totalIncome > 0 || totalExpenses > 0 ? (
-        <>
-          <div className="flex flex-1 flex-col justify-center gap-5">
+      <span className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-600 shadow-sm">
+        {period === "average" ? "Average" : period}
+      </span>
+    </div>
+
+    <div className="h-px bg-slate-100" />
+
+    {totalIncome > 0 || totalExpenses > 0 ? (
+      <>
+        <div className="mt-5 flex flex-1 flex-col justify-center gap-5">
             {rows.map((row) => (
               <div
                 key={row.label}
