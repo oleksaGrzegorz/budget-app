@@ -15,14 +15,35 @@ export const ExpensesList = ({ entries, setEntries }: ExpensesListProps) => {
     );
   };
 
-  const visibleEntries = showAll ? entries : entries.slice(-3);
+  const entriesWithIndexes = entries.map((entry, index) => ({
+    ...entry,
+    realIndex: index,
+  }));
+
+  const visibleEntries = showAll
+    ? entriesWithIndexes
+    : entriesWithIndexes.slice(-3);
+
+  const newestFirstEntries = [...visibleEntries].reverse();
+
+  const groupedEntries = newestFirstEntries.reduce<
+    Record<string, typeof newestFirstEntries>
+  >((groups, entry) => {
+    if (!groups[entry.month]) {
+      groups[entry.month] = [];
+    }
+
+    groups[entry.month].push(entry);
+
+    return groups;
+  }, {});
 
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">
         <h2 className="text-lg font-semibold text-slate-800">Entries</h2>
 
-        {!!entries.length && (
+        {entries.length > 0 && (
           <span className="text-sm text-slate-400">{entries.length}</span>
         )}
       </div>
@@ -33,55 +54,58 @@ export const ExpensesList = ({ entries, setEntries }: ExpensesListProps) => {
         </div>
       ) : (
         <>
-          <ul className="space-y-3 transition-all duration-300 ease-in-out">
-            {visibleEntries.map((item, index) => {
-              const realIndex = showAll
-                ? index
-                : entries.length - visibleEntries.length + index;
+          <div className="space-y-6">
+            {Object.entries(groupedEntries).map(([month, monthEntries]) => (
+              <div key={month}>
+                <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">
+                  {month}
+                </h3>
 
-              return (
-                <li
-                  key={realIndex}
-                  className={`flex items-center justify-between rounded-xl border p-4 transition-all duration-300 ease-in-out hover:shadow-sm ${
-                    item.formType === "expense"
-                      ? "border-rose-200 bg-rose-50"
-                      : "border-emerald-200 bg-emerald-50"
-                  }`}
-                >
-                  <div>
-                    <div className="font-semibold text-slate-800">
-                      {item.category}
-                    </div>
-
-                    <div className="mt-1 text-xs text-slate-500">
-                      {item.month} •{" "}
-                      {item.formType === "expense" ? "Expense" : "Income"}
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-5">
-                    <div
-                      className={`text-base font-bold ${
+                <ul className="space-y-3">
+                  {monthEntries.map((item) => (
+                    <li
+                      key={item.realIndex}
+                      className={`flex items-center justify-between rounded-xl border p-4 transition-all duration-300 ease-in-out hover:shadow-sm ${
                         item.formType === "expense"
-                          ? "text-rose-600"
-                          : "text-emerald-600"
+                          ? "border-rose-200 bg-rose-50"
+                          : "border-emerald-200 bg-emerald-50"
                       }`}
                     >
-                      {item.amount.toFixed(2)} euro
-                    </div>
+                      <div>
+                        <div className="font-semibold text-slate-800">
+                          {item.category}
+                        </div>
 
-                    <button
-                      type="button"
-                      onClick={() => removeEntry(realIndex)}
-                      className="flex h-9 w-9 items-center justify-center rounded-lg text-slate-400 transition hover:bg-white hover:text-rose-600"
-                    >
-                      ✕
-                    </button>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
+                        <div className="mt-1 text-xs text-slate-500">
+                          {item.formType === "expense" ? "Expense" : "Income"}
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-5">
+                        <div
+                          className={`text-base font-bold ${
+                            item.formType === "expense"
+                              ? "text-rose-600"
+                              : "text-emerald-600"
+                          }`}
+                        >
+                          {item.amount.toFixed(2)} euro
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() => removeEntry(item.realIndex)}
+                          className="flex h-9 w-9 items-center justify-center rounded-lg text-slate-400 transition hover:bg-white hover:text-rose-600"
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
 
           {entries.length > 3 && (
             <button
