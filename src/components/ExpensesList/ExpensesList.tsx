@@ -20,14 +20,20 @@ export const ExpensesList = ({ entries, setEntries }: ExpensesListProps) => {
     realIndex: index,
   }));
 
-  const visibleEntries = showAll
-    ? entriesWithIndexes
-    : entriesWithIndexes.slice(-3);
+const sortedEntries = [...entriesWithIndexes].sort((a, b) => {
+  const monthDifference = Number(b.month) - Number(a.month);
 
-  const newestFirstEntries = [...visibleEntries].reverse();
+  if (monthDifference !== 0) {
+    return monthDifference;
+  }
 
-  const groupedEntries = newestFirstEntries.reduce<
-    Record<string, typeof newestFirstEntries>
+  return b.realIndex - a.realIndex;
+});
+
+  const visibleEntries = showAll ? sortedEntries : sortedEntries.slice(0, 5);
+
+  const groupedEntries = visibleEntries.reduce<
+    Record<string, typeof visibleEntries>
   >((groups, entry) => {
     if (!groups[entry.month]) {
       groups[entry.month] = [];
@@ -41,7 +47,9 @@ export const ExpensesList = ({ entries, setEntries }: ExpensesListProps) => {
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-slate-800">Entries</h2>
+        <h2 className="text-lg font-semibold text-slate-800">
+          Transactions history
+        </h2>
 
         {entries.length > 0 && (
           <span className="text-sm text-slate-400">{entries.length}</span>
@@ -54,64 +62,65 @@ export const ExpensesList = ({ entries, setEntries }: ExpensesListProps) => {
         </div>
       ) : (
         <>
-          <div className="space-y-6">
+          <div className="space-y-8">
             {Object.entries(groupedEntries).map(([month, monthEntries]) => (
-              <div key={month}>
-                <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">
-                  {month}
-                </h3>
+              <section key={month}>
+                <div className="mb-3 flex items-center gap-3">
+                  <div className="h-px flex-1 bg-slate-200" />
 
-                <ul className="space-y-3">
-                  {monthEntries.map((item) => (
-                    <li
-                      key={item.realIndex}
-                      className={`flex items-center justify-between rounded-xl border p-4 transition-all duration-300 ease-in-out hover:shadow-sm ${
-                        item.formType === "expense"
-                          ? "border-rose-200 bg-rose-50"
-                          : "border-emerald-200 bg-emerald-50"
-                      }`}
-                    >
-                      <div>
-                        <div className="font-semibold text-slate-800">
+                  <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
+                    {month}
+                  </h3>
+
+                  <div className="h-px flex-1 bg-slate-200" />
+                </div>
+
+                <ul>
+                  {monthEntries.map((item) => {
+                    const isExpense = item.formType === "expense";
+
+                    return (
+                      <li
+                        key={item.realIndex}
+                        className="group flex items-center justify-between border-b border-slate-100 py-4 transition hover:bg-slate-50"
+                      >
+                        <div className="font-medium text-slate-800">
                           {item.category}
                         </div>
 
-                        <div className="mt-1 text-xs text-slate-500">
-                          {item.formType === "expense" ? "Expense" : "Income"}
-                        </div>
-                      </div>
+                        <div className="ml-4 flex items-center gap-4">
+                          <span
+                            className={`text-sm font-bold ${
+                              isExpense
+                                ? "text-rose-600"
+                                : "text-emerald-600"
+                            }`}
+                          >
+                            {isExpense ? "-" : "+"}
+                            {item.amount.toFixed(2)} €
+                          </span>
 
-                      <div className="flex items-center gap-5">
-                        <div
-                          className={`text-base font-bold ${
-                            item.formType === "expense"
-                              ? "text-rose-600"
-                              : "text-emerald-600"
-                          }`}
-                        >
-                          {item.amount.toFixed(2)} euro
+                          <button
+                            type="button"
+                            onClick={() => removeEntry(item.realIndex)}
+                            className="flex h-8 w-8 items-center justify-center rounded-full text-slate-300 opacity-100 transition hover:bg-slate-100 hover:text-rose-600 lg:opacity-0 lg:group-hover:opacity-100"
+                          >
+                            ✕
+                          </button>
                         </div>
-
-                        <button
-                          type="button"
-                          onClick={() => removeEntry(item.realIndex)}
-                          className="flex h-9 w-9 items-center justify-center rounded-lg text-slate-400 transition hover:bg-white hover:text-rose-600"
-                        >
-                          ✕
-                        </button>
-                      </div>
-                    </li>
-                  ))}
+                      </li>
+                    );
+                  })}
                 </ul>
-              </div>
+              </section>
             ))}
           </div>
 
-          {entries.length > 3 && (
+          {entries.length > 5 && (
             <button
               type="button"
               onClick={() => setShowAll((prev) => !prev)}
-              className="mt-4 w-full rounded-xl border border-slate-200 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-50"
+              className="mt-6 w-full rounded-xl border border-slate-200 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-50"
             >
               {showAll ? "Show less" : "Show details"}
             </button>
