@@ -30,13 +30,13 @@ export const ExpensesByCategoryChart = ({
       const value = group.categories.reduce((sum, category) => {
         const amount =
           period === "average"
-            ? getCategoryAverage(
+            ? (getCategoryAverage(
                 expenses,
                 category,
                 activeMonths,
                 expenseCategoryAverageTypes,
-              ) ?? 0
-            : expenses[category]?.[period] ?? 0;
+              ) ?? 0)
+            : (expenses[category]?.[period] ?? 0);
 
         return sum + amount;
       }, 0);
@@ -51,13 +51,21 @@ export const ExpensesByCategoryChart = ({
     .sort((a, b) => b.value - a.value);
 
   const topItems = groupItems.slice(0, maxVisibleItems);
-  const otherValue = groupItems
-    .slice(maxVisibleItems)
-    .reduce((sum, item) => sum + item.value, 0);
+  const hiddenItems = groupItems.slice(maxVisibleItems);
+
+  const otherValue = hiddenItems.reduce((sum, item) => sum + item.value, 0);
+
+  const visibleOtherItem = topItems.find((item) => item.name === "Other");
 
   const items =
     otherValue > 0
-      ? [...topItems, { name: "Other", emoji: "📦", value: otherValue }]
+      ? visibleOtherItem
+        ? topItems.map((item) =>
+            item.name === "Other"
+              ? { ...item, value: item.value + otherValue }
+              : item,
+          )
+        : [...topItems, { name: "Other", emoji: "📦", value: otherValue }]
       : topItems;
 
   const total = items.reduce((sum, item) => sum + item.value, 0);
@@ -115,7 +123,7 @@ export const ExpensesByCategoryChart = ({
               <div className="absolute left-9 right-0 top-0 bottom-10 flex items-end justify-between gap-3">
                 {items.map((item, index) => {
                   const percent = (item.value / total) * 100;
-                  const height = Math.min(percent, 40) / 40 * 100;
+                  const height = (Math.min(percent, 40) / 40) * 100;
 
                   return (
                     <div
@@ -128,20 +136,20 @@ export const ExpensesByCategoryChart = ({
                       </div>
 
                       <div className="flex h-full w-full max-w-12 items-end justify-center">
-<div
-className={`w-full rounded-t-2xl shadow-sm transition-all duration-500 ${
-  index === 0
-    ? "bg-amber-600"
-    : index === 1
-      ? "bg-amber-500"
-      : index === 2
-        ? "bg-amber-400"
-        : "bg-amber-300"
-}`}
-  style={{
-    height: `${Math.max(height, 6)}%`,
-  }}
-/>
+                        <div
+                          className={`w-full rounded-t-2xl shadow-sm transition-all duration-500 ${
+                            index === 0
+                              ? "bg-amber-600"
+                              : index === 1
+                                ? "bg-amber-500"
+                                : index === 2
+                                  ? "bg-amber-400"
+                                  : "bg-amber-300"
+                          }`}
+                          style={{
+                            height: `${Math.max(height, 6)}%`,
+                          }}
+                        />
                       </div>
                     </div>
                   );
