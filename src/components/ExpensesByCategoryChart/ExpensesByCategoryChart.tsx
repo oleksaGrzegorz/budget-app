@@ -82,12 +82,6 @@ export const ExpensesByCategoryChart = ({
             </p>
           </div>
         </div>
-
-        {total > 0 && (
-          <span className="rounded-xl bg-sky-50 px-3 py-2 text-sm font-black text-sky-600">
-            {formatMoney(total)}
-          </span>
-        )}
       </div>
 
       <div className="h-px bg-slate-100" />
