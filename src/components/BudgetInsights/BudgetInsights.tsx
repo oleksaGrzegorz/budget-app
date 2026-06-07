@@ -22,13 +22,13 @@ export const BudgetInsights = ({
         period={period}
       />
 
+      <MonthProgressCard />
+
       <BiggestSavingsCard
         expenses={expenses}
         expenseGoals={expenseGoals}
         period={period}
       />
-
-      <MonthProgressCard />
     </section>
   );
 };
