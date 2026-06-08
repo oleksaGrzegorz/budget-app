@@ -156,8 +156,6 @@ export const initialEntries: Entry[] = [
   { formType: "income", category: "Salary - Grzesiek", month: "04", amount: 4281.12 },
   { formType: "income", category: "Salary - Grzesiek", month: "05", amount: 2836.03 },
 
-  { formType: "income", category: "Salary - Other", month: "01", amount: 18.26 },
-
   { formType: "income", category: "Salary - Marta", month: "01", amount: 1667.9 },
   { formType: "income", category: "Salary - Marta", month: "02", amount: 1327.9 },
   { formType: "income", category: "Salary - Marta", month: "03", amount: 1418 },
