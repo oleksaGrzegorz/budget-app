@@ -17,6 +17,8 @@ import { initialExpenseGoals } from "./data/initialExpenseGoals";
 import type { PeriodOption } from "./utils/budgetAverages";
 import { ExpensesByCategoryChart } from "./components/ExpensesByCategoryChart/ExpensesByCategoryChart";
 import { ExpensesByIncomeChart } from "./components/ExpensesByIncomeChart/ExpensesByIncomeChart";
+import { IncomeForecastTable } from "./components/IncomeForecastTable/IncomeForecastTable";
+import { initialForecast } from "./data/initialForecast";
 
 export default function App() {
   const [amount, setAmount] = useState<number | null>(null);
@@ -46,15 +48,20 @@ export default function App() {
     Record<string, number | null>
   >("budget.incomeGoals", {});
 
+  const [forecast, setForecast] = useLocalStorageState(
+    "budget.forecast",
+    initialForecast,
+  );
+
   const expensesForTable = useMemo(() => sumExpenses(entries), [entries]);
   const incomesForTable = useMemo(() => sumIncomes(entries), [entries]);
 
   return (
     <div
       className={`min-h-screen transition-colors duration-300 ${
-theme === "dark"
-  ? "bg-slate-950 text-slate-100"
-  : "bg-slate-300 text-slate-800"
+        theme === "dark"
+          ? "bg-slate-950 text-slate-100"
+          : "bg-slate-300 text-slate-800"
       }`}
     >
       <main className="mx-auto max-w-7xl space-y-10 px-6 py-10">
@@ -125,6 +132,15 @@ theme === "dark"
             incomeGoals={incomeGoals}
             setIncomeGoals={setIncomeGoals}
             period={budgetPeriod}
+          />
+        </section>
+
+        <section className="overflow-x-auto rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <IncomeForecastTable
+            incomes={incomesForTable}
+            expenses={expensesForTable}
+            forecast={forecast}
+            setForecast={setForecast}
           />
         </section>
 
