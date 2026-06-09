@@ -1,5 +1,4 @@
 import { categories } from "../data/categories";
-import { expenseCategoryAverageTypes } from "../data/expenseCategoryAverageTypes";
 import {
   getActiveMonths,
   getCategoriesAverageTotal,
@@ -78,7 +77,7 @@ export const useBudgetMetrics = (
       expenses,
       categories,
       activeMonths,
-      expenseCategoryAverageTypes,
+
     );
   };
 

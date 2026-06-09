@@ -1,3 +1,5 @@
+export type CategoryAverageType = "monthly" | "annual";
+
 export const categoryGroups = [
   {
     name: "Mortgage",
@@ -57,7 +59,6 @@ export const categoryGroups = [
     iconClassName: "bg-purple-200 ring-purple-300",
     categories: ["Watches & accessories"],
   },
-
   {
     name: "Child",
     emoji: "👶",
@@ -88,7 +89,6 @@ export const categoryGroups = [
     iconClassName: "bg-fuchsia-200 ring-fuchsia-300",
     categories: ["Entertainment", "Theme parks & attractions"],
   },
-
   {
     name: "Travel",
     emoji: "✈️",
@@ -123,3 +123,27 @@ export const categoryIconClassNames: Record<string, string> =
       group.categories.map((category) => [category, group.iconClassName]),
     ),
   );
+
+export const categoryAverageTypes: Partial<
+  Record<string, CategoryAverageType>
+> = {
+  "Property tax": "annual",
+  "Car repairs & parts": "annual",
+  "Dentist & medicine": "annual",
+  "Renovations": "annual",
+  "Home items": "annual",
+  "Watches & accessories": "annual",
+  "Clothes & shoes": "annual",
+  "Massage": "annual",
+  "Gym": "annual",
+  "Theme parks & attractions": "annual",
+  "Flights": "annual",
+  "Currency exchange": "annual",
+  "Other": "annual",
+};
+
+export function getCategoryAverageType(
+  category: string,
+): CategoryAverageType {
+  return categoryAverageTypes[category] ?? "monthly";
+}

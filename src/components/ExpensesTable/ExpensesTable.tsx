@@ -1,5 +1,5 @@
 import React from "react";
-import { categoryGroups } from "../../data/categories";
+import { categoryAverageTypes, categoryGroups } from "../../data/categories";
 import { months } from "../../data/months";
 import { GoalCell } from "../BudgetSummaryTable/GoalCell";
 import {
@@ -7,7 +7,7 @@ import {
   getCategoryAverage,
   type PeriodOption,
 } from "../../utils/budgetAverages";
-import { expenseCategoryAverageTypes } from "../../data/expenseCategoryAverageTypes";
+
 
 interface ExpensesTableProps {
   expenses: Record<string, Record<string, number>>;
@@ -80,7 +80,7 @@ export const ExpensesTable = ({
                 expenses,
                 category,
                 activeMonths,
-                expenseCategoryAverageTypes,
+                categoryAverageTypes,
               );
 
               return (

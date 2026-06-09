@@ -1,6 +1,5 @@
-import { categories } from "../../data/categories";
+import { categories, categoryAverageTypes } from "../../data/categories";
 import { months } from "../../data/months";
-import { expenseCategoryAverageTypes } from "../../data/expenseCategoryAverageTypes";
 import {
   getActiveMonths,
   getCategoriesAverageTotal,
@@ -33,7 +32,7 @@ export const BudgetUsageSummary = ({
       expenses,
       categories,
       activeMonths,
-      expenseCategoryAverageTypes,
+      categoryAverageTypes,
     ) ?? 0;
 
   const selectedSpent =

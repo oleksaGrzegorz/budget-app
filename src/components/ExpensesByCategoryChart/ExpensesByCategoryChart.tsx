@@ -1,5 +1,4 @@
-import { categoryGroups } from "../../data/categories";
-import { expenseCategoryAverageTypes } from "../../data/expenseCategoryAverageTypes";
+import { categoryAverageTypes, categoryGroups } from "../../data/categories";
 import {
   getActiveMonths,
   getCategoryAverage,
@@ -34,7 +33,7 @@ export const ExpensesByCategoryChart = ({
                 expenses,
                 category,
                 activeMonths,
-                expenseCategoryAverageTypes,
+                categoryAverageTypes,
               ) ?? 0)
             : (expenses[category]?.[period] ?? 0);
 

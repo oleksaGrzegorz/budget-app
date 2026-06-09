@@ -1,5 +1,5 @@
 import { months } from "../data/months";
-import type { CategoryAverageType } from "../data/expenseCategoryAverageTypes";
+import type { CategoryAverageType } from "../data/categories";
 
 export type MonthlyCategoryMap = Record<string, Record<string, number>>;
 export type PeriodOption = "average" | string;
@@ -41,7 +41,7 @@ export const getCategoryAverage = (
   values: MonthlyCategoryMap,
   category: string,
   activeMonths: string[],
-  categoryAverageTypes: Record<string, CategoryAverageType> = {},
+  categoryAverageTypes: Partial<Record<string, CategoryAverageType>> = {},
 ): number | null => {
   if (categoryAverageTypes[category] === "annual") {
     return getCategoryYearTotal(values, category) / 12;
@@ -61,7 +61,7 @@ export const getCategoriesAverageTotal = (
   values: MonthlyCategoryMap,
   categories: string[],
   activeMonths: string[],
-  categoryAverageTypes: Record<string, CategoryAverageType> = {},
+  categoryAverageTypes: Partial<Record<string, CategoryAverageType>> = {},
 ): number | null => {
   if (activeMonths.length === 0) return null;
 

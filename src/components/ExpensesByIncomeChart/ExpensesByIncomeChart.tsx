@@ -1,5 +1,4 @@
 import { categories } from "../../data/categories";
-import { expenseCategoryAverageTypes } from "../../data/expenseCategoryAverageTypes";
 import {
   getActiveMonths,
   getCategoriesAverageTotal,
@@ -49,7 +48,6 @@ export const ExpensesByIncomeChart = ({
           expenses,
           categories,
           activeMonths,
-          expenseCategoryAverageTypes,
         ) ?? 0)
       : getMonthTotal(expenses, categories, period);
 

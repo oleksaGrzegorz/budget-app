@@ -1,5 +1,5 @@
 import { categories, categoryEmojis } from "../../data/categories";
-import { expenseCategoryAverageTypes } from "../../data/expenseCategoryAverageTypes";
+
 import {
   getActiveMonths,
   getCategoryAverage,
@@ -33,7 +33,6 @@ export const BiggestSavingsCard = ({
               expenses,
               category,
               activeMonths,
-              expenseCategoryAverageTypes,
             )
           : expenses[category]?.[period] ?? 0;
 
