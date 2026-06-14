@@ -1,4 +1,10 @@
-export const MonthProgressCard = () => {
+interface Props {
+  expectedExpensesLeft: number;
+}
+
+export const MonthProgressCard = ({
+  expectedExpensesLeft,
+}: Props) => {
   const now = new Date();
 
   const currentDay = now.getDate();
@@ -65,6 +71,18 @@ export const MonthProgressCard = () => {
                 width: `${Math.min(Math.max(progress, 0), 100)}%`,
               }}
             />
+          </div>
+        </div>
+
+        <div className="mt-8 border-t border-slate-100 pt-6">
+          <div className="text-center">
+            <div className="text-xs font-bold uppercase tracking-wider text-slate-400">
+              Expected expenses left
+            </div>
+
+            <div className="mt-2 text-3xl font-black text-slate-900">
+              {expectedExpensesLeft.toFixed(0)} €
+            </div>
           </div>
         </div>
       </div>
