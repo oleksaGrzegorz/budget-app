@@ -6,6 +6,7 @@ export const initialEntries: Entry[] = [
   { formType: "expense", category: "Mortgage", month: "03", amount: 1300.79 },
   { formType: "expense", category: "Mortgage", month: "04", amount: 1300.79 },
   { formType: "expense", category: "Mortgage", month: "05", amount: 1300.79 },
+  { formType: "expense", category: "Mortgage", month: "06", amount: 1300.79 },
 
   { formType: "expense", category: "Property tax", month: "03", amount: 1256.32 },
 
@@ -14,12 +15,14 @@ export const initialEntries: Entry[] = [
   { formType: "expense", category: "Groceries", month: "03", amount: 722.45 },
   { formType: "expense", category: "Groceries", month: "04", amount: 549.4 },
   { formType: "expense", category: "Groceries", month: "05", amount: 832.7 },
+  { formType: "expense", category: "Groceries", month: "06", amount: 432.45 },
 
   { formType: "expense", category: "Eating out", month: "01", amount: 201.36 },
   { formType: "expense", category: "Eating out", month: "02", amount: 38.29 },
   { formType: "expense", category: "Eating out", month: "03", amount: 28.11 },
   { formType: "expense", category: "Eating out", month: "04", amount: 62.55 },
   { formType: "expense", category: "Eating out", month: "05", amount: 109.5 },
+  { formType: "expense", category: "Eating out", month: "06", amount: 55.96 },
 
   { formType: "expense", category: "Health insurance", month: "01", amount: 299.8 },
   { formType: "expense", category: "Health insurance", month: "02", amount: 299.8 },
@@ -29,12 +32,14 @@ export const initialEntries: Entry[] = [
 
   { formType: "expense", category: "Dentist & medicine", month: "01", amount: 29.99 },
   { formType: "expense", category: "Dentist & medicine", month: "04", amount: 2.52 },
+  { formType: "expense", category: "Dentist & medicine", month: "06", amount: 78.77 },
 
   { formType: "expense", category: "Fuel - Dacia", month: "01", amount: 194.15 },
   { formType: "expense", category: "Fuel - Dacia", month: "02", amount: 228.88 },
   { formType: "expense", category: "Fuel - Dacia", month: "03", amount: 291.33 },
   { formType: "expense", category: "Fuel - Dacia", month: "04", amount: 128.39 },
   { formType: "expense", category: "Fuel - Dacia", month: "05", amount: 220.82 },
+  { formType: "expense", category: "Fuel - Dacia", month: "06", amount: 101.61 },
 
   { formType: "expense", category: "Fuel - Renault", month: "01", amount: 50.31 },
   { formType: "expense", category: "Fuel - Renault", month: "02", amount: 140.18 },
@@ -43,20 +48,24 @@ export const initialEntries: Entry[] = [
   { formType: "expense", category: "Car tax", month: "03", amount: 234 },
   { formType: "expense", category: "Car tax", month: "04", amount: 31 },
   { formType: "expense", category: "Car tax", month: "05", amount: 31 },
+  { formType: "expense", category: "Car tax", month: "06", amount: 203 },
 
   { formType: "expense", category: "Car insurance", month: "02", amount: 40.48 },
   { formType: "expense", category: "Car insurance", month: "03", amount: 40.48 },
   { formType: "expense", category: "Car insurance", month: "04", amount: 40.48 },
   { formType: "expense", category: "Car insurance", month: "05", amount: 40.48 },
+  { formType: "expense", category: "Car insurance", month: "06", amount: 40.48 },
 
   { formType: "expense", category: "Car repairs & parts", month: "02", amount: 236.68 },
   { formType: "expense", category: "Car repairs & parts", month: "03", amount: 4 },
   { formType: "expense", category: "Car repairs & parts", month: "04", amount: 4 },
+  { formType: "expense", category: "Car repairs & parts", month: "06", amount: 698.18 },
 
   { formType: "expense", category: "Electricity", month: "01", amount: 242 },
   { formType: "expense", category: "Electricity", month: "02", amount: 186 },
   { formType: "expense", category: "Electricity", month: "03", amount: 22 },
   { formType: "expense", category: "Electricity", month: "05", amount: 203 },
+  { formType: "expense", category: "Electricity", month: "06", amount: 203 },
 
   { formType: "expense", category: "Water", month: "01", amount: 34 },
   { formType: "expense", category: "Water", month: "02", amount: 34 },
@@ -81,12 +90,14 @@ export const initialEntries: Entry[] = [
   { formType: "expense", category: "DELA", month: "03", amount: 19.81 },
   { formType: "expense", category: "DELA", month: "04", amount: 19.81 },
   { formType: "expense", category: "DELA", month: "05", amount: 19.81 },
+  { formType: "expense", category: "DELA", month: "06", amount: 19.81 },
 
   { formType: "expense", category: "Liability insurance", month: "01", amount: 6.17 },
   { formType: "expense", category: "Liability insurance", month: "02", amount: 6.17 },
   { formType: "expense", category: "Liability insurance", month: "03", amount: 6.17 },
   { formType: "expense", category: "Liability insurance", month: "04", amount: 6.17 },
   { formType: "expense", category: "Liability insurance", month: "05", amount: 6.17 },
+  { formType: "expense", category: "Liability insurance", month: "06", amount: 6.17 },
 
   { formType: "expense", category: "Phone", month: "01", amount: 29.56 },
   { formType: "expense", category: "Phone", month: "02", amount: 30.04 },
@@ -99,25 +110,31 @@ export const initialEntries: Entry[] = [
   { formType: "expense", category: "ING cards", month: "03", amount: 12 },
   { formType: "expense", category: "ING cards", month: "04", amount: 12 },
   { formType: "expense", category: "ING cards", month: "05", amount: 12 },
+  { formType: "expense", category: "ING cards", month: "06", amount: 8 },
 
   { formType: "expense", category: "Gym", month: "02", amount: 55.91 },
   { formType: "expense", category: "Gym", month: "03", amount: 220 },
+  { formType: "expense", category: "Gym", month: "06", amount: 68.28 },
 
   { formType: "expense", category: "Renovations", month: "01", amount: 23.19 },
   { formType: "expense", category: "Renovations", month: "03", amount: 53.05 },
   { formType: "expense", category: "Renovations", month: "04", amount: 42.89 },
   { formType: "expense", category: "Renovations", month: "05", amount: 188.29 },
+  { formType: "expense", category: "Renovations", month: "06", amount: 251.89 },
 
   { formType: "expense", category: "Home items", month: "04", amount: 527.69 },
   { formType: "expense", category: "Home items", month: "05", amount: 184.05 },
+  { formType: "expense", category: "Home items", month: "06", amount: 6.08 },
 
   { formType: "expense", category: "Watches & accessories", month: "05", amount: 293.97 },
+  { formType: "expense", category: "Watches & accessories", month: "06", amount: 130 },
 
   { formType: "expense", category: "Child", month: "01", amount: 126.75 },
   { formType: "expense", category: "Child", month: "02", amount: 449.21 },
   { formType: "expense", category: "Child", month: "03", amount: 106.07 },
   { formType: "expense", category: "Child", month: "04", amount: 64.92 },
   { formType: "expense", category: "Child", month: "05", amount: 25 },
+  { formType: "expense", category: "Child", month: "06", amount: 181 },
 
   { formType: "expense", category: "Dog", month: "02", amount: 22.04 },
   { formType: "expense", category: "Dog", month: "03", amount: 36 },
@@ -171,4 +188,5 @@ export const initialEntries: Entry[] = [
   { formType: "income", category: "Refunds", month: "04", amount: 260.55 },
 
   { formType: "income", category: "Rent", month: "05", amount: 200 },
+  { formType: "income", category: "Rent", month: "06", amount: 400 },
 ];
