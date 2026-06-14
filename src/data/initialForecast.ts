@@ -107,7 +107,11 @@ export const initialForecast: Forecast = {
     "12": 4200,
   },
 
-  ratings: Object.fromEntries(months.map((month) => [month, null])),
+ratings: Object.fromEntries(months.map((month) => [month, null])),
 
-  notes: Object.fromEntries(months.map((month) => [month, ""])),
+notes: {
+  ...Object.fromEntries(months.map((month) => [month, ""])),
+  "06": "rent: 600e/800e expected (200e less Kam - vacation)",
+},
 };
+
