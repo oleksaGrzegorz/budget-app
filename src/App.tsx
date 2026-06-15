@@ -74,7 +74,7 @@ export default function App() {
         />
       </div>
 
-      <DashboardCard>
+      <DashboardCard title="Expenses" subtitle="Monthly expenses by category">
         <ExpensesTable
           expenses={expensesForTable}
           goals={expenseGoals}
@@ -83,7 +83,7 @@ export default function App() {
         />
       </DashboardCard>
 
-      <DashboardCard>
+      <DashboardCard title="Income" subtitle="Monthly income by category">
         <IncomesTable
           incomes={incomesForTable}
           incomeGoals={incomeGoals}
@@ -92,7 +92,10 @@ export default function App() {
         />
       </DashboardCard>
 
-      <DashboardCard>
+      <DashboardCard
+        title="Budget summary"
+        subtitle="Income, expenses and savings"
+      >
         <BudgetSummaryTable
           expenses={expensesForTable}
           incomes={incomesForTable}
