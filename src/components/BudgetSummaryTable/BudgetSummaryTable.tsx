@@ -1,10 +1,11 @@
-import { months } from "../../data/months";
-import { SavingsSection } from "./sections/SavingsSection";
-import { TotalsSection } from "./sections/TotalsSection";
-import { useBudgetMetrics } from "../../hooks/useBudgetMetrics";
 import { useEffect, useState } from "react";
+
+import { months } from "../../data/months";
+import { useBudgetMetrics } from "../../hooks/useBudgetMetrics";
 import type { Goals } from "../../types/goals";
 import type { PeriodOption } from "../../utils/budgetAverages";
+import { SavingsSection } from "./sections/SavingsSection";
+import { TotalsSection } from "./sections/TotalsSection";
 
 interface BudgetSummaryTableProps {
   expenses: Record<string, Record<string, number>>;

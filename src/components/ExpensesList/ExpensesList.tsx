@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import type { Entry } from "../../types/entry";
 
 interface ExpensesListProps {
@@ -47,9 +48,6 @@ const sortedEntries = [...entriesWithIndexes].sort((a, b) => {
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-slate-800">
-          Transactions history
-        </h2>
 
         {entries.length > 0 && (
           <span className="text-sm text-slate-400">{entries.length}</span>

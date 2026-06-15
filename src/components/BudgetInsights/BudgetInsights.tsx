@@ -1,11 +1,11 @@
-import { BiggestOverspendingCard } from "./BiggestOverspendingCard";
-import { BiggestSavingsCard } from "./BiggestSavingsCard";
-import { MonthProgressCard } from "./MonthProgressCard";
 import {
   categories,
   getCategoryAverageType,
 } from "../../data/categories";
 import type { PeriodOption } from "../../utils/budgetAverages";
+import { BiggestOverspendingCard } from "./BiggestOverspendingCard";
+import { BiggestSavingsCard } from "./BiggestSavingsCard";
+import { MonthProgressCard } from "./MonthProgressCard";
 
 interface BudgetInsightsProps {
   expenses: Record<string, Record<string, number>>;

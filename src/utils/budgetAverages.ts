@@ -1,5 +1,5 @@
-import { months } from "../data/months";
 import type { CategoryAverageType } from "../data/categories";
+import { months } from "../data/months";
 
 export type MonthlyCategoryMap = Record<string, Record<string, number>>;
 export type PeriodOption = "average" | string;

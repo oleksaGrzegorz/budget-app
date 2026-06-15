@@ -1,11 +1,11 @@
-import { months } from "../../data/months";
 import { budgetSummaryLabels as incomeCategories } from "../../data/budgetSummaryLabels";
-import { GoalCell } from "../BudgetSummaryTable/GoalCell";
+import { months } from "../../data/months";
 import {
   getActiveMonths,
   getCategoryAverage,
   type PeriodOption,
 } from "../../utils/budgetAverages";
+import { GoalCell } from "../BudgetSummaryTable/GoalCell";
 
 interface IncomesTableProps {
   incomes: Record<string, Record<string, number>>;

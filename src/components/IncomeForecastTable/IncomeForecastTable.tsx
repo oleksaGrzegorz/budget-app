@@ -1,7 +1,8 @@
 import { Fragment } from "react";
+
 import { budgetSummaryLabels as incomeCategories } from "../../data/budgetSummaryLabels";
-import { months } from "../../data/months";
 import type { Forecast } from "../../data/initialForecast";
+import { months } from "../../data/months";
 
 interface IncomeForecastTableProps {
   incomes: Record<string, Record<string, number>>;
@@ -224,18 +225,6 @@ export const IncomeForecastTable = ({
 
   return (
     <div>
-      <div className="mb-5">
-        <h2 className="text-lg font-bold tracking-tight text-slate-900">
-          Financial forecast
-        </h2>
-
-        <p className="mt-0.5 text-xs font-semibold text-slate-500">
-          Annual plan, monthly performance and forecast assumptions
-        </p>
-      </div>
-
-      <div className="mb-5 h-px bg-slate-100" />
-
       <div className="mb-6 rounded-2xl border border-slate-200 bg-slate-50 p-5">
         <div className="mb-4 flex items-center justify-between gap-4">
           <div>

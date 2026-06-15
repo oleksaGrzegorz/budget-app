@@ -1,10 +1,9 @@
 import {
   categories,
-  categoryEmojis,
   categoryAverageTypes,
+  categoryEmojis,
   getCategoryAverageType,
 } from "../../data/categories";
-
 import {
   getActiveMonths,
   getCategoryAverage,

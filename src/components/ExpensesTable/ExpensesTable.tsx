@@ -1,12 +1,13 @@
 import React from "react";
+
 import { categoryAverageTypes, categoryGroups } from "../../data/categories";
 import { months } from "../../data/months";
-import { GoalCell } from "../BudgetSummaryTable/GoalCell";
 import {
   getActiveMonths,
   getCategoryAverage,
   type PeriodOption,
 } from "../../utils/budgetAverages";
+import { GoalCell } from "../BudgetSummaryTable/GoalCell";
 
 
 interface ExpensesTableProps {

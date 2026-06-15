@@ -1,8 +1,9 @@
-import { categories } from "../data/categories";
 import {
   getActiveMonths,
   getCategoriesAverageTotal,
 } from "../utils/budgetAverages";
+
+import { categories } from "../data/categories";
 
 export const useBudgetMetrics = (
   expenses: Record<string, Record<string, number>>,
