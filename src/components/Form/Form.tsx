@@ -1,32 +1,22 @@
-import type { Dispatch, SetStateAction } from "react";
-import { categories } from "../../data/categories";
+import { type Dispatch, type SetStateAction, useState } from "react";
+
 import { budgetSummaryLabels as incomeCategories } from "../../data/budgetSummaryLabels";
+import { categories } from "../../data/categories";
 import { months } from "../../data/months";
 import type { Entry } from "../../types/entry";
 
 interface FormProps {
-  amount: number | null;
-  setAmount: Dispatch<SetStateAction<number | null>>;
   setEntries: Dispatch<SetStateAction<Entry[]>>;
-  category: string;
-  setCategory: Dispatch<SetStateAction<string>>;
-  month: string;
-  setMonth: Dispatch<SetStateAction<string>>;
-  formType: "expense" | "income";
-  setFormType: Dispatch<SetStateAction<"expense" | "income">>;
 }
 
-export const Form = ({
-  amount,
-  setAmount,
-  setEntries,
-  category,
-  setCategory,
-  month,
-  setMonth,
-  formType,
-  setFormType,
-}: FormProps) => {
+export const Form = ({ setEntries }: FormProps) => {
+  const currentMonth = String(new Date().getMonth() + 1).padStart(2, "0");
+
+  const [amount, setAmount] = useState<number | null>(null);
+  const [category, setCategory] = useState("");
+  const [month, setMonth] = useState(currentMonth);
+  const [formType, setFormType] = useState<"expense" | "income">("expense");
+
   const isExpense = formType === "expense";
 
   const categoriesToShow = isExpense ? categories : incomeCategories;
@@ -66,7 +56,6 @@ export const Form = ({
 
     setAmount(null);
     setCategory("");
-
   };
 
   return (
@@ -99,9 +88,7 @@ export const Form = ({
             type="button"
             onClick={() => handleTypeChange("expense")}
             className={`relative z-10 rounded-lg px-5 py-2 text-sm font-semibold transition-colors duration-300 ${
-              isExpense
-                ? "text-white"
-                : "text-slate-500 hover:text-slate-800"
+              isExpense ? "text-white" : "text-slate-500 hover:text-slate-800"
             }`}
           >
             Expense
@@ -111,9 +98,7 @@ export const Form = ({
             type="button"
             onClick={() => handleTypeChange("income")}
             className={`relative z-10 rounded-lg px-5 py-2 text-sm font-semibold transition-colors duration-300 ${
-              !isExpense
-                ? "text-white"
-                : "text-slate-500 hover:text-slate-800"
+              !isExpense ? "text-white" : "text-slate-500 hover:text-slate-800"
             }`}
           >
             Income
@@ -138,9 +123,7 @@ export const Form = ({
               value={amount ?? ""}
               placeholder="e.g. 250"
               onChange={(e) =>
-                setAmount(
-                  e.target.value === "" ? null : Number(e.target.value),
-                )
+                setAmount(e.target.value === "" ? null : Number(e.target.value))
               }
               className={`h-11 w-full rounded-lg border border-slate-300 px-3 pr-9 text-sm outline-none transition-all duration-300 focus:ring-2 ${accent.focus}`}
             />
