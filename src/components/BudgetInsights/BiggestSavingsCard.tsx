@@ -1,6 +1,7 @@
 import {
   categories,
   categoryEmojis,
+  categoryAverageTypes,
   getCategoryAverageType,
 } from "../../data/categories";
 
@@ -40,7 +41,7 @@ export const BiggestSavingsCard = ({
 
       const spent =
         period === "average"
-          ? getCategoryAverage(expenses, category, activeMonths)
+          ? getCategoryAverage(expenses, category, activeMonths, categoryAverageTypes)
           : expenses[category]?.[period] ?? 0;
 
       const goal = expenseGoals[category];

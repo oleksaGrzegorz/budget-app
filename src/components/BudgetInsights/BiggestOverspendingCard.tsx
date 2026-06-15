@@ -1,4 +1,4 @@
-import { categories, categoryEmojis } from "../../data/categories";
+import { categories, categoryAverageTypes, categoryEmojis } from "../../data/categories";
 import {
   getActiveMonths,
   getCategoryAverage,
@@ -28,7 +28,7 @@ export const BiggestOverspendingCard = ({
     .map((category) => {
       const spent =
         period === "average"
-          ? getCategoryAverage(expenses, category, activeMonths)
+          ? getCategoryAverage(expenses, category, activeMonths, categoryAverageTypes)
           : expenses[category]?.[period] ?? 0;
 
       const goal = expenseGoals[category];
