@@ -1,60 +1,42 @@
-import { useMemo, useState } from "react";
-import { Header } from "./components/Header/Header";
-import { Form } from "./components/Form/Form";
-import { ExpensesTable } from "./components/ExpensesTable/ExpensesTable";
-import { BudgetSummaryTable } from "./components/BudgetSummaryTable/BudgetSummaryTable";
-import { ExpensesList } from "./components/ExpensesList/ExpensesList";
-import { IncomesTable } from "./components/IncomesTable/IncomesTable";
-import { sumExpenses } from "./utils/sumExpenses";
-import { sumIncomes } from "./utils/sumIncomes";
+import { useState } from "react";
+
+import { useBudgetData } from "./hooks/useBudgetData";
 import { useLocalStorageState } from "./hooks/useLocalStorageState";
-import type { Entry } from "./types/entry";
-import { initialEntries } from "./data/initialEntries";
+
 import { BitcoinPrice } from "./components/BitcoinPrice";
-import { BudgetUsageSummary } from "./components/BudgetUsageSummary/BudgetUsageSummary";
 import { BudgetInsights } from "./components/BudgetInsights/BudgetInsights";
-import { initialExpenseGoals } from "./data/initialExpenseGoals";
-import type { PeriodOption } from "./utils/budgetAverages";
+import { BudgetSummaryTable } from "./components/BudgetSummaryTable/BudgetSummaryTable";
+import { BudgetUsageSummary } from "./components/BudgetUsageSummary/BudgetUsageSummary";
 import { ExpensesByCategoryChart } from "./components/ExpensesByCategoryChart/ExpensesByCategoryChart";
 import { ExpensesByIncomeChart } from "./components/ExpensesByIncomeChart/ExpensesByIncomeChart";
+import { ExpensesList } from "./components/ExpensesList/ExpensesList";
+import { ExpensesTable } from "./components/ExpensesTable/ExpensesTable";
+import { Form } from "./components/Form/Form";
+import { Header } from "./components/Header/Header";
 import { IncomeForecastTable } from "./components/IncomeForecastTable/IncomeForecastTable";
-import { initialForecast } from "./data/initialForecast";
+import { IncomesTable } from "./components/IncomesTable/IncomesTable";
+
+import type { PeriodOption } from "./utils/budgetAverages";
 
 export default function App() {
-  const [amount, setAmount] = useState<number | null>(null);
-  const [category, setCategory] = useState("");
-
-  const currentMonth = String(new Date().getMonth() + 1).padStart(2, "0");
-  const [month, setMonth] = useState(currentMonth);
-
-  const [formType, setFormType] = useState<"expense" | "income">("expense");
-  const [budgetPeriod, setBudgetPeriod] = useState<PeriodOption>("average");
-
   const [theme, setTheme] = useLocalStorageState<"light" | "dark">(
     "budget.theme",
     "light",
   );
+  const [budgetPeriod, setBudgetPeriod] = useState<PeriodOption>("average");
 
-  const [entries, setEntries] = useLocalStorageState<Entry[]>(
-    "budget.entries",
-    initialEntries,
-  );
-
-  const [expenseGoals, setExpenseGoals] = useLocalStorageState<
-    Record<string, number | null>
-  >("budget.expenseGoals", initialExpenseGoals);
-
-  const [incomeGoals, setIncomeGoals] = useLocalStorageState<
-    Record<string, number | null>
-  >("budget.incomeGoals", {});
-
-  const [forecast, setForecast] = useLocalStorageState(
-    "budget.forecast",
-    initialForecast,
-  );
-
-  const expensesForTable = useMemo(() => sumExpenses(entries), [entries]);
-  const incomesForTable = useMemo(() => sumIncomes(entries), [entries]);
+  const {
+    entries,
+    setEntries,
+    expenseGoals,
+    setExpenseGoals,
+    incomeGoals,
+    setIncomeGoals,
+    forecast,
+    setForecast,
+    expensesForTable,
+    incomesForTable,
+  } = useBudgetData();
 
   return (
     <div
@@ -69,17 +51,7 @@ export default function App() {
 
         <BitcoinPrice />
 
-        <Form
-          amount={amount}
-          setAmount={setAmount}
-          setEntries={setEntries}
-          category={category}
-          setCategory={setCategory}
-          month={month}
-          setMonth={setMonth}
-          setFormType={setFormType}
-          formType={formType}
-        />
+        <Form setEntries={setEntries} />
 
         <BudgetUsageSummary
           expenses={expensesForTable}
