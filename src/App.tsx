@@ -8,6 +8,7 @@ import { BitcoinPrice } from "./components/BitcoinPrice";
 import { BudgetInsights } from "./components/BudgetInsights/BudgetInsights";
 import { BudgetSummaryTable } from "./components/BudgetSummaryTable/BudgetSummaryTable";
 import { BudgetUsageSummary } from "./components/BudgetUsageSummary/BudgetUsageSummary";
+import {DashboardCard} from "./components/DashboardCard/DashboardCard";
 import { ExpensesByCategoryChart } from "./components/ExpensesByCategoryChart/ExpensesByCategoryChart";
 import { ExpensesByIncomeChart } from "./components/ExpensesByIncomeChart/ExpensesByIncomeChart";
 import { ExpensesList } from "./components/ExpensesList/ExpensesList";
@@ -73,25 +74,25 @@ export default function App() {
         />
       </div>
 
-      <section className="overflow-x-auto rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <DashboardCard>
         <ExpensesTable
           expenses={expensesForTable}
           goals={expenseGoals}
           setGoals={setExpenseGoals}
           period={budgetPeriod}
         />
-      </section>
+      </DashboardCard>
 
-      <section className="overflow-x-auto rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <DashboardCard> 
         <IncomesTable
           incomes={incomesForTable}
           incomeGoals={incomeGoals}
           setIncomeGoals={setIncomeGoals}
           period={budgetPeriod}
         />
-      </section>
+      </DashboardCard>
 
-      <section className="overflow-x-auto rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <DashboardCard>
         <BudgetSummaryTable
           expenses={expensesForTable}
           incomes={incomesForTable}
@@ -99,20 +100,20 @@ export default function App() {
           setIncomeGoals={setIncomeGoals}
           period={budgetPeriod}
         />
-      </section>
+      </DashboardCard>
 
-      <section className="overflow-x-auto rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <DashboardCard>
         <IncomeForecastTable
           incomes={incomesForTable}
           expenses={expensesForTable}
           forecast={forecast}
           setForecast={setForecast}
         />
-      </section>
+      </DashboardCard>
 
-      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <DashboardCard>
         <ExpensesList entries={entries} setEntries={setEntries} />
-      </div>
+      </DashboardCard>
     </AppLayout>
   );
 }
