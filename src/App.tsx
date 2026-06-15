@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useBudgetData } from "./hooks/useBudgetData";
 import { useLocalStorageState } from "./hooks/useLocalStorageState";
 
+import { AppLayout } from "./components/AppLayout/AppLayout";
 import { BitcoinPrice } from "./components/BitcoinPrice";
 import { BudgetInsights } from "./components/BudgetInsights/BudgetInsights";
 import { BudgetSummaryTable } from "./components/BudgetSummaryTable/BudgetSummaryTable";
@@ -39,87 +40,79 @@ export default function App() {
   } = useBudgetData();
 
   return (
-    <div
-      className={`min-h-screen transition-colors duration-300 ${
-        theme === "dark"
-          ? "bg-slate-950 text-slate-100"
-          : "bg-slate-300 text-slate-800"
-      }`}
-    >
-      <main className="mx-auto max-w-7xl space-y-10 px-6 py-10">
-        <Header theme={theme} setTheme={setTheme} />
+    <AppLayout theme={theme}>
+      <Header theme={theme} setTheme={setTheme} />
 
-        <BitcoinPrice />
+      <BitcoinPrice />
 
-        <Form setEntries={setEntries} />
+      <Form setEntries={setEntries} />
 
-        <BudgetUsageSummary
+      <BudgetUsageSummary
+        expenses={expensesForTable}
+        expenseGoals={expenseGoals}
+        period={budgetPeriod}
+        setPeriod={setBudgetPeriod}
+      />
+
+      <BudgetInsights
+        expenses={expensesForTable}
+        expenseGoals={expenseGoals}
+        period={budgetPeriod}
+      />
+
+      <div className="grid gap-4 xl:grid-cols-2">
+        <ExpensesByIncomeChart
           expenses={expensesForTable}
-          expenseGoals={expenseGoals}
+          incomes={incomesForTable}
           period={budgetPeriod}
-          setPeriod={setBudgetPeriod}
         />
 
-        <BudgetInsights
+        <ExpensesByCategoryChart
           expenses={expensesForTable}
-          expenseGoals={expenseGoals}
           period={budgetPeriod}
         />
+      </div>
 
-        <div className="grid gap-4 xl:grid-cols-2">
-          <ExpensesByIncomeChart
-            expenses={expensesForTable}
-            incomes={incomesForTable}
-            period={budgetPeriod}
-          />
+      <section className="overflow-x-auto rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <ExpensesTable
+          expenses={expensesForTable}
+          goals={expenseGoals}
+          setGoals={setExpenseGoals}
+          period={budgetPeriod}
+        />
+      </section>
 
-          <ExpensesByCategoryChart
-            expenses={expensesForTable}
-            period={budgetPeriod}
-          />
-        </div>
+      <section className="overflow-x-auto rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <IncomesTable
+          incomes={incomesForTable}
+          incomeGoals={incomeGoals}
+          setIncomeGoals={setIncomeGoals}
+          period={budgetPeriod}
+        />
+      </section>
 
-        <section className="overflow-x-auto rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-          <ExpensesTable
-            expenses={expensesForTable}
-            goals={expenseGoals}
-            setGoals={setExpenseGoals}
-            period={budgetPeriod}
-          />
-        </section>
+      <section className="overflow-x-auto rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <BudgetSummaryTable
+          expenses={expensesForTable}
+          incomes={incomesForTable}
+          incomeGoals={incomeGoals}
+          setIncomeGoals={setIncomeGoals}
+          period={budgetPeriod}
+        />
+      </section>
 
-        <section className="overflow-x-auto rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-          <IncomesTable
-            incomes={incomesForTable}
-            incomeGoals={incomeGoals}
-            setIncomeGoals={setIncomeGoals}
-            period={budgetPeriod}
-          />
-        </section>
+      <section className="overflow-x-auto rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <IncomeForecastTable
+          incomes={incomesForTable}
+          expenses={expensesForTable}
+          forecast={forecast}
+          setForecast={setForecast}
+        />
+      </section>
 
-        <section className="overflow-x-auto rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-          <BudgetSummaryTable
-            expenses={expensesForTable}
-            incomes={incomesForTable}
-            incomeGoals={incomeGoals}
-            setIncomeGoals={setIncomeGoals}
-            period={budgetPeriod}
-          />
-        </section>
-
-        <section className="overflow-x-auto rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-          <IncomeForecastTable
-            incomes={incomesForTable}
-            expenses={expensesForTable}
-            forecast={forecast}
-            setForecast={setForecast}
-          />
-        </section>
-
-        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-          <ExpensesList entries={entries} setEntries={setEntries} />
-        </div>
-      </main>
-    </div>
+      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <ExpensesList entries={entries} setEntries={setEntries} />
+      </div>
+    </AppLayout>
   );
 }
