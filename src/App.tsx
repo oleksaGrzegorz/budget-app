@@ -110,7 +110,7 @@ export default function App() {
           setForecast={setForecast}
         />
       </DashboardCard>
-      
+
       <DashboardCard>
         <ExpensesList entries={entries} setEntries={setEntries} />
       </DashboardCard>
