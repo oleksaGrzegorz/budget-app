@@ -8,7 +8,7 @@ import { BitcoinPrice } from "./components/BitcoinPrice";
 import { BudgetInsights } from "./components/BudgetInsights/BudgetInsights";
 import { BudgetSummaryTable } from "./components/BudgetSummaryTable/BudgetSummaryTable";
 import { BudgetUsageSummary } from "./components/BudgetUsageSummary/BudgetUsageSummary";
-import {DashboardCard} from "./components/DashboardCard/DashboardCard";
+import { DashboardCard } from "./components/DashboardCard/DashboardCard";
 import { ExpensesByCategoryChart } from "./components/ExpensesByCategoryChart/ExpensesByCategoryChart";
 import { ExpensesByIncomeChart } from "./components/ExpensesByIncomeChart/ExpensesByIncomeChart";
 import { ExpensesList } from "./components/ExpensesList/ExpensesList";
@@ -83,7 +83,7 @@ export default function App() {
         />
       </DashboardCard>
 
-      <DashboardCard> 
+      <DashboardCard>
         <IncomesTable
           incomes={incomesForTable}
           incomeGoals={incomeGoals}
@@ -110,7 +110,7 @@ export default function App() {
           setForecast={setForecast}
         />
       </DashboardCard>
-
+      
       <DashboardCard>
         <ExpensesList entries={entries} setEntries={setEntries} />
       </DashboardCard>
