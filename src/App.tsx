@@ -105,7 +105,7 @@ export default function App() {
         />
       </DashboardCard>
 
-      <DashboardCard>
+      <DashboardCard title="Income forecast" subtitle="Predicted income for the next period">
         <IncomeForecastTable
           incomes={incomesForTable}
           expenses={expensesForTable}
@@ -114,7 +114,7 @@ export default function App() {
         />
       </DashboardCard>
 
-      <DashboardCard>
+      <DashboardCard title="Transactions history" subtitle="All your transactions in one place">
         <ExpensesList entries={entries} setEntries={setEntries} />
       </DashboardCard>
     </AppLayout>
