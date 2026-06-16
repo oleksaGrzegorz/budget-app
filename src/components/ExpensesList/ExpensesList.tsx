@@ -7,6 +7,8 @@ interface ExpensesListProps {
   setEntries: React.Dispatch<React.SetStateAction<Entry[]>>;
 }
 
+type EntryWithIndex = Entry & { realIndex: number };
+
 export const ExpensesList = ({ entries, setEntries }: ExpensesListProps) => {
   const [showAll, setShowAll] = useState(false);
 
@@ -21,20 +23,20 @@ export const ExpensesList = ({ entries, setEntries }: ExpensesListProps) => {
     realIndex: index,
   }));
 
-const sortedEntries = [...entriesWithIndexes].sort((a, b) => {
-  const monthDifference = Number(b.month) - Number(a.month);
+  const sortedEntries = [...entriesWithIndexes].sort((a, b) => {
+    const monthDifference = Number(b.month) - Number(a.month);
 
-  if (monthDifference !== 0) {
-    return monthDifference;
-  }
+    if (monthDifference !== 0) {
+      return monthDifference;
+    }
 
-  return b.realIndex - a.realIndex;
-});
+    return b.realIndex - a.realIndex;
+  });
 
   const visibleEntries = showAll ? sortedEntries : sortedEntries.slice(0, 5);
 
   const groupedEntries = visibleEntries.reduce<
-    Record<string, typeof visibleEntries>
+    Record<string, EntryWithIndex[]>
   >((groups, entry) => {
     if (!groups[entry.month]) {
       groups[entry.month] = [];
@@ -47,13 +49,6 @@ const sortedEntries = [...entriesWithIndexes].sort((a, b) => {
 
   return (
     <div>
-      <div className="mb-6 flex items-center justify-between">
-
-        {entries.length > 0 && (
-          <span className="text-sm text-slate-400">{entries.length}</span>
-        )}
-      </div>
-
       {!entries.length ? (
         <div className="rounded-xl border border-dashed border-slate-200 py-10 text-center text-sm text-slate-400">
           No entries yet
@@ -89,9 +84,7 @@ const sortedEntries = [...entriesWithIndexes].sort((a, b) => {
                         <div className="ml-4 flex items-center gap-4">
                           <span
                             className={`text-sm font-bold ${
-                              isExpense
-                                ? "text-rose-600"
-                                : "text-emerald-600"
+                              isExpense ? "text-rose-600" : "text-emerald-600"
                             }`}
                           >
                             {isExpense ? "-" : "+"}
