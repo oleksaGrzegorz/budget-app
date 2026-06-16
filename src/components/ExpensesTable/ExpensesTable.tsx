@@ -1,4 +1,4 @@
-import React from "react";
+import { Fragment } from "react";
 
 import { categoryAverageTypes, categoryGroups } from "../../data/categories";
 import { months } from "../../data/months";
@@ -8,7 +8,6 @@ import {
   type PeriodOption,
 } from "../../utils/budgetAverages";
 import { GoalCell } from "../BudgetSummaryTable/GoalCell";
-
 
 interface ExpensesTableProps {
   expenses: Record<string, Record<string, number>>;
@@ -41,9 +40,7 @@ export const ExpensesTable = ({
               <th
                 key={month}
                 className={`border border-slate-200 px-3 py-2 text-center font-semibold ${
-                  isSelectedMonth
-                    ? "bg-sky-100 text-sky-900"
-                    : "text-slate-700"
+                  isSelectedMonth ? "bg-sky-100 text-sky-900" : "text-slate-700"
                 }`}
               >
                 {month}
@@ -63,7 +60,7 @@ export const ExpensesTable = ({
 
       <tbody>
         {categoryGroups.map((group) => (
-          <React.Fragment key={group.name}>
+          <Fragment key={group.name}>
             <tr>
               <td
                 colSpan={columnCount}
@@ -128,7 +125,7 @@ export const ExpensesTable = ({
                 </tr>
               );
             })}
-          </React.Fragment>
+          </Fragment>
         ))}
       </tbody>
     </table>
