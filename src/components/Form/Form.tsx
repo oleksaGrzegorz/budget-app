@@ -1,4 +1,9 @@
-import { type Dispatch, type SetStateAction, useState } from "react";
+import {
+  type Dispatch,
+  type SetStateAction,
+  type SyntheticEvent,
+  useState,
+} from "react";
 
 import { budgetSummaryLabels as incomeCategories } from "../../data/budgetSummaryLabels";
 import { categories } from "../../data/categories";
@@ -9,13 +14,15 @@ interface FormProps {
   setEntries: Dispatch<SetStateAction<Entry[]>>;
 }
 
+type FormType = "expense" | "income";
+
 export const Form = ({ setEntries }: FormProps) => {
   const currentMonth = String(new Date().getMonth() + 1).padStart(2, "0");
 
   const [amount, setAmount] = useState<number | null>(null);
   const [category, setCategory] = useState("");
   const [month, setMonth] = useState(currentMonth);
-  const [formType, setFormType] = useState<"expense" | "income">("expense");
+  const [formType, setFormType] = useState<FormType>("expense");
 
   const isExpense = formType === "expense";
 
@@ -34,12 +41,12 @@ export const Form = ({ setEntries }: FormProps) => {
   const isSubmitDisabled =
     !category || !month || amount === null || amount <= 0;
 
-  const handleTypeChange = (type: "expense" | "income") => {
+  const handleTypeChange = (type: FormType) => {
     setFormType(type);
     setCategory("");
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (isSubmitDisabled) return;
