@@ -3,6 +3,7 @@ import {
   getCategoryAverageType,
 } from "../../data/categories";
 import type { BudgetData } from "../../types/budgetData";
+import type { GoalsData } from "../../types/goalsData";
 import type { PeriodOption } from "../../utils/budgetAverages";
 import { BiggestOverspendingCard } from "./BiggestOverspendingCard";
 import { BiggestSavingsCard } from "./BiggestSavingsCard";
@@ -10,7 +11,7 @@ import { MonthProgressCard } from "./MonthProgressCard";
 
 interface BudgetInsightsProps {
   expenses: BudgetData;
-  expenseGoals: Record<string, number | null>;
+  expenseGoals: GoalsData;
   period: PeriodOption;
 }
 

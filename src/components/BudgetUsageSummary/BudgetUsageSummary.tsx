@@ -1,6 +1,7 @@
 import { categories, categoryAverageTypes } from "../../data/categories";
 import { months } from "../../data/months";
 import type { BudgetData } from "../../types/budgetData";
+import type { GoalsData } from "../../types/goalsData";
 import {
   getActiveMonths,
   getCategoriesAverageTotal,
@@ -10,7 +11,7 @@ import {
 
 interface BudgetUsageSummaryProps {
   expenses: BudgetData;
-  expenseGoals: Record<string, number | null>;
+  expenseGoals: GoalsData;
   period: PeriodOption;
   setPeriod: React.Dispatch<React.SetStateAction<PeriodOption>>;
 }

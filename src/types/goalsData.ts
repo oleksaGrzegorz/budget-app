@@ -1,0 +1,1 @@
+export type GoalsData = Record<string, number | null>;

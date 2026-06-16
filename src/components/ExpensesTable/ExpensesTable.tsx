@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import { categoryAverageTypes, categoryGroups } from "../../data/categories";
 import { months } from "../../data/months";
 import type { BudgetData } from "../../types/budgetData";
+import type { GoalsData } from "../../types/goalsData";
 import {
   getActiveMonths,
   getCategoryAverage,
@@ -12,7 +13,7 @@ import { GoalCell } from "../BudgetSummaryTable/GoalCell";
 
 interface ExpensesTableProps {
   expenses: BudgetData;
-  goals: Record<string, number | null>;
+  goals: GoalsData;
   setGoals: React.Dispatch<React.SetStateAction<Record<string, number | null>>>;
   period: PeriodOption;
 }
