@@ -2,13 +2,14 @@ import {
   categories,
   getCategoryAverageType,
 } from "../../data/categories";
+import type { BudgetData } from "../../types/budgetData";
 import type { PeriodOption } from "../../utils/budgetAverages";
 import { BiggestOverspendingCard } from "./BiggestOverspendingCard";
 import { BiggestSavingsCard } from "./BiggestSavingsCard";
 import { MonthProgressCard } from "./MonthProgressCard";
 
 interface BudgetInsightsProps {
-  expenses: Record<string, Record<string, number>>;
+  expenses: BudgetData;
   expenseGoals: Record<string, number | null>;
   period: PeriodOption;
 }

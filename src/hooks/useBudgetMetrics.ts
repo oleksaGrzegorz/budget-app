@@ -1,3 +1,5 @@
+import type { BudgetData } from "../types/budgetData";
+
 import {
   getActiveMonths,
   getCategoriesAverageTotal,
@@ -6,8 +8,8 @@ import {
 import { categories } from "../data/categories";
 
 export const useBudgetMetrics = (
-  expenses: Record<string, Record<string, number>>,
-  incomes: Record<string, Record<string, number>>,
+  expenses: BudgetData,
+  incomes: BudgetData,
 ) => {
   const activeMonths = getActiveMonths(expenses, incomes);
 

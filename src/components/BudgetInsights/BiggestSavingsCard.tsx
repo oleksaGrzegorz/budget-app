@@ -4,6 +4,7 @@ import {
   categoryEmojis,
   getCategoryAverageType,
 } from "../../data/categories";
+import type { BudgetData } from "../../types/budgetData";
 import {
   getActiveMonths,
   getCategoryAverage,
@@ -11,7 +12,7 @@ import {
 } from "../../utils/budgetAverages";
 
 interface Props {
-  expenses: Record<string, Record<string, number>>;
+  expenses: BudgetData;
   expenseGoals: Record<string, number | null>;
   period: PeriodOption;
 }

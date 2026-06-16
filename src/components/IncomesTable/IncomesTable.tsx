@@ -1,5 +1,6 @@
 import { budgetSummaryLabels as incomeCategories } from "../../data/budgetSummaryLabels";
 import { months } from "../../data/months";
+import type { BudgetData } from "../../types/budgetData";
 import {
   getActiveMonths,
   getCategoryAverage,
@@ -8,7 +9,7 @@ import {
 import { GoalCell } from "../BudgetSummaryTable/GoalCell";
 
 interface IncomesTableProps {
-  incomes: Record<string, Record<string, number>>;
+  incomes: BudgetData;
   incomeGoals: Record<string, number | null>;
   setIncomeGoals: React.Dispatch<
     React.SetStateAction<Record<string, number | null>>

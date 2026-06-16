@@ -1,8 +1,10 @@
+import type { BudgetData } from "../types/budgetData";
+
 import { budgetSummaryLabels } from "./budgetSummaryLabels";
 import { months } from "./months";
 
 export interface Forecast {
-  incomes: Record<string, Record<string, number>>;
+  incomes: BudgetData;
   plannedExpenses: Record<string, number | null>;
   ratings: Record<string, number | null>;
   notes: Record<string, string>;

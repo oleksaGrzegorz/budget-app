@@ -2,14 +2,15 @@ import { useEffect, useState } from "react";
 
 import { months } from "../../data/months";
 import { useBudgetMetrics } from "../../hooks/useBudgetMetrics";
+import type { BudgetData } from "../../types/budgetData";
 import type { Goals } from "../../types/goals";
 import type { PeriodOption } from "../../utils/budgetAverages";
 import { SavingsSection } from "./sections/SavingsSection";
 import { TotalsSection } from "./sections/TotalsSection";
 
 interface BudgetSummaryTableProps {
-  expenses: Record<string, Record<string, number>>;
-  incomes: Record<string, Record<string, number>>;
+  expenses: BudgetData;
+  incomes: BudgetData;
   incomeGoals: Record<string, number | null>;
   setIncomeGoals: React.Dispatch<
     React.SetStateAction<Record<string, number | null>>

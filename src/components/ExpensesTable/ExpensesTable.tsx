@@ -2,6 +2,7 @@ import { Fragment } from "react";
 
 import { categoryAverageTypes, categoryGroups } from "../../data/categories";
 import { months } from "../../data/months";
+import type { BudgetData } from "../../types/budgetData";
 import {
   getActiveMonths,
   getCategoryAverage,
@@ -10,7 +11,7 @@ import {
 import { GoalCell } from "../BudgetSummaryTable/GoalCell";
 
 interface ExpensesTableProps {
-  expenses: Record<string, Record<string, number>>;
+  expenses: BudgetData;
   goals: Record<string, number | null>;
   setGoals: React.Dispatch<React.SetStateAction<Record<string, number | null>>>;
   period: PeriodOption;

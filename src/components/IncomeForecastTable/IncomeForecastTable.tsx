@@ -3,10 +3,11 @@ import { Fragment } from "react";
 import { budgetSummaryLabels as incomeCategories } from "../../data/budgetSummaryLabels";
 import type { Forecast } from "../../data/initialForecast";
 import { months } from "../../data/months";
+import type { BudgetData } from "../../types/budgetData";
 
 interface IncomeForecastTableProps {
-  incomes: Record<string, Record<string, number>>;
-  expenses: Record<string, Record<string, number>>;
+  incomes: BudgetData;
+  expenses: BudgetData;
   forecast: Forecast;
   setForecast: React.Dispatch<React.SetStateAction<Forecast>>;
 }

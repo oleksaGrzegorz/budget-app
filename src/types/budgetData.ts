@@ -1,0 +1,1 @@
+export type BudgetData = Record<string, Record<string, number>>;
