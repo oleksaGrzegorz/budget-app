@@ -3,36 +3,7 @@ import { Fragment } from "react";
 import { budgetSummaryLabels as incomeCategories } from "../../data/budgetSummaryLabels";
 import type { Forecast } from "../../data/initialForecast";
 import { months } from "../../data/months";
-
-const tableClassName =
-  "w-full table-fixed border-collapse border border-slate-200 text-[11px]";
-
-const baseHeaderClassName =
-  "w-28 border border-slate-200 px-2 py-1 text-left font-semibold text-slate-700";
-
-const labelClassName =
-  "w-28 border border-slate-200 bg-slate-50 px-2 py-1 text-left font-semibold text-slate-800";
-
-const monthHeaderClassName =
-  "border border-slate-200 px-1 py-1 text-center font-semibold text-slate-700";
-
-const inputClassName =
-  "w-16 rounded-md border border-slate-200 bg-white px-1 py-1 text-center text-[11px] font-semibold text-slate-700 outline-none focus:border-sky-300 focus:ring-2 focus:ring-sky-100";
-
-const summaryHeaderClassName =
-  "border border-slate-200 bg-sky-50 px-1 py-1 text-center font-black text-sky-900";
-
-const summaryCellClassName =
-  "border border-slate-200 bg-sky-50 px-1 py-1 text-center font-black text-sky-900";
-
-const expenseInputClassName =
-  "w-16 rounded-md border border-rose-200 bg-white px-1 py-1 text-center text-[11px] font-semibold text-rose-700 outline-none focus:border-rose-300 focus:ring-2 focus:ring-rose-100";
-
-const mutedLabelClassName =
-  "w-28 border border-slate-200 bg-white px-2 py-1 text-left font-medium text-slate-500";
-
-const valueCellClassName =
-  "border border-slate-200 bg-white px-1 py-1 text-center font-bold";
+import { tableStyles } from "./tableStyles";
 
 const formatMoney = (value: number) => value.toFixed(2);
 
@@ -95,19 +66,19 @@ export const ForecastAssumptionsTable = ({
         Forecast assumptions
       </h3>
 
-      <table className={tableClassName}>
+      <table className={tableStyles.table}>
         <thead className="bg-slate-50">
           <tr>
-            <th className={baseHeaderClassName}>Category</th>
+            <th className={tableStyles.baseHeader}>Category</th>
 
             {months.map((month) => (
-              <th key={month} className={monthHeaderClassName}>
+              <th key={month} className={tableStyles.monthHeader}>
                 {month}
               </th>
             ))}
 
-            <th className={summaryHeaderClassName}>Avg</th>
-            <th className={summaryHeaderClassName}>Year</th>
+            <th className={tableStyles.summaryHeader}>Avg</th>
+            <th className={tableStyles.summaryHeader}>Year</th>
           </tr>
         </thead>
 
@@ -115,13 +86,10 @@ export const ForecastAssumptionsTable = ({
           {incomeCategories.map((category) => (
             <Fragment key={category}>
               <tr>
-                <th className={labelClassName}>{category}</th>
+                <th className={tableStyles.label}>{category}</th>
 
                 {months.map((month) => (
-                  <td
-                    key={month}
-                    className="border border-slate-200 bg-white px-1 py-1 text-center"
-                  >
+                  <td key={month} className={tableStyles.valueCell}>
                     <input
                       type="number"
                       value={forecast.incomes[category]?.[month] ?? 0}
@@ -134,12 +102,12 @@ export const ForecastAssumptionsTable = ({
                             : Number(event.target.value),
                         )
                       }
-                      className={inputClassName}
+                      className={tableStyles.input}
                     />
                   </td>
                 ))}
 
-                <td className={summaryCellClassName}>
+                <td className={tableStyles.summaryCell}>
                   {formatMoney(
                     getAverage(
                       (month) => forecast.incomes[category]?.[month] ?? 0,
@@ -147,7 +115,7 @@ export const ForecastAssumptionsTable = ({
                   )}
                 </td>
 
-                <td className={summaryCellClassName}>
+                <td className={tableStyles.summaryCell}>
                   {formatMoney(
                     getYearTotal(
                       (month) => forecast.incomes[category]?.[month] ?? 0,
@@ -157,7 +125,7 @@ export const ForecastAssumptionsTable = ({
               </tr>
 
               <tr>
-                <th className={mutedLabelClassName}>Diff.</th>
+                <th className={tableStyles.mutedLabel}>Diff.</th>
 
                 {months.map((month) => {
                   const planned = forecast.incomes[category]?.[month] ?? 0;
@@ -168,7 +136,7 @@ export const ForecastAssumptionsTable = ({
                   return (
                     <td
                       key={month}
-                      className={`${valueCellClassName} ${
+                      className={`${tableStyles.valueCell} ${
                         hasData
                           ? getTextClassName(difference)
                           : "text-slate-400"
@@ -179,7 +147,7 @@ export const ForecastAssumptionsTable = ({
                   );
                 })}
 
-                <td className={summaryCellClassName}>
+                <td className={tableStyles.summaryCell}>
                   {getActualAverage(
                     (month) =>
                       getActualIncomeByCategory(category, month) -
@@ -195,7 +163,7 @@ export const ForecastAssumptionsTable = ({
                     : "-"}
                 </td>
 
-                <td className={summaryCellClassName}>
+                <td className={tableStyles.summaryCell}>
                   {formatMoney(
                     getActualYearTotal(
                       (month) =>
@@ -209,15 +177,10 @@ export const ForecastAssumptionsTable = ({
           ))}
 
           <tr className="border-t-4 border-t-slate-100">
-            <th className="border border-slate-200 bg-rose-50 px-2 py-1 text-left font-black text-rose-900">
-              Planned expenses
-            </th>
+            <th className={tableStyles.label}>Planned expenses</th>
 
             {months.map((month) => (
-              <td
-                key={month}
-                className="border border-slate-200 bg-rose-50 px-1 py-1 text-center"
-              >
+              <td key={month} className={tableStyles.valueCell}>
                 <input
                   type="number"
                   value={forecast.plannedExpenses[month] ?? 0}
@@ -229,16 +192,16 @@ export const ForecastAssumptionsTable = ({
                         : Number(event.target.value),
                     )
                   }
-                  className={expenseInputClassName}
+                  className={tableStyles.expenseInput}
                 />
               </td>
             ))}
 
-            <td className={summaryCellClassName}>
+            <td className={tableStyles.summaryCell}>
               {formatMoney(getAverage(getPlannedExpenses))}
             </td>
 
-            <td className={summaryCellClassName}>
+            <td className={tableStyles.summaryCell}>
               {formatMoney(getYearTotal(getPlannedExpenses))}
             </td>
           </tr>

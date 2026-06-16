@@ -1,4 +1,5 @@
 import { months } from "../../data/months";
+import { tableStyles } from "./tableStyles";
 
 interface MonthlyPerformanceTableProps {
   getActualIncome: (month: string) => number;
@@ -19,27 +20,6 @@ interface MonthlyPerformanceTableProps {
 }
 
 const formatMoney = (value: number) => value.toFixed(2);
-
-const tableClassName =
-  "w-full table-fixed border-collapse border border-slate-200 text-[11px]";
-
-const baseHeaderClassName =
-  "w-28 border border-slate-200 px-2 py-1 text-left font-semibold text-slate-700";
-
-const monthHeaderClassName =
-  "border border-slate-200 px-1 py-1 text-center font-semibold text-slate-700";
-
-const summaryHeaderClassName =
-  "border border-slate-200 bg-sky-50 px-1 py-1 text-center font-black text-sky-900";
-
-const labelClassName =
-  "w-28 border border-slate-200 bg-slate-50 px-2 py-1 text-left font-semibold text-slate-800";
-
-const valueCellClassName =
-  "border border-slate-200 bg-white px-1 py-1 text-center font-bold";
-
-const summaryCellClassName =
-  "border border-slate-200 bg-sky-50 px-1 py-1 text-center font-black text-sky-900";
 
 const getTextClassName = (value: number) => {
   if (value > 0) return "text-emerald-600";
@@ -75,25 +55,25 @@ export const MonthlyPerformanceTable = ({
         Monthly performance
       </h3>
 
-      <table className={tableClassName}>
+      <table className={tableStyles.table}>
         <thead className="bg-slate-50">
           <tr>
-            <th className={baseHeaderClassName}>Metric</th>
+            <th className={tableStyles.baseHeader}>Metric</th>
 
             {months.map((month) => (
-              <th key={month} className={monthHeaderClassName}>
+              <th key={month} className={tableStyles.monthHeader}>
                 {month}
               </th>
             ))}
 
-            <th className={summaryHeaderClassName}>Avg</th>
-            <th className={summaryHeaderClassName}>Year</th>
+            <th className={tableStyles.summaryHeader}>Avg</th>
+            <th className={tableStyles.summaryHeader}>Year</th>
           </tr>
         </thead>
 
         <tbody>
           <tr>
-            <th className={labelClassName}>Income diff.</th>
+            <th className={tableStyles.label}>Income diff.</th>
 
             {months.map((month) => {
               const difference =
@@ -104,7 +84,7 @@ export const MonthlyPerformanceTable = ({
               return (
                 <td
                   key={month}
-                  className={`${valueCellClassName} ${
+                  className={`${tableStyles.valueCell} ${
                     hasData ? getTextClassName(difference) : "text-slate-400"
                   }`}
                 >
@@ -113,7 +93,7 @@ export const MonthlyPerformanceTable = ({
               );
             })}
 
-            <td className={summaryCellClassName}>
+            <td className={tableStyles.summaryCell}>
               {getActualAverage(
                 (month) => getActualIncome(month) - getPlannedIncome(month),
               ) !== null
@@ -126,7 +106,7 @@ export const MonthlyPerformanceTable = ({
                 : "-"}
             </td>
 
-            <td className={summaryCellClassName}>
+            <td className={tableStyles.summaryCell}>
               {formatMoney(
                 getActualYearTotal(
                   (month) => getActualIncome(month) - getPlannedIncome(month),
@@ -136,7 +116,7 @@ export const MonthlyPerformanceTable = ({
           </tr>
 
           <tr>
-            <th className={labelClassName}>Expense diff.</th>
+            <th className={tableStyles.label}>Expense diff.</th>
 
             {months.map((month) => {
               const difference =
@@ -147,7 +127,7 @@ export const MonthlyPerformanceTable = ({
               return (
                 <td
                   key={month}
-                  className={`${valueCellClassName} ${
+                  className={`${tableStyles.valueCell} ${
                     hasData ? getTextClassName(difference) : "text-slate-400"
                   }`}
                 >
@@ -156,7 +136,7 @@ export const MonthlyPerformanceTable = ({
               );
             })}
 
-            <td className={summaryCellClassName}>
+            <td className={tableStyles.summaryCell}>
               {getActualAverage(
                 (month) => getPlannedExpenses(month) - getActualExpenses(month),
               ) !== null
@@ -169,7 +149,7 @@ export const MonthlyPerformanceTable = ({
                 : "-"}
             </td>
 
-            <td className={summaryCellClassName}>
+            <td className={tableStyles.summaryCell}>
               {formatMoney(
                 getActualYearTotal(
                   (month) =>
@@ -185,19 +165,16 @@ export const MonthlyPerformanceTable = ({
             </th>
 
             {months.map((month) => (
-              <td
-                key={month}
-                className="border border-slate-200 bg-amber-50 px-1 py-1 text-center font-black text-amber-900"
-              >
+              <td key={month} className={tableStyles.valueCell}>
                 {formatMoney(getSavingsGoal(month))}
               </td>
             ))}
 
-            <td className={summaryCellClassName}>
+            <td className={tableStyles.summaryCell}>
               {formatMoney(getAverage(getSavingsGoal))}
             </td>
 
-            <td className={summaryCellClassName}>
+            <td className={tableStyles.summaryCell}>
               {formatMoney(getYearTotal(getSavingsGoal))}
             </td>
           </tr>
@@ -227,19 +204,19 @@ export const MonthlyPerformanceTable = ({
               );
             })}
 
-            <td className={summaryCellClassName}>
+            <td className={tableStyles.summaryCell}>
               {getActualAverage(getActualSavings) !== null
                 ? formatMoney(getActualAverage(getActualSavings) ?? 0)
                 : "-"}
             </td>
 
-            <td className={summaryCellClassName}>
+            <td className={tableStyles.summaryCell}>
               {formatMoney(getActualYearTotal(getActualSavings))}
             </td>
           </tr>
 
           <tr>
-            <th className={labelClassName}>Savings diff.</th>
+            <th className={tableStyles.label}>Savings diff.</th>
 
             {months.map((month) => {
               const difference =
@@ -249,7 +226,7 @@ export const MonthlyPerformanceTable = ({
               return (
                 <td
                   key={month}
-                  className={`${valueCellClassName} ${
+                  className={`${tableStyles.valueCell} ${
                     hasData ? getTextClassName(difference) : "text-slate-400"
                   }`}
                 >
@@ -258,7 +235,7 @@ export const MonthlyPerformanceTable = ({
               );
             })}
 
-            <td className={summaryCellClassName}>
+            <td className={tableStyles.summaryCell}>
               {getActualAverage(
                 (month) => getActualSavings(month) - getSavingsGoal(month),
               ) !== null
@@ -271,7 +248,7 @@ export const MonthlyPerformanceTable = ({
                 : "-"}
             </td>
 
-            <td className={summaryCellClassName}>
+            <td className={tableStyles.summaryCell}>
               {formatMoney(
                 getActualYearTotal(
                   (month) => getActualSavings(month) - getSavingsGoal(month),
@@ -281,7 +258,7 @@ export const MonthlyPerformanceTable = ({
           </tr>
 
           <tr>
-            <th className={labelClassName}>Rating</th>
+            <th className={tableStyles.label}>Rating</th>
 
             {months.map((month) => {
               const rating = getRating(month);
@@ -298,13 +275,13 @@ export const MonthlyPerformanceTable = ({
               );
             })}
 
-            <td className={summaryCellClassName}>
+            <td className={tableStyles.summaryCell}>
               {getAverageRating() !== null
                 ? getAverageRating()?.toFixed(1)
                 : "-"}
             </td>
 
-            <td className={summaryCellClassName}>-</td>
+            <td className={tableStyles.summaryCell}>-</td>
           </tr>
         </tbody>
       </table>
