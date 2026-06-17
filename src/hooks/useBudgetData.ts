@@ -24,12 +24,12 @@ export const useBudgetData = (selectedYear: string) => {
 
   const [expenseGoals, setExpenseGoals] = useLocalStorageState<
     Record<string, number | null>
-  >("budget.expenseGoals", initialExpenseGoals);
+  >(`budget.expenseGoals.${selectedYear}`, initialExpenseGoals);
   const [incomeGoals, setIncomeGoals] = useLocalStorageState<
     Record<string, number | null>
-  >("budget.incomeGoals", {});
+  >(`budget.incomeGoals.${selectedYear}`, {});
   const [forecast, setForecast] = useLocalStorageState(
-    "budget.forecast",
+    `budget.forecast.${selectedYear}`,
     initialForecast,
   );
 
