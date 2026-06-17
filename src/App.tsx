@@ -27,8 +27,10 @@ export default function App() {
   );
   const [budgetPeriod, setBudgetPeriod] = useState<PeriodOption>("average");
 
+  const [selectedYear, setSelectedYear] = useState("2026");
+
   const {
-    entries,
+    entriesForSelectedYear,
     setEntries,
     expenseGoals,
     setExpenseGoals,
@@ -38,13 +40,22 @@ export default function App() {
     setForecast,
     expensesForTable,
     incomesForTable,
-  } = useBudgetData();
+  } = useBudgetData(selectedYear);
 
   return (
     <AppLayout theme={theme}>
       <Header theme={theme} setTheme={setTheme} />
 
       <BitcoinPrice />
+
+      <select
+        value={selectedYear}
+        onChange={(event) => setSelectedYear(event.target.value)}
+        className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm"
+      >
+        <option value="2025">2025</option>
+        <option value="2026">2026</option>
+      </select>
 
       <Form setEntries={setEntries} />
 
@@ -105,7 +116,10 @@ export default function App() {
         />
       </DashboardCard>
 
-      <DashboardCard title="Income forecast" subtitle="Predicted income for the next period">
+      <DashboardCard
+        title="Income forecast"
+        subtitle="Predicted income for the next period"
+      >
         <IncomeForecastTable
           incomes={incomesForTable}
           expenses={expensesForTable}
@@ -114,8 +128,14 @@ export default function App() {
         />
       </DashboardCard>
 
-      <DashboardCard title="Transactions history" subtitle="All your transactions in one place">
-        <ExpensesList entries={entries} setEntries={setEntries} />
+      <DashboardCard
+        title="Transactions history"
+        subtitle="All your transactions in one place"
+      >
+        <ExpensesList
+          entries={entriesForSelectedYear}
+          setEntries={setEntries}
+        />
       </DashboardCard>
     </AppLayout>
   );

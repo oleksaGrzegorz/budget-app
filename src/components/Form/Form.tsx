@@ -22,6 +22,8 @@ export const Form = ({ setEntries }: FormProps) => {
   const [amount, setAmount] = useState<number | null>(null);
   const [category, setCategory] = useState("");
   const [month, setMonth] = useState(currentMonth);
+  const currentYear = String(new Date().getFullYear());
+  const [year, setYear] = useState(currentYear);
   const [formType, setFormType] = useState<FormType>("expense");
 
   const isExpense = formType === "expense";
@@ -39,7 +41,7 @@ export const Form = ({ setEntries }: FormProps) => {
       };
 
   const isSubmitDisabled =
-    !category || !month || amount === null || amount <= 0;
+    !category || !month || !year || amount === null || amount <= 0;
 
   const handleTypeChange = (type: FormType) => {
     setFormType(type);
@@ -57,6 +59,7 @@ export const Form = ({ setEntries }: FormProps) => {
         formType,
         category,
         month,
+        year,
         amount,
       },
     ]);
@@ -117,7 +120,7 @@ export const Form = ({ setEntries }: FormProps) => {
 
       <form
         onSubmit={handleSubmit}
-        className="mt-6 grid items-end gap-4 lg:grid-cols-[1fr_1fr_1fr_auto]"
+        className="mt-6 grid items-end gap-4 lg:grid-cols-[1fr_1fr_1fr_1fr_auto]"
       >
         <label className="space-y-1.5">
           <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
@@ -179,6 +182,20 @@ export const Form = ({ setEntries }: FormProps) => {
               </option>
             ))}
           </select>
+        </label>
+
+        <label className="space-y-1.5">
+          <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+            Year
+          </span>
+
+          <input
+            type="number"
+            value={year}
+            placeholder="e.g. 2023"
+            onChange={(e) => setYear(e.target.value)}
+            className={`h-11 w-full rounded-lg border border-slate-300 px-3 text-sm outline-none transition-all duration-300 focus:ring-2 ${accent.focus}`}
+          />
         </label>
 
         <button

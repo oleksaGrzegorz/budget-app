@@ -11,11 +11,17 @@ import { initialForecast } from "../data/initialForecast";
 
 import { useLocalStorageState } from "./useLocalStorageState";
 
-export const useBudgetData = () => {
+export const useBudgetData = (selectedYear: string) => {
   const [entries, setEntries] = useLocalStorageState<Entry[]>(
     "budget.entries",
     initialEntries,
   );
+
+  const entriesForSelectedYear = useMemo(
+    () => entries.filter((entry) => entry.year === selectedYear),
+    [entries, selectedYear],
+  );
+
   const [expenseGoals, setExpenseGoals] = useLocalStorageState<
     Record<string, number | null>
   >("budget.expenseGoals", initialExpenseGoals);
@@ -27,9 +33,16 @@ export const useBudgetData = () => {
     initialForecast,
   );
 
-  const expensesForTable = useMemo(() => sumExpenses(entries), [entries]);
-  const incomesForTable = useMemo(() => sumIncomes(entries), [entries]);
+  const expensesForTable = useMemo(
+    () => sumExpenses(entriesForSelectedYear),
+    [entriesForSelectedYear],
+  );
+  const incomesForTable = useMemo(
+    () => sumIncomes(entriesForSelectedYear),
+    [entriesForSelectedYear],
+  );
   return {
+    entriesForSelectedYear,
     entries,
     setEntries,
     expenseGoals,
