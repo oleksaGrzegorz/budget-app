@@ -17,6 +17,7 @@ import { Form } from "./components/Form/Form";
 import { Header } from "./components/Header/Header";
 import { IncomeForecastTable } from "./components/IncomeForecastTable/IncomeForecastTable";
 import { IncomesTable } from "./components/IncomesTable/IncomesTable";
+import { YearSelector } from "./components/YearSelector/YearSelector";
 
 import type { PeriodOption } from "./utils/budgetAverages";
 
@@ -44,20 +45,19 @@ export default function App() {
 
   return (
     <AppLayout theme={theme}>
-      <Header theme={theme} setTheme={setTheme} />
+      
+      <Header 
+        theme={theme} 
+        setTheme={setTheme} />
 
       <BitcoinPrice />
 
-      <select
-        value={selectedYear}
-        onChange={(event) => setSelectedYear(event.target.value)}
-        className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm"
-      >
-        <option value="2025">2025</option>
-        <option value="2026">2026</option>
-      </select>
+      <YearSelector 
+        year={selectedYear} 
+        onChange={setSelectedYear} />
 
-      <Form setEntries={setEntries} />
+      <Form 
+        setEntries={setEntries} />
 
       <BudgetUsageSummary
         expenses={expensesForTable}
