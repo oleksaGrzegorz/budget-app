@@ -7,45 +7,37 @@ interface ExpensesListProps {
   setEntries: React.Dispatch<React.SetStateAction<Entry[]>>;
 }
 
-type EntryWithIndex = Entry & { realIndex: number };
-
 export const ExpensesList = ({ entries, setEntries }: ExpensesListProps) => {
   const [showAll, setShowAll] = useState(false);
 
-  const removeEntry = (index: number) => {
-    setEntries((prev) =>
-      prev.filter((_, currentIndex) => currentIndex !== index),
-    );
+  const removeEntry = (id: string) => {
+    setEntries((prev) => prev.filter((entry) => entry.id !== id));
   };
 
-  const entriesWithIndexes = entries.map((entry, index) => ({
-    ...entry,
-    realIndex: index,
-  }));
-
-  const sortedEntries = [...entriesWithIndexes].sort((a, b) => {
+  const sortedEntries = [...entries].sort((a, b) => {
     const monthDifference = Number(b.month) - Number(a.month);
 
     if (monthDifference !== 0) {
       return monthDifference;
     }
 
-    return b.realIndex - a.realIndex;
+    return b.id.localeCompare(a.id);
   });
 
   const visibleEntries = showAll ? sortedEntries : sortedEntries.slice(0, 5);
 
-  const groupedEntries = visibleEntries.reduce<
-    Record<string, EntryWithIndex[]>
-  >((groups, entry) => {
-    if (!groups[entry.month]) {
-      groups[entry.month] = [];
-    }
+  const groupedEntries = visibleEntries.reduce<Record<string, Entry[]>>(
+    (groups, entry) => {
+      if (!groups[entry.month]) {
+        groups[entry.month] = [];
+      }
 
-    groups[entry.month].push(entry);
+      groups[entry.month].push(entry);
 
-    return groups;
-  }, {});
+      return groups;
+    },
+    {},
+  );
 
   return (
     <div>
@@ -74,7 +66,7 @@ export const ExpensesList = ({ entries, setEntries }: ExpensesListProps) => {
 
                     return (
                       <li
-                        key={item.realIndex}
+                        key={item.id}
                         className="group flex items-center justify-between border-b border-slate-100 py-4 transition hover:bg-slate-50"
                       >
                         <div className="font-medium text-slate-800">
@@ -93,7 +85,7 @@ export const ExpensesList = ({ entries, setEntries }: ExpensesListProps) => {
 
                           <button
                             type="button"
-                            onClick={() => removeEntry(item.realIndex)}
+                            onClick={() => removeEntry(item.id)}
                             className="flex h-8 w-8 items-center justify-center rounded-full text-slate-300 opacity-100 transition hover:bg-slate-100 hover:text-rose-600 lg:opacity-0 lg:group-hover:opacity-100"
                           >
                             ✕
