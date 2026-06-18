@@ -23,6 +23,7 @@ export const categoryGroups = [
       "Car tax",
       "Car insurance",
       "Car repairs & parts",
+      "Fines",
     ],
   },
   {
@@ -93,7 +94,7 @@ export const categoryGroups = [
     name: "Travel",
     emoji: "✈️",
     iconClassName: "bg-indigo-200 ring-indigo-300",
-    categories: ["Flights"],
+    categories: ["Flights", "Vacations"],
   },
   {
     name: "Currency",
@@ -129,6 +130,7 @@ export const categoryAverageTypes: Partial<
 > = {
   "Property tax": "annual",
   "Car repairs & parts": "annual",
+  "Fines":"annual",
   "Dentist & medicine": "annual",
   "Renovations": "annual",
   "Home items": "annual",
