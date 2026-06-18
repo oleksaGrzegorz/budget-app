@@ -56,6 +56,7 @@ export const Form = ({ setEntries }: FormProps) => {
     setEntries((prev) => [
       ...prev,
       {
+        id: crypto.randomUUID(),
         formType,
         category,
         month,
