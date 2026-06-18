@@ -5,5 +5,4 @@ export type Entry = {
   year: string;
   month: string;
   amount: number;
-
 };
