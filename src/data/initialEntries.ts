@@ -1,7 +1,7 @@
 import type { Entry } from "../types/entry";
 
-export const initialEntries: Entry[] = [
-  { formType: "expense", category: "Mortgage", year: "2026", month: "01", amount: 1300.79 },
+const rawEntries: Omit<Entry, "id">[] = [
+{ formType: "expense", category: "Mortgage", year: "2026", month: "01", amount: 1300.79 },
   { formType: "expense", category: "Mortgage", year: "2026", month: "02", amount: 1300.79 },
   { formType: "expense", category: "Mortgage", year: "2026", month: "03", amount: 1300.79 },
   { formType: "expense", category: "Mortgage", year: "2026", month: "04", amount: 1300.79 },
@@ -190,3 +190,8 @@ export const initialEntries: Entry[] = [
   { formType: "income", category: "Rent", year: "2026", month: "05", amount: 200 },
   { formType: "income", category: "Rent", year: "2026", month: "06", amount: 400 },
 ];
+
+export const initialEntries: Entry[] = rawEntries.map((entry, index) => ({
+  id: `seed-${index}`,
+  ...entry,
+}));
