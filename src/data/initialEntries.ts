@@ -1,6 +1,39 @@
 import type { Entry } from "../types/entry";
 
 const rawEntries: Omit<Entry, "id">[] = [
+
+  { formType: "income", category: "Salary - Grzesiek", year: "2025", month: "01", amount: 2743.53 },
+  { formType: "income", category: "Salary - Grzesiek", year: "2025", month: "02", amount: 2727.32 },
+  { formType: "income", category: "Salary - Grzesiek", year: "2025", month: "03", amount: 6123.33 },
+  { formType: "income", category: "Salary - Grzesiek", year: "2025", month: "04", amount: 4160.32 },
+  { formType: "income", category: "Salary - Grzesiek", year: "2025", month: "05", amount: 3003.5 },
+  { formType: "income", category: "Salary - Grzesiek", year: "2025", month: "06", amount: 2653.38 },
+  { formType: "income", category: "Salary - Grzesiek", year: "2025", month: "07", amount: 2423.37 },
+  { formType: "income", category: "Salary - Grzesiek", year: "2025", month: "08", amount: 2753.57 },
+  { formType: "income", category: "Salary - Grzesiek", year: "2025", month: "09", amount: 2867.01 },
+  { formType: "income", category: "Salary - Grzesiek", year: "2025", month: "10", amount: 2616.6 },
+  { formType: "income", category: "Salary - Grzesiek", year: "2025", month: "11", amount: 2178.78 },
+  { formType: "income", category: "Salary - Grzesiek", year: "2025", month: "12", amount: 2677.54 },
+
+  { formType: "income", category: "Salary - Marta", year: "2025", month: "01", amount: 2009.65 },
+  { formType: "income", category: "Salary - Marta", year: "2025", month: "02", amount: 1479.65 },
+  { formType: "income", category: "Salary - Marta", year: "2025", month: "03", amount: 1819.65 },
+  { formType: "income", category: "Salary - Marta", year: "2025", month: "04", amount: 2557.31 },
+  { formType: "income", category: "Salary - Marta", year: "2025", month: "05", amount: 1489.65 },
+  { formType: "income", category: "Salary - Marta", year: "2025", month: "06", amount: 1607.31 },
+  { formType: "income", category: "Salary - Marta", year: "2025", month: "07", amount: 1457.31 },
+  { formType: "income", category: "Salary - Marta", year: "2025", month: "08", amount: 1387.31 },
+  { formType: "income", category: "Salary - Marta", year: "2025", month: "09", amount: 1909.65 },
+  { formType: "income", category: "Salary - Marta", year: "2025", month: "10", amount: 2459.65 },
+  { formType: "income", category: "Salary - Marta", year: "2025", month: "11", amount: 2007.31 },
+  { formType: "income", category: "Salary - Marta", year: "2025", month: "12", amount: 2050 },
+
+  { formType: "income", category: "Other income", year: "2025", month: "04", amount: 1000 },
+  { formType: "income", category: "Other income", year: "2025", month: "05", amount: 5782 },
+  { formType: "income", category: "Other income", year: "2025", month: "06", amount: 1800 },
+  { formType: "income", category: "Other income", year: "2025", month: "09", amount: 900 },
+  { formType: "income", category: "Other income", year: "2025", month: "10", amount: 175 },
+
   { formType: "expense", category: "Mortgage", year: "2025", month: "01", amount: 1300.79 },
   { formType: "expense", category: "Mortgage", year: "2025", month: "02", amount: 1300.79 },
   { formType: "expense", category: "Mortgage", year: "2025", month: "03", amount: 1300.79 },
