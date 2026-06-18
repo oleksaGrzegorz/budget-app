@@ -10,6 +10,7 @@ export const initialExpenseGoals: Record<string, number | null> = {
   "Car tax": 100,
   "Car insurance": 41,
   "Car repairs & parts": 50,
+  "Fines": 1,
 
   "Electricity": 180,
   "Water": 34,
@@ -33,13 +34,16 @@ export const initialExpenseGoals: Record<string, number | null> = {
 
   "Hairdresser": 30,
   "Clothes & shoes": 50,
+  "Massage": 20,
 
   "Gym": 30,
 
   "Entertainment": 50,
-  "Flights": 100,
   "Theme parks & attractions": 30,
-  "Massage": 20,
+
+  "Flights": 100,
+  "Vacations": 20,
+
 
   "Currency exchange": 1,
 
