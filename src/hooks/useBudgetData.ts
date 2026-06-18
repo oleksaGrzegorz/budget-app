@@ -8,6 +8,7 @@ import { sumIncomes } from "../utils/sumIncomes";
 import { initialEntries } from "../data/initialEntries";
 import { initialExpenseGoals } from "../data/initialExpenseGoals";
 import { initialForecast } from "../data/initialForecast";
+import { initialIncomeGoals } from "../data/initialIncomeGoals";
 
 import { useLocalStorageState } from "./useLocalStorageState";
 
@@ -27,7 +28,7 @@ export const useBudgetData = (selectedYear: string) => {
   >(`budget.expenseGoals.${selectedYear}`, initialExpenseGoals);
   const [incomeGoals, setIncomeGoals] = useLocalStorageState<
     Record<string, number | null>
-  >(`budget.incomeGoals.${selectedYear}`, {});
+  >(`budget.incomeGoals.${selectedYear}`, initialIncomeGoals);
   const [forecast, setForecast] = useLocalStorageState(
     `budget.forecast.${selectedYear}`,
     initialForecast,
