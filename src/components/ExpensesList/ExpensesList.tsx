@@ -15,6 +15,12 @@ export const ExpensesList = ({ entries, setEntries }: ExpensesListProps) => {
   };
 
   const sortedEntries = [...entries].sort((a, b) => {
+    const yearDifference = Number(b.year) - Number(a.year);
+
+    if (yearDifference !== 0) {
+      return yearDifference;
+    }
+
     const monthDifference = Number(b.month) - Number(a.month);
 
     if (monthDifference !== 0) {
