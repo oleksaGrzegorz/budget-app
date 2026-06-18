@@ -45,19 +45,13 @@ export default function App() {
 
   return (
     <AppLayout theme={theme}>
-      
-      <Header 
-        theme={theme} 
-        setTheme={setTheme} />
+      <Header theme={theme} setTheme={setTheme} />
 
       <BitcoinPrice />
 
-      <YearSelector 
-        year={selectedYear} 
-        onChange={setSelectedYear} />
+      <YearSelector year={selectedYear} onChange={setSelectedYear} />
 
-      <Form 
-        setEntries={setEntries} />
+      <Form selectedYear={selectedYear} setEntries={setEntries} />
 
       <BudgetUsageSummary
         expenses={expensesForTable}
