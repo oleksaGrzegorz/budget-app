@@ -65,7 +65,10 @@ export default function App() {
       <BudgetInsights
         expenses={expensesForTable}
         expenseGoals={expenseGoals}
+        incomes={incomesForTable}
         period={budgetPeriod}
+        forecast={forecast}
+  
       />
 
       <div className="grid gap-4 xl:grid-cols-2">
