@@ -41,6 +41,8 @@ export default function App() {
     setForecast,
     expensesForTable,
     incomesForTable,
+    summaryGoals,
+    setSummaryGoals,
   } = useBudgetData(selectedYear);
 
   return (
@@ -104,9 +106,9 @@ export default function App() {
         <BudgetSummaryTable
           expenses={expensesForTable}
           incomes={incomesForTable}
-          incomeGoals={incomeGoals}
-          setIncomeGoals={setIncomeGoals}
           period={budgetPeriod}
+          goals={summaryGoals}
+          setGoals={setSummaryGoals}
         />
       </DashboardCard>
 
