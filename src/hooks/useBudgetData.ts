@@ -1,10 +1,12 @@
 import { useMemo } from "react";
 
 import type { Entry } from "../types/entry";
+import type { Goals } from "../types/goals";
 
 import { sumExpenses } from "../utils/sumExpenses";
 import { sumIncomes } from "../utils/sumIncomes";
 
+import { initialBudgetSummaryGoals } from "../data/initialBudgetSummaryGoals";
 import { initialEntries } from "../data/initialEntries";
 import { initialExpenseGoals } from "../data/initialExpenseGoals";
 import { initialForecast } from "../data/initialForecast";
@@ -29,6 +31,10 @@ export const useBudgetData = (selectedYear: string) => {
   const [incomeGoals, setIncomeGoals] = useLocalStorageState<
     Record<string, number | null>
   >(`budget.incomeGoals.${selectedYear}`, initialIncomeGoals);
+  const [summaryGoals, setSummaryGoals] = useLocalStorageState<Goals>(
+  `budget.summaryGoals.${selectedYear}`,
+  initialBudgetSummaryGoals,
+);
   const [forecast, setForecast] = useLocalStorageState(
     `budget.forecast.${selectedYear}`,
     initialForecast,
@@ -54,5 +60,7 @@ export const useBudgetData = (selectedYear: string) => {
     setForecast,
     expensesForTable,
     incomesForTable,
+    summaryGoals,
+    setSummaryGoals,
   };
 };

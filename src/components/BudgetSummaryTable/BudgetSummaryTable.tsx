@@ -1,10 +1,7 @@
-import { useEffect, useState } from "react";
-
 import { months } from "../../data/months";
 import { useBudgetMetrics } from "../../hooks/useBudgetMetrics";
 import type { BudgetData } from "../../types/budgetData";
 import type { Goals } from "../../types/goals";
-import type { GoalsData } from "../../types/goalsData";
 import type { PeriodOption } from "../../utils/budgetAverages";
 import { SavingsSection } from "./sections/SavingsSection";
 import { TotalsSection } from "./sections/TotalsSection";
@@ -12,16 +9,16 @@ import { TotalsSection } from "./sections/TotalsSection";
 interface BudgetSummaryTableProps {
   expenses: BudgetData;
   incomes: BudgetData;
-  incomeGoals: GoalsData;
-  setIncomeGoals: React.Dispatch<
-    React.SetStateAction<Record<string, number | null>>
-  >;
+  goals: Goals;
+  setGoals: React.Dispatch<React.SetStateAction<Goals>>;
   period: PeriodOption;
 }
 
 export const BudgetSummaryTable = ({
   expenses,
   incomes,
+  goals,
+  setGoals,
   period,
 }: BudgetSummaryTableProps) => {
   const {
@@ -34,19 +31,6 @@ export const BudgetSummaryTable = ({
     getAverageIncome,
     getAverageExpense,
   } = useBudgetMetrics(expenses, incomes);
-
-  const [goals, setGoals] = useState<Goals>(
-    JSON.parse(localStorage.getItem("budgetGoals") || "null") ?? {
-      income: null,
-      expenses: null,
-      savings: null,
-      savingsPercentage: null,
-    },
-  );
-
-  useEffect(() => {
-    localStorage.setItem("budgetGoals", JSON.stringify(goals));
-  }, [goals]);
 
   return (
     <table className="w-full border-collapse border border-slate-200 text-xs">
@@ -63,9 +47,7 @@ export const BudgetSummaryTable = ({
               <th
                 key={month}
                 className={`border border-slate-200 px-3 py-2 text-center font-semibold ${
-                  isSelectedMonth
-                    ? "bg-sky-100 text-sky-900"
-                    : "text-slate-700"
+                  isSelectedMonth ? "bg-sky-100 text-sky-900" : "text-slate-700"
                 }`}
               >
                 {month}
