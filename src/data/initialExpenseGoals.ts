@@ -2,14 +2,14 @@ export const initialExpenseGoals: Record<string, number | null> = {
   Mortgage: 1300.79,
   "Property tax": 105,
 
-  Groceries: 700,
+  Groceries: 750,
   "Eating out": 50,
 
   "Fuel - Dacia": 200,
   "Fuel - Renault": 30,
   "Car tax": 100,
   "Car insurance": 41,
-  "Car repairs & parts": 50,
+  "Car repairs & parts": 100,
   "Fines": 1,
 
   "Electricity": 180,
