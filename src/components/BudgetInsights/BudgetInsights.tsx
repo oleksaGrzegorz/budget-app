@@ -1,43 +1,26 @@
-import {
-  categories,
-  getCategoryAverageType,
-} from "../../data/categories";
+import type { Forecast } from "../../data/initialForecast";
 import type { BudgetData } from "../../types/budgetData";
 import type { GoalsData } from "../../types/goalsData";
 import type { PeriodOption } from "../../utils/budgetAverages";
 import { BiggestOverspendingCard } from "./BiggestOverspendingCard";
 import { BiggestSavingsCard } from "./BiggestSavingsCard";
-import { MonthProgressCard } from "./MonthProgressCard";
+import { IncomeGoalCard } from "./IncomeGoalCard";
 
 interface BudgetInsightsProps {
   expenses: BudgetData;
+  incomes: BudgetData;
   expenseGoals: GoalsData;
+  forecast: Forecast;
   period: PeriodOption;
 }
 
 export const BudgetInsights = ({
   expenses,
+  incomes,
   expenseGoals,
+  forecast,
   period,
 }: BudgetInsightsProps) => {
-  const expectedExpensesLeft =
-    period === "average"
-      ? 0
-      : categories.reduce((sum, category) => {
-          if (getCategoryAverageType(category) === "annual") {
-            return sum;
-          }
-
-          const goal = expenseGoals[category] ?? 0;
-          const spent = expenses[category]?.[period] ?? 0;
-
-          if (spent >= goal) {
-            return sum;
-          }
-
-          return sum + (goal - spent);
-        }, 0);
-
   return (
     <section className="grid gap-4 lg:grid-cols-3">
       <BiggestSavingsCard
@@ -46,7 +29,11 @@ export const BudgetInsights = ({
         period={period}
       />
 
-      <MonthProgressCard expectedExpensesLeft={expectedExpensesLeft} />
+      <IncomeGoalCard
+        incomes={incomes}
+        forecast={forecast}
+        period={period}
+      />
 
       <BiggestOverspendingCard
         expenses={expenses}

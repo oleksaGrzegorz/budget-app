@@ -21,6 +21,7 @@ type IncomePlanItem = {
   difference: number;
   missing: number;
   progress: number;
+  displayProgress: number;
   isBelowPlan: boolean;
   hasPlan: boolean;
 };
@@ -68,7 +69,8 @@ export const IncomeGoalCard = ({
 
       const difference = actual - planned;
       const missing = difference < 0 ? Math.abs(difference) : 0;
-      const progress = planned > 0 ? Math.min((actual / planned) * 100, 100) : 0;
+      const rawProgress = planned > 0 ? (actual / planned) * 100 : 0;
+      const progress = Math.min(rawProgress, 100);
 
       return {
         category,
@@ -77,6 +79,7 @@ export const IncomeGoalCard = ({
         difference,
         missing,
         progress,
+        displayProgress: rawProgress,
         isBelowPlan: difference < 0,
         hasPlan: planned > 0,
       };
@@ -94,8 +97,9 @@ export const IncomeGoalCard = ({
   const totalActual = items.reduce((sum, item) => sum + item.actual, 0);
   const totalPlanned = items.reduce((sum, item) => sum + item.planned, 0);
   const totalDifference = totalActual - totalPlanned;
-  const totalProgress =
-    totalPlanned > 0 ? Math.min((totalActual / totalPlanned) * 100, 100) : 0;
+  const totalRawProgress =
+    totalPlanned > 0 ? (totalActual / totalPlanned) * 100 : 0;
+  const totalProgress = Math.min(totalRawProgress, 100);
 
   return (
     <section className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
@@ -170,7 +174,7 @@ export const IncomeGoalCard = ({
         </div>
 
         <div className="mt-1 text-center text-[11px] font-bold text-slate-400">
-          {Math.round(totalProgress)}% of forecast
+          {Math.round(totalRawProgress)}% of forecast
         </div>
       </div>
 
@@ -182,7 +186,7 @@ export const IncomeGoalCard = ({
 
           <div className="space-y-2">
             {belowPlanItems.length > 0 ? (
-              belowPlanItems.slice(0, 3).map((item) => (
+              belowPlanItems.map((item) => (
                 <div
                   key={item.category}
                   className="rounded-xl bg-rose-50 px-3 py-2"
@@ -202,7 +206,7 @@ export const IncomeGoalCard = ({
                       {formatMoney(item.actual)} / {formatMoney(item.planned)}
                     </span>
 
-                    <span>{Math.round(item.progress)}%</span>
+                    <span>{Math.round(item.displayProgress)}%</span>
                   </div>
 
                   <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-white">
@@ -228,18 +232,35 @@ export const IncomeGoalCard = ({
 
           <div className="space-y-2">
             {reachedPlanItems.length > 0 ? (
-              reachedPlanItems.slice(0, 3).map((item) => (
+              reachedPlanItems.map((item) => (
                 <div
                   key={item.category}
-                  className="flex items-center justify-between gap-3 rounded-xl bg-emerald-50 px-3 py-2 text-xs"
+                  className="rounded-xl bg-emerald-50 px-3 py-2"
                 >
-                  <span className="truncate font-bold text-slate-700">
-                    {item.category}
-                  </span>
+                  <div className="flex items-center justify-between gap-3 text-xs">
+                    <span className="truncate font-black text-slate-800">
+                      {item.category}
+                    </span>
 
-                  <span className="shrink-0 font-black text-emerald-600">
-                    +{formatMoney(item.difference)}
-                  </span>
+                    <span className="shrink-0 font-black text-emerald-600">
+                      +{formatMoney(item.difference)}
+                    </span>
+                  </div>
+
+                  <div className="mt-1 flex items-center justify-between gap-3 text-[10px] font-bold text-slate-400">
+                    <span>
+                      {formatMoney(item.actual)} / {formatMoney(item.planned)}
+                    </span>
+
+                    <span>{Math.round(item.displayProgress)}%</span>
+                  </div>
+
+                  <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-white">
+                    <div
+                      className="h-full rounded-full bg-emerald-500 transition-all duration-500"
+                      style={{ width: `${item.progress}%` }}
+                    />
+                  </div>
                 </div>
               ))
             ) : (
