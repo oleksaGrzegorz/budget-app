@@ -139,11 +139,9 @@ export const categoryAverageTypes: Partial<
   "Clothes & shoes": "annual",
   "Massage": "annual",
   "Gym": "annual",
-  "Entertainment": "annual",
-  "Theme parks & attractions": "annual",
   "Flights": "annual",
+  "Vacations": "annual",
   "Currency exchange": "annual",
-  "Other": "annual",
 };
 
 export function getCategoryAverageType(
