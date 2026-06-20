@@ -47,7 +47,7 @@ export default function App() {
 
   return (
     <AppLayout theme={theme}>
-      <Header theme={theme} setTheme={setTheme} />
+      <Header theme={theme} setTheme={setTheme}/>
 
       <BitcoinPrice />
 
