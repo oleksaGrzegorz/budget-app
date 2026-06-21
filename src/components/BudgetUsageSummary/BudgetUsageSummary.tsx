@@ -39,6 +39,51 @@ const formatMoney = (value: number) =>
     maximumFractionDigits: 2,
   });
 
+const getMonthProgressPercent = (month: string) => {
+  const now = new Date();
+  const selectedMonthIndex = Number(month) - 1;
+
+  if (Number.isNaN(selectedMonthIndex)) return null;
+
+  const selectedYear = now.getFullYear();
+  const daysInMonth = new Date(
+    selectedYear,
+    selectedMonthIndex + 1,
+    0,
+  ).getDate();
+
+  const isCurrentMonth = now.getMonth() === selectedMonthIndex;
+
+  if (!isCurrentMonth) return 100;
+
+  return Math.round((now.getDate() / daysInMonth) * 100);
+};
+
+const CategoryName = ({
+  category,
+  emoji,
+}: {
+  category: string;
+  emoji: string;
+}) => {
+  const isAnnual = getCategoryAverageType(category) === "annual";
+
+  return (
+    <span className="truncate text-slate-500">
+      <span className="mr-1">{emoji}</span>
+      {category}
+      {isAnnual && (
+        <span
+          className="ml-1 rounded-full bg-indigo-50 px-1.5 py-0.5 text-[9px] font-black uppercase text-indigo-600"
+          title="Annual category"
+        >
+          annual
+        </span>
+      )}
+    </span>
+  );
+};
+
 export const BudgetUsageSummary = ({
   expenses,
   expenseGoals,
@@ -132,6 +177,14 @@ export const BudgetUsageSummary = ({
     plannedBudget > 0
       ? Math.round((projectedMonthEnd / plannedBudget) * 100)
       : null;
+
+  const monthProgressPercent =
+    period === "average" ? null : getMonthProgressPercent(period);
+
+  const isSpendingTooFast =
+    monthProgressPercent !== null &&
+    usagePercent !== null &&
+    usagePercent > monthProgressPercent;
 
   const progress =
     usagePercent !== null ? Math.min(Math.max(usagePercent, 0), 100) : 0;
@@ -238,10 +291,22 @@ export const BudgetUsageSummary = ({
       </div>
 
       <div className="mt-8">
-        <div className="mb-2 flex items-center justify-between">
-          <span className="text-xs font-bold text-slate-400">
-            Current: {usagePercent !== null ? `${usagePercent}%` : "-"}
-          </span>
+        <div className="mb-2 flex items-start justify-between">
+          <div className="flex flex-col gap-0.5">
+            <span className="text-xs font-bold text-slate-400">
+              Current: {usagePercent !== null ? `${usagePercent}%` : "-"}
+            </span>
+
+            {monthProgressPercent !== null && (
+              <span
+                className={`text-[10px] font-bold ${
+                  isSpendingTooFast ? "text-amber-500" : "text-emerald-600"
+                }`}
+              >
+                Month progress: {monthProgressPercent}%
+              </span>
+            )}
+          </div>
 
           {period !== "average" && (
             <span
@@ -264,6 +329,14 @@ export const BudgetUsageSummary = ({
             }`}
             style={{ width: `${progress}%` }}
           />
+
+          {monthProgressPercent !== null && (
+            <div
+              className="absolute top-1/2 h-4 w-1 -translate-y-1/2 rounded-full bg-slate-400 ring-4 ring-white"
+              style={{ left: `${Math.min(monthProgressPercent, 100)}%` }}
+              title="Month progress"
+            />
+          )}
 
           {period !== "average" && (
             <div
@@ -330,10 +403,10 @@ export const BudgetUsageSummary = ({
                     key={item.category}
                     className="flex items-center justify-between gap-3 text-xs font-bold"
                   >
-                    <span className="truncate text-slate-500">
-                      <span className="mr-1">{item.emoji}</span>
-                      {item.category}
-                    </span>
+                    <CategoryName
+                      category={item.category}
+                      emoji={item.emoji}
+                    />
 
                     <span className="shrink-0 text-slate-700">
                       {formatMoney(item.left)}
@@ -357,7 +430,6 @@ export const BudgetUsageSummary = ({
               {formatMoney(projectedMonthEnd)}
             </div>
 
-
             {isProjectedOverBudget && topOverspendingItems.length > 0 && (
               <div className="mt-3 space-y-1.5">
                 {topOverspendingItems.map((item) => (
@@ -365,10 +437,10 @@ export const BudgetUsageSummary = ({
                     key={item.category}
                     className="flex items-center justify-between gap-3 text-xs font-bold"
                   >
-                    <span className="truncate text-slate-500">
-                      <span className="mr-1">{item.emoji}</span>
-                      {item.category}
-                    </span>
+                    <CategoryName
+                      category={item.category}
+                      emoji={item.emoji}
+                    />
 
                     <span className="shrink-0 text-rose-600">
                       {formatMoney(item.diff)}
