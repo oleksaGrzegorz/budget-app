@@ -62,6 +62,7 @@ export default function App() {
         setPeriod={setBudgetPeriod}
       />
 
+      <div className="grid gap-4 xl:grid-cols-2">
       <BudgetInsights
         expenses={expensesForTable}
         expenseGoals={expenseGoals}
@@ -71,18 +72,18 @@ export default function App() {
   
       />
 
-      <div className="grid gap-4 xl:grid-cols-2">
         <ExpensesByIncomeChart
           expenses={expensesForTable}
           incomes={incomesForTable}
           period={budgetPeriod}
         />
 
+    </div>
         <ExpensesByCategoryChart
           expenses={expensesForTable}
           period={budgetPeriod}
         />
-      </div>
+  
 
       <DashboardCard title="Expenses" subtitle="Monthly expenses by category">
         <ExpensesTable
