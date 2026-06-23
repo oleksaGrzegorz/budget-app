@@ -346,14 +346,14 @@ const rawEntries: Omit<Entry, "id">[] = [
   { formType: "expense", category: "Groceries", year: "2026", month: "03", amount: 722.45 },
   { formType: "expense", category: "Groceries", year: "2026", month: "04", amount: 549.4 },
   { formType: "expense", category: "Groceries", year: "2026", month: "05", amount: 832.7 },
-  { formType: "expense", category: "Groceries", year: "2026", month: "06", amount: 432.45 },
+  { formType: "expense", category: "Groceries", year: "2026", month: "06", amount: 696.98 },
 
   { formType: "expense", category: "Eating out", year: "2026", month: "01", amount: 201.36 },
   { formType: "expense", category: "Eating out", year: "2026", month: "02", amount: 38.29 },
   { formType: "expense", category: "Eating out", year: "2026", month: "03", amount: 28.11 },
   { formType: "expense", category: "Eating out", year: "2026", month: "04", amount: 62.55 },
   { formType: "expense", category: "Eating out", year: "2026", month: "05", amount: 109.5 },
-  { formType: "expense", category: "Eating out", year: "2026", month: "06", amount: 55.96 },
+  { formType: "expense", category: "Eating out", year: "2026", month: "06", amount: 61.98 },
 
   { formType: "expense", category: "Health insurance", year: "2026", month: "01", amount: 299.8 },
   { formType: "expense", category: "Health insurance", year: "2026", month: "02", amount: 299.8 },
@@ -363,7 +363,7 @@ const rawEntries: Omit<Entry, "id">[] = [
 
   { formType: "expense", category: "Dentist & medicine", year: "2026", month: "01", amount: 29.99 },
   { formType: "expense", category: "Dentist & medicine", year: "2026", month: "04", amount: 2.52 },
-  { formType: "expense", category: "Dentist & medicine", year: "2026", month: "06", amount: 78.77 },
+  { formType: "expense", category: "Dentist & medicine", year: "2026", month: "06", amount: 188.77 },
 
   { formType: "expense", category: "Fuel - Dacia", year: "2026", month: "01", amount: 194.15 },
   { formType: "expense", category: "Fuel - Dacia", year: "2026", month: "02", amount: 228.88 },
@@ -403,6 +403,7 @@ const rawEntries: Omit<Entry, "id">[] = [
   { formType: "expense", category: "Water", year: "2026", month: "03", amount: 34 },
   { formType: "expense", category: "Water", year: "2026", month: "04", amount: 34 },
   { formType: "expense", category: "Water", year: "2026", month: "05", amount: 34 },
+  { formType: "expense", category: "Water", year: "2026", month: "06", amount: 34 },
 
   { formType: "expense", category: "Internet", year: "2026", month: "01", amount: 31.39 },
   { formType: "expense", category: "Internet", year: "2026", month: "02", amount: 31.39 },
@@ -451,7 +452,7 @@ const rawEntries: Omit<Entry, "id">[] = [
   { formType: "expense", category: "Renovations", year: "2026", month: "03", amount: 53.05 },
   { formType: "expense", category: "Renovations", year: "2026", month: "04", amount: 42.89 },
   { formType: "expense", category: "Renovations", year: "2026", month: "05", amount: 188.29 },
-  { formType: "expense", category: "Renovations", year: "2026", month: "06", amount: 251.89 },
+  { formType: "expense", category: "Renovations", year: "2026", month: "06", amount: 240.56 },
 
   { formType: "expense", category: "Home items", year: "2026", month: "04", amount: 527.69 },
   { formType: "expense", category: "Home items", year: "2026", month: "05", amount: 184.05 },
@@ -503,23 +504,26 @@ const rawEntries: Omit<Entry, "id">[] = [
   { formType: "income", category: "Salary - Grzesiek", year: "2026", month: "03", amount: 6522.7 },
   { formType: "income", category: "Salary - Grzesiek", year: "2026", month: "04", amount: 4281.12 },
   { formType: "income", category: "Salary - Grzesiek", year: "2026", month: "05", amount: 2836.03 },
+{ formType: "income", category: "Salary - Grzesiek", year: "2026", month: "06", amount: 2480.79 },
 
   { formType: "income", category: "Salary - Marta", year: "2026", month: "01", amount: 1667.9 },
   { formType: "income", category: "Salary - Marta", year: "2026", month: "02", amount: 1327.9 },
   { formType: "income", category: "Salary - Marta", year: "2026", month: "03", amount: 1418 },
   { formType: "income", category: "Salary - Marta", year: "2026", month: "04", amount: 1617.9 },
   { formType: "income", category: "Salary - Marta", year: "2026", month: "05", amount: 999.8 },
+{ formType: "income", category: "Salary - Marta", year: "2026", month: "06", amount: 1230 },
 
   { formType: "income", category: "Other income", year: "2026", month: "01", amount: 326 },
   { formType: "income", category: "Other income", year: "2026", month: "02", amount: 75 },
   { formType: "income", category: "Other income", year: "2026", month: "03", amount: 75 },
   { formType: "income", category: "Other income", year: "2026", month: "04", amount: 370.07 },
   { formType: "income", category: "Other income", year: "2026", month: "05", amount: 75 },
+{ formType: "income", category: "Other income", year: "2026", month: "06", amount: 75 },
 
   { formType: "income", category: "Refunds", year: "2026", month: "04", amount: 260.55 },
 
   { formType: "income", category: "Rent", year: "2026", month: "05", amount: 200 },
-  { formType: "income", category: "Rent", year: "2026", month: "06", amount: 400 },
+  { formType: "income", category: "Rent", year: "2026", month: "06", amount: 500 },
 ];
 
 export const initialEntries: Entry[] = rawEntries.map((entry, index) => ({
