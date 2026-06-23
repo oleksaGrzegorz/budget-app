@@ -47,7 +47,7 @@ export default function App() {
 
   return (
     <AppLayout theme={theme}>
-      <Header theme={theme} setTheme={setTheme}/>
+      <Header theme={theme} setTheme={setTheme} />
 
       <BitcoinPrice />
 
@@ -55,35 +55,34 @@ export default function App() {
 
       <Form selectedYear={selectedYear} setEntries={setEntries} />
 
-      <BudgetUsageSummary
-        expenses={expensesForTable}
-        expenseGoals={expenseGoals}
-        period={budgetPeriod}
-        setPeriod={setBudgetPeriod}
-      />
-
       <div className="grid gap-4 xl:grid-cols-2">
-      <BudgetInsights
-        expenses={expensesForTable}
-        expenseGoals={expenseGoals}
-        incomes={incomesForTable}
-        period={budgetPeriod}
-        forecast={forecast}
-  
-      />
+        <BudgetInsights
+          expenses={expensesForTable}
+          expenseGoals={expenseGoals}
+          incomes={incomesForTable}
+          period={budgetPeriod}
+          forecast={forecast}
+        />
 
         <ExpensesByIncomeChart
           expenses={expensesForTable}
           incomes={incomesForTable}
           period={budgetPeriod}
         />
+      </div>
 
-    </div>
-        <ExpensesByCategoryChart
-          expenses={expensesForTable}
-          period={budgetPeriod}
-        />
-  
+      <BudgetUsageSummary
+        expenses={expensesForTable}
+        expenseGoals={expenseGoals}
+        period={budgetPeriod}
+        setPeriod={setBudgetPeriod}
+        selectedYear={selectedYear}
+      />
+
+      <ExpensesByCategoryChart
+        expenses={expensesForTable}
+        period={budgetPeriod}
+      />
 
       <DashboardCard title="Expenses" subtitle="Monthly expenses by category">
         <ExpensesTable
