@@ -18,6 +18,7 @@ interface BudgetUsageSummaryProps {
   expenses: BudgetData;
   expenseGoals: GoalsData;
   period: PeriodOption;
+  selectedYear: string;
   setPeriod: React.Dispatch<React.SetStateAction<PeriodOption>>;
 }
 
@@ -33,63 +34,82 @@ type OverspendingItem = {
   diff: number;
 };
 
+type Tone = "slate" | "rose" | "emerald";
+
+type InsightMetric = {
+  title: string;
+  value: string;
+  subtitle: string;
+  tone: Tone;
+  meta?: string;
+};
+
 const formatMoney = (value: number) =>
   value.toLocaleString("en-US", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
 
-const getMonthProgressPercent = (month: string) => {
+const getMonthRelation = (month: string, year: number) => {
+  const now = new Date();
+  const selectedMonthIndex = Number(month) - 1;
+
+  if (Number.isNaN(selectedMonthIndex)) return "unknown";
+
+  const selectedDate = new Date(year, selectedMonthIndex, 1);
+  const currentDate = new Date(now.getFullYear(), now.getMonth(), 1);
+
+  if (selectedDate < currentDate) return "past";
+  if (selectedDate > currentDate) return "future";
+
+  return "current";
+};
+
+const getMonthProgressPercent = (month: string, year: number) => {
   const now = new Date();
   const selectedMonthIndex = Number(month) - 1;
 
   if (Number.isNaN(selectedMonthIndex)) return null;
+  if (now.getFullYear() !== year) return null;
+  if (now.getMonth() !== selectedMonthIndex) return null;
 
-  const selectedYear = now.getFullYear();
-  const daysInMonth = new Date(
-    selectedYear,
-    selectedMonthIndex + 1,
-    0,
-  ).getDate();
-
-  const isCurrentMonth = now.getMonth() === selectedMonthIndex;
-
-  if (!isCurrentMonth) return 100;
+  const daysInMonth = new Date(year, selectedMonthIndex + 1, 0).getDate();
 
   return Math.round((now.getDate() / daysInMonth) * 100);
 };
 
-const CategoryName = ({
-  category,
-  emoji,
-}: {
-  category: string;
-  emoji: string;
-}) => {
-  const isAnnual = getCategoryAverageType(category) === "annual";
+const getToneTextClass = (tone: Tone) => {
+  if (tone === "rose") return "text-rose-600";
+  if (tone === "emerald") return "text-emerald-600";
 
-  return (
-    <span className="truncate text-slate-500">
-      <span className="mr-1">{emoji}</span>
-      {category}
-      {isAnnual && (
-        <span
-          className="ml-1 rounded-full bg-indigo-50 px-1.5 py-0.5 text-[9px] font-black uppercase text-indigo-600"
-          title="Annual category"
-        >
-          annual
-        </span>
-      )}
-    </span>
-  );
+  return "text-slate-900";
 };
+
+const getToneSubtextClass = (tone: Tone) => {
+  if (tone === "rose") return "text-rose-500";
+  if (tone === "emerald") return "text-emerald-500";
+
+  return "text-slate-500";
+};
+
+const formatGapText = (
+  gap: number,
+  positiveLabel: string,
+  negativeLabel: string,
+) =>
+  gap < 0
+    ? `${formatMoney(Math.abs(gap))} ${negativeLabel}`
+    : `${formatMoney(gap)} ${positiveLabel}`;
 
 export const BudgetUsageSummary = ({
   expenses,
   expenseGoals,
   period,
   setPeriod,
+  selectedYear,
 }: BudgetUsageSummaryProps) => {
+  const selectedYearNumber = Number(selectedYear);
+
   const activeMonths = getActiveMonths(expenses);
 
   const plannedBudget = categories.reduce(
@@ -109,6 +129,19 @@ export const BudgetUsageSummary = ({
     period === "average"
       ? averageSpent
       : getMonthTotal(expenses, categories, period);
+
+const monthRelation =
+  period === "average"
+    ? "average"
+    : getMonthRelation(period, selectedYearNumber);
+
+  const isClosedMonth = monthRelation === "past";
+  const isFutureMonth = monthRelation === "future";
+
+const monthProgressPercent =
+  period === "average"
+    ? null
+    : getMonthProgressPercent(period, selectedYearNumber);
 
   const expectedExpenseItems: ExpectedExpenseItem[] =
     period === "average"
@@ -159,8 +192,15 @@ export const BudgetUsageSummary = ({
 
   const topOverspendingItems = overspendingItems.slice(0, 3);
 
-  const projectedMonthEnd =
-    period === "average" ? selectedSpent : selectedSpent + expectedExpensesLeft;
+  const totalOverspending = overspendingItems.reduce(
+    (sum, item) => sum + item.diff,
+    0,
+  );
+
+const projectedMonthEnd =
+  period === "average" || isClosedMonth
+    ? selectedSpent
+    : selectedSpent + expectedExpensesLeft;
 
   const remaining = plannedBudget - selectedSpent;
   const projectedGap = plannedBudget - projectedMonthEnd;
@@ -173,14 +213,6 @@ export const BudgetUsageSummary = ({
       ? Math.round((selectedSpent / plannedBudget) * 100)
       : null;
 
-  const projectedUsagePercent =
-    plannedBudget > 0
-      ? Math.round((projectedMonthEnd / plannedBudget) * 100)
-      : null;
-
-  const monthProgressPercent =
-    period === "average" ? null : getMonthProgressPercent(period);
-
   const isSpendingTooFast =
     monthProgressPercent !== null &&
     usagePercent !== null &&
@@ -189,13 +221,166 @@ export const BudgetUsageSummary = ({
   const progress =
     usagePercent !== null ? Math.min(Math.max(usagePercent, 0), 100) : 0;
 
-  const projectedProgress =
-    projectedUsagePercent !== null
-      ? Math.min(Math.max(projectedUsagePercent, 0), 100)
-      : 0;
+  const insightTitle = isClosedMonth
+    ? "Month result"
+    : isFutureMonth
+      ? "Planned month"
+      : "Month outlook";
 
-  const spentLabel =
-    period === "average" ? "average spent" : `spent in ${period}`;
+  const insightSummary = isClosedMonth
+    ? `Finished ${formatGapText(
+        remaining,
+        "under budget",
+        "over budget",
+      )}. Unused categories were ${formatMoney(
+        expectedExpensesLeft,
+      )}, while overspending drivers totaled ${formatMoney(totalOverspending)}.`
+    : isFutureMonth
+      ? `Planned expenses of ${formatMoney(
+          expectedExpensesLeft,
+        )} leave ${formatGapText(
+          projectedGap,
+          "expected left",
+          "expected overspend",
+        )}.`
+      : `Now ${formatGapText(
+          remaining,
+          "left",
+          "over budget",
+        )}. With ${formatMoney(
+          expectedExpensesLeft,
+        )} upcoming expenses, month end is ${formatGapText(
+          projectedGap,
+          "expected left",
+          "expected overspend",
+        )}.`;
+
+  const firstMetric: InsightMetric = isClosedMonth
+    ? {
+        title: "Final position",
+        value: `${isOverBudget ? "+" : ""}${formatMoney(Math.abs(remaining))}`,
+        subtitle: isOverBudget ? "Over budget" : "Under budget",
+        tone: isOverBudget ? "rose" : "emerald",
+      }
+    : isFutureMonth
+      ? {
+          title: "Available budget",
+          value: formatMoney(plannedBudget),
+          subtitle: "Starting budget",
+          tone: "slate",
+        }
+      : {
+          title: "Now",
+          value: `${isOverBudget ? "+" : ""}${formatMoney(
+            Math.abs(remaining),
+          )}`,
+          subtitle: isOverBudget ? "Over budget" : "Left in budget",
+          tone: isOverBudget ? "rose" : "emerald",
+        };
+
+  const secondMetric: InsightMetric = isClosedMonth
+    ? {
+        title: "Unused categories",
+        value: formatMoney(expectedExpensesLeft),
+        subtitle: `${expectedExpenseItems.length} categories not used`,
+        tone: "slate",
+      }
+    : isFutureMonth
+      ? {
+          title: "Planned expenses",
+          value: formatMoney(expectedExpensesLeft),
+          subtitle: `${expectedExpenseItems.length} expected items`,
+          tone: "slate",
+        }
+      : {
+          title: "Upcoming expenses",
+          value: formatMoney(expectedExpensesLeft),
+          subtitle: `${expectedExpenseItems.length} expected items`,
+          tone: "slate",
+        };
+
+const thirdMetric: InsightMetric = isClosedMonth
+  ? {
+      title: "Overspending drivers",
+      value:
+        totalOverspending > 0
+          ? `+${formatMoney(totalOverspending)}`
+          : formatMoney(0),
+      subtitle: `${overspendingItems.length} categories over budget`,
+      tone: totalOverspending > 0 ? "rose" : "slate",
+      meta: `Final spend: ${formatMoney(selectedSpent)}`,
+    }
+  : {
+      title: isFutureMonth ? "Planned position" : "Month end",
+      value: `${isProjectedOverBudget ? "+" : ""}${formatMoney(
+        Math.abs(projectedGap),
+      )}`,
+      subtitle: isProjectedOverBudget ? "Expected overspend" : "Expected left",
+      tone: isProjectedOverBudget ? "rose" : "emerald",
+      meta: `Projected spend: ${formatMoney(projectedMonthEnd)}`,
+    };
+
+  const firstOperator = isClosedMonth
+    ? "despite"
+    : isFutureMonth
+      ? "−"
+      : isOverBudget
+        ? "+"
+        : "−";
+
+  const secondOperator = isClosedMonth ? "driven by" : "=";
+
+  const expectedListTitle = isClosedMonth
+    ? "Unused categories"
+    : isFutureMonth
+      ? "Planned expenses"
+      : "Upcoming expenses";
+
+  const driversListTitle = isClosedMonth
+    ? "Overspending drivers"
+    : isFutureMonth
+      ? "Risk drivers"
+      : "Forecast drivers";
+
+  const emptyExpectedText = isClosedMonth
+    ? "No unused categories"
+    : isFutureMonth
+      ? "No planned expenses"
+      : "No upcoming expenses";
+
+  const emptyDriversText = isFutureMonth
+    ? "No overspending yet"
+    : "No overspending drivers";
+
+const renderMetric = (metric: InsightMetric) => (
+  <div className="rounded-xl border border-slate-100 bg-white px-4 py-4 text-center">
+    <div className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">
+      {metric.title}
+    </div>
+
+    <div
+      className={`mt-2 text-2xl font-bold tracking-tight ${getToneTextClass(
+        metric.tone,
+      )}`}
+    >
+      {metric.value}
+    </div>
+
+    <div
+      className={`mt-1 text-xs font-medium ${getToneSubtextClass(
+        metric.tone,
+      )}`}
+    >
+      {metric.subtitle}
+    </div>
+
+    {metric.meta && (
+      <div className="mt-1 text-[11px] font-medium text-slate-400">
+        {metric.meta}
+      </div>
+    )}
+  </div>
+);
 
   return (
     <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
@@ -234,127 +419,63 @@ export const BudgetUsageSummary = ({
         </div>
       </div>
 
-      <div className="mt-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-center lg:gap-8">
-        <div className="flex w-full items-center gap-4 rounded-xl border border-slate-100 bg-slate-50 px-4 py-4 sm:px-5 lg:w-auto lg:min-w-[270px] lg:px-6 lg:py-5">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-2xl text-slate-500 ring-1 ring-slate-200 sm:h-12 sm:w-12 lg:h-14 lg:w-14 lg:text-3xl">
-            ↗
+      <div className="mt-8 flex justify-center">
+        <div className="text-center">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400">
+            Budget
           </div>
 
-          <div>
-            <div className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
+          <div className="mt-2 text-4xl font-bold tracking-tight">
+            <span className={isOverBudget ? "text-rose-600" : "text-slate-900"}>
               {formatMoney(selectedSpent)}
-            </div>
+            </span>
 
-            <div className="text-sm font-medium text-slate-500 lg:text-base">
-              {spentLabel}
-            </div>
-          </div>
-        </div>
+            <span className="mx-3 text-slate-300">/</span>
 
-        <div className="hidden text-4xl font-semibold text-slate-300 lg:block">
-          /
-        </div>
-
-        <div
-          className={`flex w-full items-center gap-4 rounded-xl border px-4 py-4 sm:px-5 lg:w-auto lg:min-w-[270px] lg:px-6 lg:py-5 ${
-            isOverBudget
-              ? "border-rose-100 bg-rose-50"
-              : "border-emerald-100 bg-emerald-50"
-          }`}
-        >
-          <div
-            className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-2xl ring-1 sm:h-12 sm:w-12 lg:h-14 lg:w-14 lg:text-3xl ${
-              isOverBudget ? "ring-rose-200" : "ring-emerald-200"
-            }`}
-          >
-            🎯
-          </div>
-
-          <div>
-            <div
-              className={`text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl ${
-                isOverBudget ? "text-rose-900" : "text-emerald-900"
-              }`}
-            >
-              {formatMoney(plannedBudget)}
-            </div>
-
-            <div
-              className={`text-sm font-medium lg:text-base ${
-                isOverBudget ? "text-rose-700" : "text-emerald-700"
-              }`}
-            >
-              planned budget
-            </div>
+            <span className="text-slate-900">{formatMoney(plannedBudget)}</span>
           </div>
         </div>
       </div>
 
       <div className="mt-8">
-        <div className="mb-2 flex items-start justify-between">
-          <div className="flex flex-col gap-0.5">
-            <span className="text-xs font-bold text-slate-400">
-              Current: {usagePercent !== null ? `${usagePercent}%` : "-"}
-            </span>
-
-            {monthProgressPercent !== null && (
-              <span
-                className={`text-[10px] font-bold ${
-                  isSpendingTooFast ? "text-amber-500" : "text-emerald-600"
-                }`}
-              >
-                Month progress: {monthProgressPercent}%
-              </span>
-            )}
-          </div>
-
-          {period !== "average" && (
-            <span
-              className={`text-xs font-black ${
-                isProjectedOverBudget ? "text-rose-600" : "text-emerald-600"
-              }`}
-            >
-              Projected:{" "}
-              {projectedUsagePercent !== null
-                ? `${projectedUsagePercent}%`
-                : "-"}
-            </span>
-          )}
-        </div>
-
-        <div className="relative h-2 overflow-visible rounded-full bg-slate-100">
-          <div
-            className={`absolute inset-y-0 left-0 rounded-full transition-all duration-500 ${
-              isOverBudget ? "bg-rose-500" : "bg-emerald-500"
-            }`}
-            style={{ width: `${progress}%` }}
-          />
-
+        <div className="relative h-9">
           {monthProgressPercent !== null && (
             <div
-              className="absolute top-1/2 h-4 w-1 -translate-y-1/2 rounded-full bg-slate-400 ring-4 ring-white"
-              style={{ left: `${Math.min(monthProgressPercent, 100)}%` }}
-              title="Month progress"
-            />
-          )}
-
-          {period !== "average" && (
-            <div
-              className={`absolute top-1/2 h-5 w-1.5 -translate-y-1/2 rounded-full ring-4 ring-white ${
-                isProjectedOverBudget ? "bg-rose-500" : "bg-emerald-500"
+              className={`absolute top-0 -translate-x-1/2 rounded-full bg-white px-2 py-0.5 text-xs font-black shadow-sm ring-1 ${
+                isSpendingTooFast
+                  ? "text-amber-500 ring-amber-100"
+                  : "text-emerald-600 ring-emerald-100"
               }`}
-              style={{ left: `${projectedProgress}%` }}
-              title="Projected month end"
-            />
+              style={{ left: `${Math.min(monthProgressPercent, 100)}%` }}
+            >
+              {monthProgressPercent}%
+            </div>
           )}
 
-          {[25, 50, 75].map((mark) => (
+          <div className="absolute bottom-0 left-0 right-0 h-2 rounded-full bg-slate-100">
             <div
-              key={mark}
-              className="absolute top-0 h-full w-px bg-white/90"
-              style={{ left: `${mark}%` }}
+              className={`absolute inset-y-0 left-0 rounded-full transition-all duration-500 ${
+                isOverBudget ? "bg-rose-500" : "bg-emerald-500"
+              }`}
+              style={{ width: `${progress}%` }}
             />
-          ))}
+
+            {monthProgressPercent !== null && (
+              <div
+                className="absolute top-1/2 h-5 w-1 -translate-y-1/2 rounded-full bg-slate-400 ring-4 ring-white"
+                style={{ left: `${Math.min(monthProgressPercent, 100)}%` }}
+                title="Month progress"
+              />
+            )}
+
+            {[25, 50, 75].map((mark) => (
+              <div
+                key={mark}
+                className="absolute top-0 h-full w-px bg-white/90"
+                style={{ left: `${mark}%` }}
+              />
+            ))}
+          </div>
         </div>
 
         <div className="mt-2 flex justify-between px-[1px] text-[10px] font-medium text-slate-400">
@@ -364,91 +485,168 @@ export const BudgetUsageSummary = ({
           <span>75</span>
           <span>100</span>
         </div>
+
+        {monthProgressPercent !== null && usagePercent !== null && (
+          <div className="mt-2 text-center text-xs font-medium text-slate-400">
+            <span
+              className={
+                isSpendingTooFast
+                  ? "font-bold text-amber-500"
+                  : "text-slate-500"
+              }
+            >
+              {usagePercent}% used
+            </span>{" "}
+            <span>•</span> <span>{monthProgressPercent}% month elapsed</span>
+          </div>
+        )}
       </div>
 
       {period !== "average" && (
-        <div className="mt-6 grid gap-3 border-t border-slate-100 pt-5 lg:grid-cols-[1fr_1.3fr_1fr]">
-          <div className="rounded-xl bg-slate-50 px-4 py-3">
-            <div className="text-[11px] font-bold uppercase tracking-wide text-slate-500">
-              Current status
-            </div>
-
-            <div
-              className={`mt-1 text-xl font-black ${
-                isOverBudget ? "text-rose-600" : "text-emerald-600"
-              }`}
-            >
-              {isOverBudget ? "Over by" : "Under by"}{" "}
-              {formatMoney(Math.abs(remaining))}
-            </div>
-
-            <div className="mt-1 text-xs font-semibold text-slate-500">
-              Actual spend vs planned budget
-            </div>
-          </div>
-
-          <div className="rounded-xl bg-slate-50 px-4 py-3">
-            <div className="text-[11px] font-bold uppercase tracking-wide text-slate-500">
-              Expected regular left
-            </div>
-
-            <div className="mt-1 text-xl font-black text-slate-900">
-              {formatMoney(expectedExpensesLeft)}
-            </div>
-
-            {topExpectedItems.length > 0 && (
-              <div className="mt-3 space-y-1.5">
-                {topExpectedItems.map((item) => (
-                  <div
-                    key={item.category}
-                    className="flex items-center justify-between gap-3 text-xs font-bold"
-                  >
-                    <CategoryName
-                      category={item.category}
-                      emoji={item.emoji}
-                    />
-
-                    <span className="shrink-0 text-slate-700">
-                      {formatMoney(item.left)}
-                    </span>
-                  </div>
-                ))}
+        <div className="mt-6 border-t border-slate-100 pt-5">
+          <div className="rounded-xl border border-slate-100 bg-slate-50 p-4">
+            <div className="text-center">
+              <div className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">
+                {insightTitle}
               </div>
-            )}
-          </div>
 
-          <div className="rounded-xl bg-slate-50 px-4 py-3">
-            <div className="text-[11px] font-bold uppercase tracking-wide text-slate-500">
-              Forecast month end
-            </div>
-
-            <div
-              className={`mt-1 text-xl font-black ${
-                isProjectedOverBudget ? "text-rose-600" : "text-emerald-600"
-              }`}
-            >
-              {formatMoney(projectedMonthEnd)}
-            </div>
-
-            {isProjectedOverBudget && topOverspendingItems.length > 0 && (
-              <div className="mt-3 space-y-1.5">
-                {topOverspendingItems.map((item) => (
-                  <div
-                    key={item.category}
-                    className="flex items-center justify-between gap-3 text-xs font-bold"
-                  >
-                    <CategoryName
-                      category={item.category}
-                      emoji={item.emoji}
-                    />
-
-                    <span className="shrink-0 text-rose-600">
-                      {formatMoney(item.diff)}
-                    </span>
-                  </div>
-                ))}
+              <div className="mx-auto mt-2 max-w-3xl text-sm font-medium text-slate-500">
+                {insightSummary}
               </div>
-            )}
+            </div>
+
+            <div className="mt-4 grid gap-3 lg:grid-cols-[1fr_auto_1fr_auto_1fr] lg:items-center">
+              {renderMetric(firstMetric)}
+
+              <div className="hidden text-center text-xs font-black uppercase tracking-widest text-slate-300 lg:block">
+                {firstOperator}
+              </div>
+
+              {renderMetric(secondMetric)}
+
+              <div className="hidden text-center text-xs font-black uppercase tracking-widest text-slate-300 lg:block">
+                {secondOperator}
+              </div>
+
+              {renderMetric(thirdMetric)}
+            </div>
+
+            <div className="mt-4 grid gap-3 lg:grid-cols-2">
+              <div className="rounded-xl border border-slate-100 bg-white p-4">
+                <div className="flex items-center justify-between gap-3 border-b border-slate-100 pb-3">
+                  <div>
+                    <div className="text-[10px] font-semibold uppercase tracking-wide text-slate-400">
+                      {expectedListTitle}
+                    </div>
+
+                    <div className="mt-1 text-xs font-medium text-slate-500">
+                      Scheduled / regular costs still ahead
+                    </div>
+                  </div>
+
+                  <div className="rounded-full bg-slate-50 px-2.5 py-1 text-xs font-bold text-slate-500">
+                    {topExpectedItems.length} items
+                  </div>
+                </div>
+
+                {topExpectedItems.length > 0 ? (
+                  <div className="mt-3 space-y-1.5">
+                    {topExpectedItems.map((item) => (
+                      <div
+                        key={item.category}
+                        className="flex items-center justify-between gap-3 rounded-lg px-2 py-1.5 transition-colors hover:bg-slate-50"
+                      >
+                        <div className="flex min-w-0 items-center gap-2">
+                          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-slate-50 text-sm">
+                            {item.emoji}
+                          </span>
+
+                          <span className="truncate text-xs font-semibold text-slate-600">
+                            {item.category}
+                          </span>
+                        </div>
+
+                        <span className="shrink-0 rounded-full bg-slate-50 px-2 py-1 text-xs font-bold text-slate-700">
+                          {formatMoney(item.left)}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="mt-3 rounded-lg bg-slate-50 px-3 py-3 text-xs font-medium text-slate-400">
+                    {emptyExpectedText}
+                  </div>
+                )}
+              </div>
+
+              <div className="rounded-xl border border-rose-100 bg-rose-50/30 p-4">
+                <div className="flex items-center justify-between gap-3 border-b border-rose-100 pb-3">
+                  <div>
+                    <div className="text-[10px] font-semibold uppercase tracking-wide text-rose-400">
+                      {driversListTitle}
+                    </div>
+
+                    <div className="mt-1 text-xs font-medium text-rose-500">
+                      Categories pushing the forecast up
+                    </div>
+                  </div>
+
+                  <div className="rounded-full bg-white px-2.5 py-1 text-xs font-bold text-rose-600 ring-1 ring-rose-100">
+                    Risk
+                  </div>
+                </div>
+
+                {topOverspendingItems.length > 0 ? (
+                  <div className="mt-3 space-y-1.5">
+                    {topOverspendingItems.map((item, index) => (
+                      <div
+                        key={item.category}
+                        className={`flex items-center justify-between gap-3 rounded-lg px-2 py-1.5 ${
+                          index === 0
+                            ? "bg-white shadow-sm ring-1 ring-rose-100"
+                            : "bg-white/60"
+                        }`}
+                      >
+                        <div className="flex min-w-0 items-center gap-2">
+                          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-rose-50 text-sm">
+                            {item.emoji}
+                          </span>
+
+                          <div className="min-w-0">
+                            <div className="flex min-w-0 items-center gap-1">
+                              <span className="truncate text-xs font-semibold text-slate-600">
+                                {item.category}
+                              </span>
+
+                              {getCategoryAverageType(item.category) ===
+                                "annual" && (
+                                <span className="shrink-0 rounded-full bg-indigo-50 px-1.5 py-0.5 text-[9px] font-black uppercase text-indigo-600">
+                                  annual
+                                </span>
+                              )}
+                            </div>
+
+                            {index === 0 && (
+                              <div className="mt-0.5 text-[10px] font-medium text-rose-400">
+                                Biggest driver
+                              </div>
+                            )}
+                          </div>
+                        </div>
+
+                        <span className="shrink-0 rounded-full bg-rose-50 px-2 py-1 text-xs font-black text-rose-600">
+                          +{formatMoney(item.diff)}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="mt-3 rounded-lg bg-white px-3 py-3 text-xs font-medium text-slate-400 ring-1 ring-slate-100">
+                    {emptyDriversText}
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       )}
