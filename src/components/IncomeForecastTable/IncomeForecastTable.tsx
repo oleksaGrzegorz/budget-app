@@ -59,6 +59,8 @@ export const IncomeForecastTable = ({
         forecastedProgress={forecastedProgress}
         savedProgress={savedProgress}
         remainingForecast={remainingForecast}
+        averageMonthlyResult={getActualAverage(getActualSavings)}
+        averageRating={getAverageRating()}
       />
 
       <MonthlyPerformanceTable
@@ -86,6 +88,8 @@ export const IncomeForecastTable = ({
         getPlannedExpenses={getPlannedExpenses}
         getActualAverage={getActualAverage}
         getActualYearTotal={getActualYearTotal}
+        getActualExpenses={getActualExpenses}
+        hasActualData={hasActualData}
       />
 
       <MonthlyNotes forecast={forecast} setForecast={setForecast} />
