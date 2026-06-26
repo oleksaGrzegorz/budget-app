@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useBudgetData } from "./hooks/useBudgetData";
 import { useLocalStorageState } from "./hooks/useLocalStorageState";
 
+import { AccountsBalance } from "./components/AccountsBalance/AccountsBalance";
 import { AppLayout } from "./components/AppLayout/AppLayout";
 import { BitcoinPrice } from "./components/BitcoinPrice";
 import { BudgetInsights } from "./components/BudgetInsights/BudgetInsights";
@@ -21,6 +22,8 @@ import { YearSelector } from "./components/YearSelector/YearSelector";
 
 import type { PeriodOption } from "./utils/budgetAverages";
 
+import { initialAccountSnapshots } from "./data/initialAccountSnapshots";
+
 export default function App() {
   const [theme, setTheme] = useLocalStorageState<"light" | "dark">(
     "budget.theme",
@@ -29,6 +32,11 @@ export default function App() {
   const [budgetPeriod, setBudgetPeriod] = useState<PeriodOption>("average");
 
   const [selectedYear, setSelectedYear] = useState("2026");
+
+  const [accountSnapshots] = useLocalStorageState(
+    "budget.accountSnapshots",
+    initialAccountSnapshots,
+  );
 
   const {
     entriesForSelectedYear,
@@ -136,6 +144,7 @@ export default function App() {
           setEntries={setEntries}
         />
       </DashboardCard>
+      <AccountsBalance snapshots={accountSnapshots} />
     </AppLayout>
   );
 }
