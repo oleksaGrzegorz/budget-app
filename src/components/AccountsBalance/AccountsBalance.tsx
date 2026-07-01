@@ -1,7 +1,8 @@
 import { Fragment, useMemo, useState } from "react";
 
+import type { ChartMetric, ChartMetricId } from "./types";
+
 import type {
-  AccountId,
   AccountSnapshot,
 } from "../../data/initialAccountSnapshots";
 import { isAccountActiveOnDate } from "../../data/initialAccountSnapshots";
@@ -38,14 +39,6 @@ import { accountPercentDiffColumns } from "./tableConfig";
 
 interface Props {
   snapshots: AccountSnapshot[];
-}
-
-type ChartMetricId = AccountId | "pln.total" | "eur.total" | "total.eur";
-
-interface ChartMetric {
-  id: ChartMetricId;
-  label: string;
-  currencyLabel: string;
 }
 
 const headerClass =
