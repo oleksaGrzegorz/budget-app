@@ -21,6 +21,8 @@ import {
   getYearSummary,
   getYearSummaryEndIndex,
 } from "./calculations";
+import type { TimeRange } from "./chartConfig";
+import { timeRanges } from "./chartConfig";
 import {
   formatChartValue,
   formatCompactNumber,
@@ -38,7 +40,6 @@ interface Props {
 }
 
 type ChartMetricId = AccountId | "pln.total" | "eur.total" | "total.eur";
-type TimeRange = "3m" | "6m" | "1y" | "3y" | "5y" | "all";
 
 interface ChartMetric {
   id: ChartMetricId;
@@ -50,15 +51,6 @@ const accountPercentDiffColumns: Partial<Record<AccountId, string>> = {
   "pln.bonds": "%",
   "eur.broker": "%",
 };
-
-const timeRanges: { id: TimeRange; label: string; months: number | null }[] = [
-  { id: "3m", label: "3M", months: 3 },
-  { id: "6m", label: "6M", months: 6 },
-  { id: "1y", label: "1Y", months: 12 },
-  { id: "3y", label: "3Y", months: 36 },
-  { id: "5y", label: "5Y", months: 60 },
-  { id: "all", label: "All", months: null },
-];
 
 const headerClass =
   "border-b border-slate-200 bg-slate-50 px-2 py-2 text-right text-[11px] font-black uppercase tracking-wide text-slate-500 whitespace-nowrap";
