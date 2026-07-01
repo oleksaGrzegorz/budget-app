@@ -3,12 +3,35 @@ import { Fragment, useMemo, useState } from "react";
 import type {
   AccountId,
   AccountSnapshot,
-  Currency,
 } from "../../data/initialAccountSnapshots";
+import { isAccountActiveOnDate } from "../../data/initialAccountSnapshots";
+import type { YearSummary } from "./calculations";
 import {
-  accountDefinitions,
-  isAccountActiveOnDate,
-} from "../../data/initialAccountSnapshots";
+  getAccountPercentDiff,
+  getAccountsForCurrency,
+  getDiff,
+  getEurTotal,
+  getIsLastSnapshotOfYear,
+  getPlnTotal,
+  getTotalEur,
+  getTotalEurDiff,
+  getTotalEurDiffPercent,
+  getTotalPln,
+  getYearStartIndex,
+  getYearSummary,
+  getYearSummaryEndIndex,
+} from "./calculations";
+import {
+  formatChartValue,
+  formatCompactNumber,
+  formatEur,
+  formatNumber,
+  formatPercent,
+  formatPln,
+  formatShortDate,
+  formatSignedEur,
+  formatSignedPln,
+} from "./format";
 
 interface Props {
   snapshots: AccountSnapshot[];
@@ -21,27 +44,6 @@ interface ChartMetric {
   id: ChartMetricId;
   label: string;
   currencyLabel: string;
-}
-
-interface YearSummary {
-  year: string;
-  baseDate: string;
-  endDate: string;
-  basePlnTotal: number;
-  endPlnTotal: number;
-  plnDiff: number;
-  baseEurTotal: number;
-  endEurTotal: number;
-  eurDiff: number;
-  baseTotalPln: number;
-  endTotalPln: number;
-  totalPlnDiff: number;
-  baseTotalEur: number;
-  endTotalEur: number;
-  totalEurDiff: number;
-  totalEurDiffPercent: number | null;
-  averageRate: number;
-  monthsCount: number;
 }
 
 const accountPercentDiffColumns: Partial<Record<AccountId, string>> = {
@@ -57,41 +59,6 @@ const timeRanges: { id: TimeRange; label: string; months: number | null }[] = [
   { id: "5y", label: "5Y", months: 60 },
   { id: "all", label: "All", months: null },
 ];
-
-const formatNumber = (value: number) =>
-  value.toLocaleString("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
-
-const formatCompactNumber = (value: number) =>
-  value.toLocaleString("en-US", {
-    maximumFractionDigits: 0,
-  });
-
-const formatPln = (value: number) => `${formatCompactNumber(value)} zł`;
-const formatEur = (value: number) => `${formatNumber(value)} €`;
-
-const formatSignedPln = (value: number) =>
-  `${value >= 0 ? "+" : ""}${formatPln(value)}`;
-
-const formatSignedEur = (value: number) =>
-  `${value >= 0 ? "+" : ""}${formatEur(value)}`;
-
-const formatPercent = (value: number) =>
-  `${value >= 0 ? "+" : ""}${value.toFixed(2)}%`;
-
-const formatChartValue = (value: number, currencyLabel: string) =>
-  currencyLabel === "EUR" ? formatEur(value) : formatPln(value);
-
-const formatShortDate = (date: string) => {
-  const parsed = new Date(date);
-
-  return parsed.toLocaleString("en-US", {
-    month: "short",
-    year: "2-digit",
-  });
-};
 
 const headerClass =
   "border-b border-slate-200 bg-slate-50 px-2 py-2 text-right text-[11px] font-black uppercase tracking-wide text-slate-500 whitespace-nowrap";
@@ -124,92 +91,6 @@ const sectionEndCellClass =
   "border-r border-r-slate-200 border-b border-slate-100 bg-slate-50 px-2 py-2 text-right text-xs font-bold whitespace-nowrap";
 
 const yearSummaryCellClass = "border-y-4 border-slate-300 bg-slate-50 p-0";
-
-const getAccountsForCurrency = (
-  currency: Currency,
-  snapshots: AccountSnapshot[],
-) =>
-  accountDefinitions.filter(
-    (account) =>
-      account.currency === currency &&
-      snapshots.some((snapshot) =>
-        isAccountActiveOnDate(account, snapshot.date),
-      ),
-  );
-
-const getCurrencyTotal = (snapshot: AccountSnapshot, currency: Currency) =>
-  accountDefinitions
-    .filter(
-      (account) =>
-        account.currency === currency &&
-        isAccountActiveOnDate(account, snapshot.date),
-    )
-    .reduce((sum, account) => sum + (snapshot.balances[account.id] ?? 0), 0);
-
-const getPlnTotal = (snapshot: AccountSnapshot) =>
-  getCurrencyTotal(snapshot, "pln");
-
-const getEurTotal = (snapshot: AccountSnapshot) =>
-  getCurrencyTotal(snapshot, "eur");
-
-const getTotalPln = (snapshot: AccountSnapshot) =>
-  getPlnTotal(snapshot) + getEurTotal(snapshot) * snapshot.exchangeRate;
-
-const getTotalEur = (snapshot: AccountSnapshot) =>
-  snapshot.exchangeRate === 0
-    ? 0
-    : getTotalPln(snapshot) / snapshot.exchangeRate;
-
-const getDiff = (
-  snapshots: AccountSnapshot[],
-  index: number,
-  currency: Currency,
-) => {
-  if (index === 0) return null;
-
-  const current = snapshots[index];
-  const previous = snapshots[index - 1];
-
-  return (
-    getCurrencyTotal(current, currency) - getCurrencyTotal(previous, currency)
-  );
-};
-
-const getTotalEurDiff = (snapshots: AccountSnapshot[], index: number) => {
-  if (index === 0) return null;
-
-  return getTotalEur(snapshots[index]) - getTotalEur(snapshots[index - 1]);
-};
-
-const getTotalEurDiffPercent = (
-  snapshots: AccountSnapshot[],
-  index: number,
-) => {
-  if (index === 0) return null;
-
-  const previous = getTotalEur(snapshots[index - 1]);
-
-  if (previous === 0) return null;
-
-  return ((getTotalEur(snapshots[index]) - previous) / previous) * 100;
-};
-
-const getAccountPercentDiff = (
-  snapshots: AccountSnapshot[],
-  index: number,
-  accountId: AccountId,
-) => {
-  if (index === 0) return null;
-
-  const current = snapshots[index].balances[accountId];
-  const previous = snapshots[index - 1].balances[accountId];
-
-  if (current === undefined || previous === undefined || previous === 0) {
-    return null;
-  }
-
-  return ((current - previous) / previous) * 100;
-};
 
 const getValueColorClass = (value: number | null) => {
   if (value === null) return "text-slate-400";
@@ -262,85 +143,6 @@ const getFilteredSnapshots = (
   minDate.setMonth(minDate.getMonth() - range.months);
 
   return snapshots.filter((snapshot) => new Date(snapshot.date) >= minDate);
-};
-
-const getSnapshotYear = (snapshot: AccountSnapshot) =>
-  snapshot.date.slice(0, 4);
-
-const getIsLastSnapshotOfYear = (
-  snapshots: AccountSnapshot[],
-  index: number,
-) => {
-  const currentYear = getSnapshotYear(snapshots[index]);
-  const nextSnapshot = snapshots[index + 1];
-
-  if (!nextSnapshot) return true;
-
-  return getSnapshotYear(nextSnapshot) !== currentYear;
-};
-
-const getYearStartIndex = (snapshots: AccountSnapshot[], year: string) =>
-  snapshots.findIndex((snapshot) => getSnapshotYear(snapshot) === year);
-
-const getYearSummaryEndIndex = (
-  snapshots: AccountSnapshot[],
-  year: string,
-  fallbackIndex: number,
-) => {
-  const nextYear = String(Number(year) + 1);
-  const nextYearJanuaryIndex = snapshots.findIndex(
-    (snapshot) => snapshot.date === `${nextYear}-01-01`,
-  );
-
-  if (nextYearJanuaryIndex !== -1) {
-    return nextYearJanuaryIndex;
-  }
-
-  return fallbackIndex;
-};
-
-const getYearSummary = (
-  snapshots: AccountSnapshot[],
-  startIndex: number,
-  endIndex: number,
-): YearSummary => {
-  const baseSnapshot = snapshots[startIndex];
-  const endSnapshot = snapshots[endIndex];
-  const yearSnapshots = snapshots.slice(startIndex, endIndex + 1);
-
-  const basePlnTotal = getPlnTotal(baseSnapshot);
-  const endPlnTotal = getPlnTotal(endSnapshot);
-  const baseEurTotal = getEurTotal(baseSnapshot);
-  const endEurTotal = getEurTotal(endSnapshot);
-  const baseTotalPln = getTotalPln(baseSnapshot);
-  const endTotalPln = getTotalPln(endSnapshot);
-  const baseTotalEur = getTotalEur(baseSnapshot);
-  const endTotalEur = getTotalEur(endSnapshot);
-  const totalEurDiff = endTotalEur - baseTotalEur;
-
-  return {
-    year: getSnapshotYear(baseSnapshot),
-    baseDate: baseSnapshot.date,
-    endDate: endSnapshot.date,
-    basePlnTotal,
-    endPlnTotal,
-    plnDiff: endPlnTotal - basePlnTotal,
-    baseEurTotal,
-    endEurTotal,
-    eurDiff: endEurTotal - baseEurTotal,
-    baseTotalPln,
-    endTotalPln,
-    totalPlnDiff: endTotalPln - baseTotalPln,
-    baseTotalEur,
-    endTotalEur,
-    totalEurDiff,
-    totalEurDiffPercent:
-      baseTotalEur === 0 ? null : (totalEurDiff / baseTotalEur) * 100,
-    averageRate:
-      yearSnapshots.reduce((sum, snapshot) => sum + snapshot.exchangeRate, 0) /
-      yearSnapshots.length,
-    monthsCount: yearSnapshots.length,
-  };
 };
 
 const DiffBadge = ({
@@ -1006,13 +808,17 @@ export const AccountsBalance = ({ snapshots }: Props) => {
                   currentYear,
                 );
 
-const yearSummaryEndIndex = showYearSummary
-  ? getYearSummaryEndIndex(snapshots, currentYear, index)
-  : index;
+                const yearSummaryEndIndex = showYearSummary
+                  ? getYearSummaryEndIndex(snapshots, currentYear, index)
+                  : index;
 
-const yearSummary = showYearSummary
-  ? getYearSummary(snapshots, yearStartIndex, yearSummaryEndIndex)
-  : null;
+                const yearSummary = showYearSummary
+                  ? getYearSummary(
+                      snapshots,
+                      yearStartIndex,
+                      yearSummaryEndIndex,
+                    )
+                  : null;
 
                 return (
                   <Fragment key={snapshot.date}>
