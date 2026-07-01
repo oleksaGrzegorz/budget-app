@@ -2,6 +2,15 @@ import type { Entry } from "../types/entry";
 
 const rawEntries: Omit<Entry, "id">[] = [
 
+// JULI 2026
+
+// EXPENSE
+  { formType: "expense", category: "Liability insurance", year: "2026", month: "07", amount: 6.17 },
+
+// INCOME
+  { formType: "income", category: "Other income", year: "2026", month: "07", amount: 295.07 },
+
+//2025
   { formType: "income", category: "Salary - Grzesiek", year: "2025", month: "01", amount: 2743.53 },
   { formType: "income", category: "Salary - Grzesiek", year: "2025", month: "02", amount: 2727.32 },
   { formType: "income", category: "Salary - Grzesiek", year: "2025", month: "03", amount: 6123.33 },
@@ -332,6 +341,8 @@ const rawEntries: Omit<Entry, "id">[] = [
   { formType: "expense", category: "Other", year: "2025", month: "12", amount: 152.54 },
 
 
+
+
   { formType: "expense", category: "Mortgage", year: "2026", month: "01", amount: 1300.79 },
   { formType: "expense", category: "Mortgage", year: "2026", month: "02", amount: 1300.79 },
   { formType: "expense", category: "Mortgage", year: "2026", month: "03", amount: 1300.79 },
@@ -353,24 +364,45 @@ const rawEntries: Omit<Entry, "id">[] = [
   { formType: "expense", category: "Eating out", year: "2026", month: "03", amount: 28.11 },
   { formType: "expense", category: "Eating out", year: "2026", month: "04", amount: 62.55 },
   { formType: "expense", category: "Eating out", year: "2026", month: "05", amount: 109.5 },
-  { formType: "expense", category: "Eating out", year: "2026", month: "06", amount: 61.98 },
+  { formType: "expense", category: "Eating out", year: "2026", month: "06", amount: 67.52 },
+
+  { formType: "expense", category: "Child", year: "2026", month: "01", amount: 126.75 },
+  { formType: "expense", category: "Child", year: "2026", month: "02", amount: 449.21 },
+  { formType: "expense", category: "Child", year: "2026", month: "03", amount: 106.07 },
+  { formType: "expense", category: "Child", year: "2026", month: "04", amount: 64.92 },
+  { formType: "expense", category: "Child", year: "2026", month: "05", amount: 25 },
+  { formType: "expense", category: "Child", year: "2026", month: "06", amount: 194.88, },
+
+  { formType: "expense", category: "Dog", year: "2026", month: "02", amount: 22.04 },
+  { formType: "expense", category: "Dog", year: "2026", month: "03", amount: 36 },
+  { formType: "expense", category: "Dog", year: "2026", month: "04", amount: 183.15 },
 
   { formType: "expense", category: "Health insurance", year: "2026", month: "01", amount: 299.8 },
   { formType: "expense", category: "Health insurance", year: "2026", month: "02", amount: 299.8 },
   { formType: "expense", category: "Health insurance", year: "2026", month: "03", amount: 482.91 },
   { formType: "expense", category: "Health insurance", year: "2026", month: "04", amount: 299.8 },
   { formType: "expense", category: "Health insurance", year: "2026", month: "05", amount: 299.8 },
+  { formType: "expense", category: "Health insurance", year: "2026", month: "06", amount: 299.8 },
 
   { formType: "expense", category: "Dentist & medicine", year: "2026", month: "01", amount: 29.99 },
   { formType: "expense", category: "Dentist & medicine", year: "2026", month: "04", amount: 2.52 },
   { formType: "expense", category: "Dentist & medicine", year: "2026", month: "06", amount: 188.77 },
+
+  { formType: "expense", category: "Hairdresser", year: "2026", month: "01", amount: 35 },
+  { formType: "expense", category: "Hairdresser", year: "2026", month: "02", amount: 35 },
+  { formType: "expense", category: "Hairdresser", year: "2026", month: "03", amount: 35 },
+  { formType: "expense", category: "Hairdresser", year: "2026", month: "05", amount: 50 },
+
+  { formType: "expense", category: "Clothes & shoes", year: "2026", month: "01", amount: 179.94 },
+  { formType: "expense", category: "Clothes & shoes", year: "2026", month: "03", amount: 160.97 },
+  { formType: "expense", category: "Clothes & shoes", year: "2026", month: "05", amount: 120 },
 
   { formType: "expense", category: "Fuel - Dacia", year: "2026", month: "01", amount: 194.15 },
   { formType: "expense", category: "Fuel - Dacia", year: "2026", month: "02", amount: 228.88 },
   { formType: "expense", category: "Fuel - Dacia", year: "2026", month: "03", amount: 291.33 },
   { formType: "expense", category: "Fuel - Dacia", year: "2026", month: "04", amount: 128.39 },
   { formType: "expense", category: "Fuel - Dacia", year: "2026", month: "05", amount: 220.82 },
-  { formType: "expense", category: "Fuel - Dacia", year: "2026", month: "06", amount: 101.61 },
+  { formType: "expense", category: "Fuel - Dacia", year: "2026", month: "06", amount: 173.32 },
 
   { formType: "expense", category: "Fuel - Renault", year: "2026", month: "01", amount: 50.31 },
   { formType: "expense", category: "Fuel - Renault", year: "2026", month: "02", amount: 140.18 },
@@ -379,7 +411,7 @@ const rawEntries: Omit<Entry, "id">[] = [
   { formType: "expense", category: "Car tax", year: "2026", month: "03", amount: 234 },
   { formType: "expense", category: "Car tax", year: "2026", month: "04", amount: 31 },
   { formType: "expense", category: "Car tax", year: "2026", month: "05", amount: 31 },
-  { formType: "expense", category: "Car tax", year: "2026", month: "06", amount: 203 },
+  { formType: "expense", category: "Car tax", year: "2026", month: "06", amount: 234 },
 
   { formType: "expense", category: "Car insurance", year: "2026", month: "02", amount: 40.48 },
   { formType: "expense", category: "Car insurance", year: "2026", month: "03", amount: 40.48 },
@@ -390,7 +422,9 @@ const rawEntries: Omit<Entry, "id">[] = [
   { formType: "expense", category: "Car repairs & parts", year: "2026", month: "02", amount: 236.68 },
   { formType: "expense", category: "Car repairs & parts", year: "2026", month: "03", amount: 4 },
   { formType: "expense", category: "Car repairs & parts", year: "2026", month: "04", amount: 4 },
-  { formType: "expense", category: "Car repairs & parts", year: "2026", month: "06", amount: 698.18 },
+  { formType: "expense", category: "Car repairs & parts", year: "2026", month: "06", amount: 798.18 },
+
+  {formType: "expense", category: "Parking", year: "2026", month: "06", amount: 5.4 },
 
   { formType: "expense", category: "Electricity", year: "2026", month: "01", amount: 242 },
   { formType: "expense", category: "Electricity", year: "2026", month: "02", amount: 186 },
@@ -410,12 +444,14 @@ const rawEntries: Omit<Entry, "id">[] = [
   { formType: "expense", category: "Internet", year: "2026", month: "03", amount: 36.23 },
   { formType: "expense", category: "Internet", year: "2026", month: "04", amount: 46.39 },
   { formType: "expense", category: "Internet", year: "2026", month: "05", amount: 46.39 },
+  { formType: "expense", category: "Internet", year: "2026", month: "06", amount: 46.39 },
 
   { formType: "expense", category: "RISK", year: "2026", month: "01", amount: 25.84 },
   { formType: "expense", category: "RISK", year: "2026", month: "02", amount: 26.91 },
   { formType: "expense", category: "RISK", year: "2026", month: "03", amount: 26.91 },
   { formType: "expense", category: "RISK", year: "2026", month: "04", amount: 26.91 },
   { formType: "expense", category: "RISK", year: "2026", month: "05", amount: 26.91 },
+  { formType: "expense", category: "RISK", year: "2026", month: "06", amount: 26.91 },
 
   { formType: "expense", category: "DELA", year: "2026", month: "01", amount: 19.81 },
   { formType: "expense", category: "DELA", year: "2026", month: "02", amount: 19.81 },
@@ -435,7 +471,8 @@ const rawEntries: Omit<Entry, "id">[] = [
   { formType: "expense", category: "Phone", year: "2026", month: "02", amount: 30.04 },
   { formType: "expense", category: "Phone", year: "2026", month: "03", amount: 30.48 },
   { formType: "expense", category: "Phone", year: "2026", month: "04", amount: 29.52 },
-  { formType: "expense", category: "Phone", year: "2026", month: "05", amount: 13.03 },
+  { formType: "expense", category: "Phone", year: "2026", month: "05", amount: 28.03 },
+  { formType: "expense", category: "Phone", year: "2026", month: "06", amount: 28.03 },
 
   { formType: "expense", category: "ING cards", year: "2026", month: "01", amount: 12 },
   { formType: "expense", category: "ING cards", year: "2026", month: "02", amount: 12 },
@@ -456,30 +493,10 @@ const rawEntries: Omit<Entry, "id">[] = [
 
   { formType: "expense", category: "Home items", year: "2026", month: "04", amount: 527.69 },
   { formType: "expense", category: "Home items", year: "2026", month: "05", amount: 184.05 },
-  { formType: "expense", category: "Home items", year: "2026", month: "06", amount: 6.08 },
+  { formType: "expense", category: "Home items", year: "2026", month: "06", amount: 517.08 },
 
   { formType: "expense", category: "Watches & accessories", year: "2026", month: "05", amount: 293.97 },
   { formType: "expense", category: "Watches & accessories", year: "2026", month: "06", amount: 130 },
-
-  { formType: "expense", category: "Child", year: "2026", month: "01", amount: 126.75 },
-  { formType: "expense", category: "Child", year: "2026", month: "02", amount: 449.21 },
-  { formType: "expense", category: "Child", year: "2026", month: "03", amount: 106.07 },
-  { formType: "expense", category: "Child", year: "2026", month: "04", amount: 64.92 },
-  { formType: "expense", category: "Child", year: "2026", month: "05", amount: 25 },
-  { formType: "expense", category: "Child", year: "2026", month: "06", amount: 181 },
-
-  { formType: "expense", category: "Dog", year: "2026", month: "02", amount: 22.04 },
-  { formType: "expense", category: "Dog", year: "2026", month: "03", amount: 36 },
-  { formType: "expense", category: "Dog", year: "2026", month: "04", amount: 183.15 },
-
-  { formType: "expense", category: "Hairdresser", year: "2026", month: "01", amount: 35 },
-  { formType: "expense", category: "Hairdresser", year: "2026", month: "02", amount: 35 },
-  { formType: "expense", category: "Hairdresser", year: "2026", month: "03", amount: 35 },
-  { formType: "expense", category: "Hairdresser", year: "2026", month: "05", amount: 50 },
-
-  { formType: "expense", category: "Clothes & shoes", year: "2026", month: "01", amount: 179.94 },
-  { formType: "expense", category: "Clothes & shoes", year: "2026", month: "03", amount: 160.97 },
-  { formType: "expense", category: "Clothes & shoes", year: "2026", month: "05", amount: 120 },
 
   { formType: "expense", category: "Massage", year: "2026", month: "01", amount: 120 },
 
@@ -504,26 +521,26 @@ const rawEntries: Omit<Entry, "id">[] = [
   { formType: "income", category: "Salary - Grzesiek", year: "2026", month: "03", amount: 6522.7 },
   { formType: "income", category: "Salary - Grzesiek", year: "2026", month: "04", amount: 4281.12 },
   { formType: "income", category: "Salary - Grzesiek", year: "2026", month: "05", amount: 2836.03 },
-{ formType: "income", category: "Salary - Grzesiek", year: "2026", month: "06", amount: 2480.79 },
+  { formType: "income", category: "Salary - Grzesiek", year: "2026", month: "06", amount: 2480.79 },
 
   { formType: "income", category: "Salary - Marta", year: "2026", month: "01", amount: 1667.9 },
   { formType: "income", category: "Salary - Marta", year: "2026", month: "02", amount: 1327.9 },
   { formType: "income", category: "Salary - Marta", year: "2026", month: "03", amount: 1418 },
   { formType: "income", category: "Salary - Marta", year: "2026", month: "04", amount: 1617.9 },
   { formType: "income", category: "Salary - Marta", year: "2026", month: "05", amount: 999.8 },
-{ formType: "income", category: "Salary - Marta", year: "2026", month: "06", amount: 1230 },
+  { formType: "income", category: "Salary - Marta", year: "2026", month: "06", amount: 1735 },
 
   { formType: "income", category: "Other income", year: "2026", month: "01", amount: 326 },
   { formType: "income", category: "Other income", year: "2026", month: "02", amount: 75 },
   { formType: "income", category: "Other income", year: "2026", month: "03", amount: 75 },
   { formType: "income", category: "Other income", year: "2026", month: "04", amount: 370.07 },
   { formType: "income", category: "Other income", year: "2026", month: "05", amount: 75 },
-{ formType: "income", category: "Other income", year: "2026", month: "06", amount: 75 },
+  { formType: "income", category: "Other income", year: "2026", month: "06", amount: 75 },
 
   { formType: "income", category: "Refunds", year: "2026", month: "04", amount: 260.55 },
 
   { formType: "income", category: "Rent", year: "2026", month: "05", amount: 200 },
-  { formType: "income", category: "Rent", year: "2026", month: "06", amount: 500 },
+  { formType: "income", category: "Rent", year: "2026", month: "06", amount: 600 },
 ];
 
 export const initialEntries: Entry[] = rawEntries.map((entry, index) => ({
