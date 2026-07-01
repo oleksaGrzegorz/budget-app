@@ -22,7 +22,7 @@ import {
 } from "./calculations";
 import type { TimeRange } from "./chartConfig";
 import { timeRanges } from "./chartConfig";
-import { getChartValue,getFilteredSnapshots } from "./chartData";
+import { getChartValue, getFilteredSnapshots } from "./chartData";
 import {
   formatChartValue,
   formatCompactNumber,
