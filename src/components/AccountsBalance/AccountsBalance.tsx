@@ -2,9 +2,7 @@ import { Fragment, useMemo, useState } from "react";
 
 import type { ChartMetric, ChartMetricId } from "./types";
 
-import type {
-  AccountSnapshot,
-} from "../../data/initialAccountSnapshots";
+import type { AccountSnapshot } from "../../data/initialAccountSnapshots";
 import { isAccountActiveOnDate } from "../../data/initialAccountSnapshots";
 import type { YearSummary } from "./calculations";
 import {
@@ -24,6 +22,7 @@ import {
 } from "./calculations";
 import type { TimeRange } from "./chartConfig";
 import { timeRanges } from "./chartConfig";
+import { getChartValue,getFilteredSnapshots } from "./chartData";
 import {
   formatChartValue,
   formatCompactNumber,
@@ -94,36 +93,6 @@ const getDiffCellClass = (value: number | null) => {
   }
 
   return value >= 0 ? "bg-emerald-50" : "bg-rose-50";
-};
-
-const getChartValue = (snapshot: AccountSnapshot, metricId: ChartMetricId) => {
-  if (metricId === "pln.total") return getPlnTotal(snapshot);
-  if (metricId === "eur.total") return getEurTotal(snapshot);
-  if (metricId === "total.eur") return getTotalEur(snapshot);
-
-  return snapshot.balances[metricId] ?? 0;
-};
-
-const getFilteredSnapshots = (
-  snapshots: AccountSnapshot[],
-  timeRange: TimeRange,
-) => {
-  const range = timeRanges.find((item) => item.id === timeRange);
-
-  if (!range || range.months === null) {
-    return snapshots;
-  }
-
-  const latest = snapshots.at(-1);
-
-  if (!latest) {
-    return snapshots;
-  }
-
-  const minDate = new Date(latest.date);
-  minDate.setMonth(minDate.getMonth() - range.months);
-
-  return snapshots.filter((snapshot) => new Date(snapshot.date) >= minDate);
 };
 
 const DiffBadge = ({
