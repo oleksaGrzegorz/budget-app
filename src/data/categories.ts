@@ -24,6 +24,7 @@ export const categoryGroups = [
       "Car insurance",
       "Car repairs & parts",
       "Fines",
+      "Parking",
     ],
   },
   {
