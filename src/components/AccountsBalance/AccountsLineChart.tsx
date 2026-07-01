@@ -24,9 +24,26 @@ export const AccountsLineChart = ({
   const values = snapshots.map((snapshot) =>
     getChartValue(snapshot, metric.id),
   );
-  const minValue = values.length ? Math.min(...values) : 0;
-  const maxValue = values.length ? Math.max(...values) : 1;
+  const rawMinValue = values.length ? Math.min(...values) : 0;
+  const rawMaxValue = values.length ? Math.max(...values) : 1;
+  const rawRange = rawMaxValue - rawMinValue || 1;
+
+  const yPadding = rawRange * 0.12;
+  const minValue = rawMinValue - yPadding;
+  const maxValue = rawMaxValue + yPadding;
   const range = maxValue - minValue || 1;
+
+  const yAxisTicks = Array.from({ length: 5 }, (_, index) => {
+    const value = maxValue - (range / 4) * index;
+
+    return {
+      value,
+      y:
+        height -
+        paddingBottom -
+        ((value - minValue) / range) * (height - paddingTop - paddingBottom),
+    };
+  });
 
   const firstValue = values[0] ?? 0;
   const lastValue = values.at(-1) ?? 0;
@@ -128,23 +145,27 @@ export const AccountsLineChart = ({
             strokeWidth="2"
           />
 
-          <text
-            x={paddingX}
-            y={paddingTop - 12}
-            textAnchor="start"
-            className="fill-slate-400 text-[11px] font-bold"
-          >
-            {formatCompactNumber(maxValue)}
-          </text>
+          {yAxisTicks.map((tick) => (
+            <g key={tick.value}>
+              <line
+                x1={paddingX}
+                y1={tick.y}
+                x2={width - paddingX}
+                y2={tick.y}
+                stroke="#e2e8f0"
+                strokeWidth="1"
+              />
 
-          <text
-            x={paddingX}
-            y={height - paddingBottom + 24}
-            textAnchor="start"
-            className="fill-slate-400 text-[11px] font-bold"
-          >
-            {formatCompactNumber(minValue)}
-          </text>
+              <text
+                x={paddingX - 10}
+                y={tick.y + 4}
+                textAnchor="end"
+                className="fill-slate-400 text-[11px] font-bold"
+              >
+                {formatCompactNumber(tick.value)}
+              </text>
+            </g>
+          ))}
 
           <polyline
             points={points}
