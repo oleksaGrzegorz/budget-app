@@ -5,10 +5,33 @@ const rawEntries: Omit<Entry, "id">[] = [
 // JULI 2026
 
 // EXPENSE
+
+
+  { formType: "expense", category: "Mortgage", year: "2026", month: "07", amount: 1300.79 },
+  { formType: "expense", category: "Groceries", year: "2026", month: "07", amount: 256.82 },
+  { formType: "expense", category: "Eating out", year: "2026", month: "07", amount: 25.41 },
+
+  { formType: "expense", category: "Fuel - Dacia", year: "2026", month: "07", amount: 90.38 },
+  { formType: "expense", category: "Fuel - Renault", year: "2026", month: "07", amount: 15.05 },
+  { formType: "expense", category: "Car insurance", year: "2026", month: "07", amount: 40.48 }, 
+  { formType: "expense", category: "Parking", year: "2026", month: "07", amount: 5 },
+
+  { formType: "expense", category: "Electricity", year: "2026", month: "07", amount: 192 },
   { formType: "expense", category: "Liability insurance", year: "2026", month: "07", amount: 6.17 },
+  { formType: "expense", category: "Dentist & medicine", year: "2026", month: "07", amount: 56.5 },
+
+  { formType: "expense", category: "Home items", year: "2026", month: "07", amount: 52.23 },
+
+  { formType: "expense", category: "Child", year: "2026", month: "07", amount: 88.97 },
+
+  { formType: "expense", category: "Clothes & shoes", year: "2026", month: "07", amount: 153.47 },
+
+  { formType: "expense", category: "Vacations", year: "2026", month: "07", amount: 157.95 },
 
 // INCOME
+  { formType: "income", category: "Salary - Marta", year: "2026", month: "07", amount: 650 },
   { formType: "income", category: "Other income", year: "2026", month: "07", amount: 295.07 },
+  { formType: "income", category: "Rent", year: "2026", month: "07", amount: 200 },
 
 //2025
   { formType: "income", category: "Salary - Grzesiek", year: "2025", month: "01", amount: 2743.53 },
@@ -500,15 +523,13 @@ const rawEntries: Omit<Entry, "id">[] = [
 
   { formType: "expense", category: "Massage", year: "2026", month: "01", amount: 120 },
 
-  { formType: "expense", category: "Entertainment", year: "2026", month: "01", amount: 63.48 },
+  { formType: "expense", category: "Entertainment", year: "2026", month: "01", amount: 209.48 },
   { formType: "expense", category: "Entertainment", year: "2026", month: "02", amount: 13.64 },
   { formType: "expense", category: "Entertainment", year: "2026", month: "03", amount: 122.72 },
   { formType: "expense", category: "Entertainment", year: "2026", month: "04", amount: 18 },
 
   { formType: "expense", category: "Flights", year: "2026", month: "01", amount: 209.56 },
   { formType: "expense", category: "Flights", year: "2026", month: "04", amount: 295.96 },
-
-  { formType: "expense", category: "Theme parks & attractions", year: "2026", month: "01", amount: 146 },
 
 
   { formType: "expense", category: "Other", year: "2026", month: "01", amount: 159.65 },
