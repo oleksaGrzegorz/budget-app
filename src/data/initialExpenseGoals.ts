@@ -39,7 +39,6 @@ export const initialExpenseGoals: Record<string, number | null> = {
   "Gym": 30,
 
   "Entertainment": 50,
-  "Theme parks & attractions": 30,
 
   "Flights": 100,
   "Vacations": 20,
