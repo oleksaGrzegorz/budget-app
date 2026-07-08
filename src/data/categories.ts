@@ -89,7 +89,7 @@ export const categoryGroups = [
     name: "Entertainment",
     emoji: "🎉",
     iconClassName: "bg-fuchsia-200 ring-fuchsia-300",
-    categories: ["Entertainment", "Theme parks & attractions"],
+    categories: ["Entertainment"],
   },
   {
     name: "Travel",
