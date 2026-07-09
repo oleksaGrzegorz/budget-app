@@ -116,7 +116,6 @@ const ASSET_COLORS: Record<AssetId, string> = {
   crypto: "#9333ea",
   cashPln: "#ca8a04",
   cashEur: "#475569",
-  
 };
 
 const LOSS_COLOR = "#e11d48";
@@ -151,15 +150,19 @@ const getInvestmentCapitalInEur = ({
     .filter((event) => event.assetId === assetId)
     .filter((event) => event.date <= date)
     .reduce((total, event) => {
-      const signedAmount =
-        String(event.kind) === "sell" || String(event.kind) === "withdrawal"
-          ? -event.amount
+      const eventAmount =
+        event.kind === "sell"
+          ? event.soldCapitalAmount ?? event.amount
           : event.amount;
 
       const amountInEur =
         event.currency === "pln"
-          ? signedAmount / snapshot.exchangeRate
-          : signedAmount;
+          ? eventAmount / snapshot.exchangeRate
+          : eventAmount;
+
+      if (event.kind === "sell") {
+        return Math.max(0, total - amountInEur);
+      }
 
       return total + amountInEur;
     }, 0);
@@ -337,23 +340,21 @@ const AllocationTooltip = ({
         {formatSignedEur(point.change)} · {formatPercent(point.changePercent)}
       </div>
 
-{isInvestedAssetId(point.id) ? (
-  <div className="mt-2 space-y-1 text-[11px] font-bold text-slate-500">
-    <div>
-      Kapitał: {formatEur(point.capitalValue + point.lossValue)}
-    </div>
+      {isInvestedAssetId(point.id) ? (
+        <div className="mt-2 space-y-1 text-[11px] font-bold text-slate-500">
+          <div>Kapitał: {formatEur(point.capitalValue + point.lossValue)}</div>
 
-    <div className={getToneClass(point.gainValue - point.lossValue)}>
-      Wynik: {formatSignedEur(point.gainValue - point.lossValue)}
-    </div>
+          <div className={getToneClass(point.gainValue - point.lossValue)}>
+            Wynik: {formatSignedEur(point.gainValue - point.lossValue)}
+          </div>
 
-    {point.lossValue > 0 ? (
-      <div className="text-rose-600">
-        Strata: -{formatEur(point.lossValue)}
-      </div>
-    ) : null}
-  </div>
-) : null}
+          {point.lossValue > 0 ? (
+            <div className="text-rose-600">
+              Strata: -{formatEur(point.lossValue)}
+            </div>
+          ) : null}
+        </div>
+      ) : null}
 
       {point.details ? (
         <div className="mt-1 text-[11px] font-bold text-slate-400">
@@ -536,48 +537,52 @@ export const QuarterlyAssetsSummary = ({
           })
         : value;
 
-const isInvestedAsset = isInvestedAssetId(id);
-const resultValue = isInvestedAsset ? value - investedCapital : 0;
+      const isInvestedAsset = isInvestedAssetId(id);
+      const resultValue = isInvestedAsset ? value - investedCapital : 0;
 
-const visibleCapital = isInvestedAsset
-  ? Math.min(value, investedCapital)
-  : value;
+      const visibleCapital = isInvestedAsset
+        ? Math.min(value, investedCapital)
+        : value;
 
-const gainValue = isInvestedAsset ? Math.max(resultValue, 0) : 0;
-const lossValue = isInvestedAsset ? Math.max(-resultValue, 0) : 0;
+      const gainValue = isInvestedAsset ? Math.max(resultValue, 0) : 0;
+      const lossValue = isInvestedAsset ? Math.max(-resultValue, 0) : 0;
 
-const labelPositionValue = isInvestedAsset
-  ? Math.max(value, investedCapital)
-  : value;
+      const labelPositionValue = isInvestedAsset
+        ? Math.max(value, investedCapital)
+        : value;
 
-  return {
-  id,
-  name,
-  value,
-  share,
-  capitalValue: visibleCapital,
-  capitalShare:
-    totalPortfolioValue === 0
-      ? 0
-      : (visibleCapital / totalPortfolioValue) * 100,
-  gainValue,
-  gainShare:
-    totalPortfolioValue === 0 ? 0 : (gainValue / totalPortfolioValue) * 100,
-  lossValue,
-  lossShare:
-    totalPortfolioValue === 0 ? 0 : (lossValue / totalPortfolioValue) * 100,
-  labelPositionShare:
-    totalPortfolioValue === 0
-      ? 0
-      : (labelPositionValue / totalPortfolioValue) * 100,
-  change,
-  changePercent,
-  color: CHART_COLORS[id],
-  capitalColor: CHART_CAPITAL_COLORS[id],
-  gainColor: CHART_COLORS[id],
-  lossColor: LOSS_COLOR,
-  details,
-};
+      return {
+        id,
+        name,
+        value,
+        share,
+        capitalValue: visibleCapital,
+        capitalShare:
+          totalPortfolioValue === 0
+            ? 0
+            : (visibleCapital / totalPortfolioValue) * 100,
+        gainValue,
+        gainShare:
+          totalPortfolioValue === 0
+            ? 0
+            : (gainValue / totalPortfolioValue) * 100,
+        lossValue,
+        lossShare:
+          totalPortfolioValue === 0
+            ? 0
+            : (lossValue / totalPortfolioValue) * 100,
+        labelPositionShare:
+          totalPortfolioValue === 0
+            ? 0
+            : (labelPositionValue / totalPortfolioValue) * 100,
+        change,
+        changePercent,
+        color: CHART_COLORS[id],
+        capitalColor: CHART_CAPITAL_COLORS[id],
+        gainColor: CHART_COLORS[id],
+        lossColor: LOSS_COLOR,
+        details,
+      };
     };
 
     const points: AllocationPoint[] = [
@@ -922,52 +927,59 @@ const labelPositionValue = isInvestedAsset
 
                   <Tooltip content={<AllocationTooltip />} cursor={false} />
 
-<Bar dataKey="capitalShare" stackId="value" barSize={18}>
-  {allocationData.map((point) => (
-    <Cell key={`capital-${point.id}`} fill={point.capitalColor} />
-  ))}
-</Bar>
+                  <Bar dataKey="capitalShare" stackId="value" barSize={18}>
+                    {allocationData.map((point) => (
+                      <Cell
+                        key={`capital-${point.id}`}
+                        fill={point.capitalColor}
+                      />
+                    ))}
+                  </Bar>
 
-<Bar
-  dataKey="lossShare"
-  stackId="value"
-  radius={[0, 8, 8, 0]}
-  barSize={18}
->
-  {allocationData.map((point) => (
-    <Cell key={`loss-${point.id}`} fill={point.lossColor} />
-  ))}
-</Bar>
+                  <Bar
+                    dataKey="lossShare"
+                    stackId="value"
+                    radius={[0, 8, 8, 0]}
+                    barSize={18}
+                  >
+                    {allocationData.map((point) => (
+                      <Cell key={`loss-${point.id}`} fill={point.lossColor} />
+                    ))}
+                  </Bar>
 
-<Bar
-  dataKey="gainShare"
-  stackId="value"
-  radius={[0, 8, 8, 0]}
-  barSize={18}
->
-  {allocationData.map((point) => (
-    <Cell key={`gain-${point.id}`} fill={point.gainColor} />
-  ))}
-</Bar>
+                  <Bar
+                    dataKey="gainShare"
+                    stackId="value"
+                    radius={[0, 8, 8, 0]}
+                    barSize={18}
+                  >
+                    {allocationData.map((point) => (
+                      <Cell key={`gain-${point.id}`} fill={point.gainColor} />
+                    ))}
+                  </Bar>
 
-<Bar dataKey="labelPositionShare" fill="transparent" barSize={18}>
-  <LabelList
-    dataKey="share"
-    position="right"
-    content={(props) => (
-      <AllocationBarLabel {...(props as ChartLabelProps)} />
-    )}
-  />
-</Bar>
+                  <Bar
+                    dataKey="labelPositionShare"
+                    fill="transparent"
+                    barSize={18}
+                  >
+                    <LabelList
+                      dataKey="share"
+                      position="right"
+                      content={(props) => (
+                        <AllocationBarLabel {...(props as ChartLabelProps)} />
+                      )}
+                    />
+                  </Bar>
                 </BarChart>
               </ResponsiveContainer>
             </div>
           </div>
 
-<div className="mt-3 rounded-xl bg-slate-50 px-3 py-2 text-xs font-bold text-slate-400">
-  Jasny kolor = wpłacony kapitał. Ciemny kolor = zysk. Czerwony kolor =
-  strata względem wpłaconego kapitału. Gotówka = PLN + EUR.
-</div>
+          <div className="mt-3 rounded-xl bg-slate-50 px-3 py-2 text-xs font-bold text-slate-400">
+            Jasny kolor = wpłacony kapitał. Ciemny kolor = zysk. Czerwony kolor
+            = strata względem wpłaconego kapitału. Gotówka = PLN + EUR.
+          </div>
         </div>
       </div>
 
