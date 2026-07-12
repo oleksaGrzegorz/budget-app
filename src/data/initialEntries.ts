@@ -8,30 +8,32 @@ const rawEntries: Omit<Entry, "id">[] = [
 
 
   { formType: "expense", category: "Mortgage", year: "2026", month: "07", amount: 1300.79 },
-  { formType: "expense", category: "Groceries", year: "2026", month: "07", amount: 256.82 },
-  { formType: "expense", category: "Eating out", year: "2026", month: "07", amount: 25.41 },
+  { formType: "expense", category: "Groceries", year: "2026", month: "07", amount: 334.16 },
+  { formType: "expense", category: "Eating out", year: "2026", month: "07", amount: 85.99 },
 
-  { formType: "expense", category: "Fuel - Dacia", year: "2026", month: "07", amount: 90.38 },
+  { formType: "expense", category: "Fuel - Dacia", year: "2026", month: "07", amount: 178.86 },
   { formType: "expense", category: "Fuel - Renault", year: "2026", month: "07", amount: 15.05 },
   { formType: "expense", category: "Car insurance", year: "2026", month: "07", amount: 40.48 }, 
-  { formType: "expense", category: "Parking", year: "2026", month: "07", amount: 5 },
+  { formType: "expense", category: "Parking", year: "2026", month: "07", amount: 21.5 },
 
   { formType: "expense", category: "Electricity", year: "2026", month: "07", amount: 192 },
   { formType: "expense", category: "Liability insurance", year: "2026", month: "07", amount: 6.17 },
-  { formType: "expense", category: "Dentist & medicine", year: "2026", month: "07", amount: 56.5 },
+  { formType: "expense", category: "ING cards", year: "2026", month: "07", amount: 8 },
+  { formType: "expense", category: "Dentist & medicine", year: "2026", month: "07", amount: 441.5 },
 
   { formType: "expense", category: "Home items", year: "2026", month: "07", amount: 52.23 },
 
-  { formType: "expense", category: "Child", year: "2026", month: "07", amount: 88.97 },
+  { formType: "expense", category: "Child", year: "2026", month: "07", amount: 131.6 },
 
-  { formType: "expense", category: "Clothes & shoes", year: "2026", month: "07", amount: 153.47 },
+  { formType: "expense", category: "Hairdresser", year: "2026", month: "07", amount: 25 },
+  { formType: "expense", category: "Clothes & shoes", year: "2026", month: "07", amount: 361.9 },
 
   { formType: "expense", category: "Vacations", year: "2026", month: "07", amount: 157.95 },
 
 // INCOME
   { formType: "income", category: "Salary - Marta", year: "2026", month: "07", amount: 650 },
   { formType: "income", category: "Other income", year: "2026", month: "07", amount: 295.07 },
-  { formType: "income", category: "Rent", year: "2026", month: "07", amount: 200 },
+  { formType: "income", category: "Rent", year: "2026", month: "07", amount: 400 },
 
 //2025
   { formType: "income", category: "Salary - Grzesiek", year: "2025", month: "01", amount: 2743.53 },
