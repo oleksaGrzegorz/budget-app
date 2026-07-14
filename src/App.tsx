@@ -4,7 +4,6 @@ import { useBudgetData } from "./hooks/useBudgetData";
 import { useLocalStorageState } from "./hooks/useLocalStorageState";
 
 import { AccountsBalance } from "./components/AccountsBalance/AccountsBalance";
-import { AppLayout } from "./components/AppLayout/AppLayout";
 import { BitcoinPrice } from "./components/BitcoinPrice";
 import { BudgetInsights } from "./components/BudgetInsights/BudgetInsights";
 import { BudgetSummaryTable } from "./components/BudgetSummaryTable/BudgetSummaryTable";
@@ -22,6 +21,7 @@ import type { PeriodOption } from "./utils/budgetAverages";
 
 import { initialAccountSnapshots } from "./data/initialAccountSnapshots";
 
+import { AppLayout } from "./shared/components/AppLayout/AppLayout";
 import { DashboardCard } from "./shared/components/DashboardCard/DashboardCard";
 import { Header } from "./shared/components/Header/Header";
 
