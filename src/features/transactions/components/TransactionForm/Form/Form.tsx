@@ -6,10 +6,10 @@ import {
   useState,
 } from "react";
 
-import { budgetSummaryLabels } from "../../data/budgetSummaryLabels";
-import { categoryGroups } from "../../data/categories";
-import { months } from "../../data/months";
-import type { Entry } from "../../types/entry";
+import { budgetSummaryLabels } from "../../../../../data/budgetSummaryLabels";
+import { categoryGroups } from "../../../../../data/categories";
+import { months } from "../../../../../data/months";
+import type { Entry } from "../../../../../types/entry";
 import {
   CategoryCombobox,
   type CategoryComboboxOption,
