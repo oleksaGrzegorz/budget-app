@@ -9,7 +9,6 @@ import { BitcoinPrice } from "./components/BitcoinPrice";
 import { BudgetInsights } from "./components/BudgetInsights/BudgetInsights";
 import { BudgetSummaryTable } from "./components/BudgetSummaryTable/BudgetSummaryTable";
 import { BudgetUsageSummary } from "./components/BudgetUsageSummary/BudgetUsageSummary";
-import { DashboardCard } from "./components/DashboardCard/DashboardCard";
 import { ExpensesByCategoryChart } from "./components/ExpensesByCategoryChart/ExpensesByCategoryChart";
 import { ExpensesByIncomeChart } from "./components/ExpensesByIncomeChart/ExpensesByIncomeChart";
 import { ExpensesList } from "./components/ExpensesList/ExpensesList";
@@ -23,6 +22,7 @@ import type { PeriodOption } from "./utils/budgetAverages";
 
 import { initialAccountSnapshots } from "./data/initialAccountSnapshots";
 
+import { DashboardCard } from "./shared/components/DashboardCard/DashboardCard";
 import { Header } from "./shared/components/Header/Header";
 
 export default function App() {
