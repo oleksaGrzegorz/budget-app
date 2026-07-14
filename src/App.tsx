@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 import { useBudgetData } from "./hooks/useBudgetData";
-import { useLocalStorageState } from "./hooks/useLocalStorageState";
 
 import { AccountsBalance } from "./components/AccountsBalance/AccountsBalance";
 import { BitcoinPrice } from "./components/BitcoinPrice";
@@ -24,6 +23,7 @@ import { AppLayout } from "./shared/components/AppLayout/AppLayout";
 import { DashboardCard } from "./shared/components/DashboardCard/DashboardCard";
 import { Header } from "./shared/components/Header/Header";
 import { YearSelector } from "./shared/components/YearSelector/YearSelector";
+import { useLocalStorageState } from "./shared/hooks/useLocalStorageState";
 
 export default function App() {
   const [theme, setTheme] = useLocalStorageState<"light" | "dark">(
