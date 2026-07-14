@@ -12,7 +12,7 @@ import { initialExpenseGoals } from "../data/initialExpenseGoals";
 import { initialForecast } from "../data/initialForecast";
 import { initialIncomeGoals } from "../data/initialIncomeGoals";
 
-import { useLocalStorageState } from "./useLocalStorageState";
+import { useLocalStorageState } from "../shared/hooks/useLocalStorageState";
 
 export const useBudgetData = (selectedYear: string) => {
   const [entries, setEntries] = useLocalStorageState<Entry[]>(
