@@ -15,7 +15,6 @@ import { ExpensesTable } from "./components/ExpensesTable/ExpensesTable";
 import { Form } from "./components/Form/Form";
 import { IncomeForecastTable } from "./components/IncomeForecastTable/IncomeForecastTable";
 import { IncomesTable } from "./components/IncomesTable/IncomesTable";
-import { YearSelector } from "./components/YearSelector/YearSelector";
 
 import type { PeriodOption } from "./utils/budgetAverages";
 
@@ -24,6 +23,7 @@ import { initialAccountSnapshots } from "./data/initialAccountSnapshots";
 import { AppLayout } from "./shared/components/AppLayout/AppLayout";
 import { DashboardCard } from "./shared/components/DashboardCard/DashboardCard";
 import { Header } from "./shared/components/Header/Header";
+import { YearSelector } from "./shared/components/YearSelector/YearSelector";
 
 export default function App() {
   const [theme, setTheme] = useLocalStorageState<"light" | "dark">(
