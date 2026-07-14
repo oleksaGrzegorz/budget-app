@@ -9,7 +9,7 @@ import {
 import { budgetSummaryLabels } from "../../../../../data/budgetSummaryLabels";
 import { categoryGroups } from "../../../../../data/categories";
 import { months } from "../../../../../data/months";
-import type { Entry } from "../../../../../types/entry";
+import type { Entry } from "../../../types/entry";
 import {
   CategoryCombobox,
   type CategoryComboboxOption,

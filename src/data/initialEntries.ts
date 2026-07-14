@@ -1,4 +1,4 @@
-import type { Entry } from "../types/entry";
+import type { Entry } from "../features/transactions/types/entry";
 
 const rawEntries: Omit<Entry, "id">[] = [
 

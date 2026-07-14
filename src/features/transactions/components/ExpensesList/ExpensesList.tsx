@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import type { Entry } from "../../types/entry";
+import type { Entry } from "../../types/entry"
 
 interface ExpensesListProps {
   entries: Entry[];

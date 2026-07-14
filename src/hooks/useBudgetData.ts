@@ -1,6 +1,5 @@
 import { useMemo } from "react";
 
-import type { Entry } from "../types/entry";
 import type { Goals } from "../types/goals";
 
 import { sumExpenses } from "../utils/sumExpenses";
@@ -12,6 +11,7 @@ import { initialExpenseGoals } from "../data/initialExpenseGoals";
 import { initialForecast } from "../data/initialForecast";
 import { initialIncomeGoals } from "../data/initialIncomeGoals";
 
+import type { Entry } from "../features/transactions/types/entry";
 import { useLocalStorageState } from "../shared/hooks/useLocalStorageState";
 
 export const useBudgetData = (selectedYear: string) => {
