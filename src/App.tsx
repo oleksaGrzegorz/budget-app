@@ -15,7 +15,6 @@ import { ExpensesByIncomeChart } from "./components/ExpensesByIncomeChart/Expens
 import { ExpensesList } from "./components/ExpensesList/ExpensesList";
 import { ExpensesTable } from "./components/ExpensesTable/ExpensesTable";
 import { Form } from "./components/Form/Form";
-import { Header } from "./components/Header/Header";
 import { IncomeForecastTable } from "./components/IncomeForecastTable/IncomeForecastTable";
 import { IncomesTable } from "./components/IncomesTable/IncomesTable";
 import { YearSelector } from "./components/YearSelector/YearSelector";
@@ -23,6 +22,8 @@ import { YearSelector } from "./components/YearSelector/YearSelector";
 import type { PeriodOption } from "./utils/budgetAverages";
 
 import { initialAccountSnapshots } from "./data/initialAccountSnapshots";
+
+import { Header } from "./shared/components/Header/Header";
 
 export default function App() {
   const [theme, setTheme] = useLocalStorageState<"light" | "dark">(
