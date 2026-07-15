@@ -1,15 +1,15 @@
 import { Fragment } from "react";
 
-import { categoryAverageTypes, categoryGroups } from "../../data/categories";
-import { months } from "../../data/months";
-import type { BudgetData } from "../../types/budgetData";
-import type { GoalsData } from "../../types/goalsData";
+import { GoalCell } from "../../../../components/BudgetSummaryTable/GoalCell";
+import { categoryAverageTypes, categoryGroups } from "../../../../data/categories";
+import { months } from "../../../../data/months";
+import type { BudgetData } from "../../../../types/budgetData";
+import type { GoalsData } from "../../../../types/goalsData";
 import {
   getActiveMonths,
   getCategoryAverage,
   type PeriodOption,
-} from "../../utils/budgetAverages";
-import { GoalCell } from "../BudgetSummaryTable/GoalCell";
+} from "../../../../utils/budgetAverages";
 
 interface ExpensesTableProps {
   expenses: BudgetData;

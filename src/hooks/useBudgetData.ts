@@ -2,7 +2,6 @@ import { useMemo } from "react";
 
 import type { Goals } from "../types/goals";
 
-import { sumExpenses } from "../utils/sumExpenses";
 import { sumIncomes } from "../utils/sumIncomes";
 
 import { initialBudgetSummaryGoals } from "../data/initialBudgetSummaryGoals";
@@ -11,6 +10,7 @@ import { initialExpenseGoals } from "../data/initialExpenseGoals";
 import { initialForecast } from "../data/initialForecast";
 import { initialIncomeGoals } from "../data/initialIncomeGoals";
 
+import  { sumExpenses } from "../features/expenses/utils/sumExpenses";
 import type { Entry } from "../features/transactions/types/entry";
 import { useLocalStorageState } from "../shared/hooks/useLocalStorageState";
 

@@ -9,7 +9,6 @@ import { BudgetSummaryTable } from "./components/BudgetSummaryTable/BudgetSummar
 import { BudgetUsageSummary } from "./components/BudgetUsageSummary/BudgetUsageSummary";
 import { ExpensesByCategoryChart } from "./components/ExpensesByCategoryChart/ExpensesByCategoryChart";
 import { ExpensesByIncomeChart } from "./components/ExpensesByIncomeChart/ExpensesByIncomeChart";
-import { ExpensesTable } from "./components/ExpensesTable/ExpensesTable";
 import { IncomeForecastTable } from "./components/IncomeForecastTable/IncomeForecastTable";
 import { IncomesTable } from "./components/IncomesTable/IncomesTable";
 
@@ -17,6 +16,7 @@ import type { PeriodOption } from "./utils/budgetAverages";
 
 import { initialAccountSnapshots } from "./data/initialAccountSnapshots";
 
+import { ExpensesTable } from "./features/expenses/components/ExpensesTable/ExpensesTable";
 import { ExpensesList } from "./features/transactions/components/ExpensesList/ExpensesList";
 import { Form } from "./features/transactions/components/TransactionForm/Form/Form";
 import { AppLayout } from "./shared/components/AppLayout/AppLayout";
