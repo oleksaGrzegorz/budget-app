@@ -169,7 +169,7 @@ const monthProgressPercent =
     0,
   );
 
-  const topExpectedItems = expectedExpenseItems.slice(0, 3);
+  const topExpectedItems = expectedExpenseItems.slice(0, 16);
 
   const overspendingItems: OverspendingItem[] =
     period === "average"
@@ -190,7 +190,7 @@ const monthProgressPercent =
           .filter((item): item is OverspendingItem => item !== null)
           .sort((a, b) => b.diff - a.diff);
 
-  const topOverspendingItems = overspendingItems.slice(0, 3);
+  const topOverspendingItems = overspendingItems.slice(0, 16);
 
   const totalOverspending = overspendingItems.reduce(
     (sum, item) => sum + item.diff,
