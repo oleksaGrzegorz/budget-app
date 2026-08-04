@@ -1,11 +1,11 @@
 import type { BudgetData } from "../types/budgetData";
 
+import { categories } from "../data/categories";
+
 import {
   getActiveMonths,
   getCategoriesAverageTotal,
-} from "../utils/budgetAverages";
-
-import { categories } from "../data/categories";
+} from "../features/budget-summary/utils/budgetAverages";
 
 export const useBudgetMetrics = (
   expenses: BudgetData,

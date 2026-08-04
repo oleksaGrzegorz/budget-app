@@ -1,10 +1,10 @@
 import { categoryAverageTypes, categoryGroups } from "../../data/categories";
-import type { BudgetData } from "../../types/budgetData";
 import {
   getActiveMonths,
   getCategoryAverage,
   type PeriodOption,
-} from "../../utils/budgetAverages";
+} from "../../features/budget-summary/utils/budgetAverages";
+import type { BudgetData } from "../../types/budgetData";
 
 interface ExpensesByCategoryChartProps {
   expenses: BudgetData;

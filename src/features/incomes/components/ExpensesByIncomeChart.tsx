@@ -5,7 +5,7 @@ import {
   getCategoriesAverageTotal,
   getMonthTotal,
   type PeriodOption,
-} from "../../../utils/budgetAverages";
+} from "../../budget-summary/utils/budgetAverages";
 
 interface ExpensesByIncomeChartProps {
   expenses: BudgetData;

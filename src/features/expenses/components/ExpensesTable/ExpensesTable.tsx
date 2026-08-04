@@ -9,7 +9,7 @@ import {
   getActiveMonths,
   getCategoryAverage,
   type PeriodOption,
-} from "../../../../utils/budgetAverages";
+} from "../../../budget-summary/utils/budgetAverages";
 
 interface ExpensesTableProps {
   expenses: BudgetData;

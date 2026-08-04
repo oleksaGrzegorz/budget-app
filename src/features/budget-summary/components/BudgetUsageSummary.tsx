@@ -1,4 +1,11 @@
 import {
+  getActiveMonths,
+  getCategoriesAverageTotal,
+  getMonthTotal,
+  type PeriodOption,
+} from "../utils/budgetAverages";
+
+import {
   categories,
   categoryAverageTypes,
   categoryEmojis,
@@ -7,12 +14,6 @@ import {
 import { months } from "../../../data/months";
 import type { BudgetData } from "../../../types/budgetData";
 import type { GoalsData } from "../../../types/goalsData";
-import {
-  getActiveMonths,
-  getCategoriesAverageTotal,
-  getMonthTotal,
-  type PeriodOption,
-} from "../../../utils/budgetAverages";
 
 interface BudgetUsageSummaryProps {
   expenses: BudgetData;

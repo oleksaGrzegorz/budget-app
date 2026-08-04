@@ -7,7 +7,7 @@ import {
   getActiveMonths,
   getCategoryAverage,
   type PeriodOption,
-} from "../../../utils/budgetAverages";
+} from "../../budget-summary/utils/budgetAverages";
 
 interface IncomesTableProps {
   incomes: BudgetData;
