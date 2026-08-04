@@ -3,16 +3,16 @@ import {
   categoryAverageTypes,
   categoryEmojis,
   getCategoryAverageType,
-} from "../../data/categories";
-import { months } from "../../data/months";
-import type { BudgetData } from "../../types/budgetData";
-import type { GoalsData } from "../../types/goalsData";
+} from "../../../data/categories";
+import { months } from "../../../data/months";
+import type { BudgetData } from "../../../types/budgetData";
+import type { GoalsData } from "../../../types/goalsData";
 import {
   getActiveMonths,
   getCategoriesAverageTotal,
   getMonthTotal,
   type PeriodOption,
-} from "../../utils/budgetAverages";
+} from "../../../utils/budgetAverages";
 
 interface BudgetUsageSummaryProps {
   expenses: BudgetData;
