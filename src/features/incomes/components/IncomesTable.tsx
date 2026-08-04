@@ -1,13 +1,13 @@
-import { budgetSummaryLabels as incomeCategories } from "../../data/budgetSummaryLabels";
-import { months } from "../../data/months";
-import type { BudgetData } from "../../types/budgetData";
-import type { GoalsData } from "../../types/goalsData";
+import { GoalCell } from "../../../components/BudgetSummaryTable/GoalCell";
+import { budgetSummaryLabels as incomeCategories } from "../../../data/budgetSummaryLabels";
+import { months } from "../../../data/months";
+import type { BudgetData } from "../../../types/budgetData";
+import type { GoalsData } from "../../../types/goalsData";
 import {
   getActiveMonths,
   getCategoryAverage,
   type PeriodOption,
-} from "../../utils/budgetAverages";
-import { GoalCell } from "../BudgetSummaryTable/GoalCell";
+} from "../../../utils/budgetAverages";
 
 interface IncomesTableProps {
   incomes: BudgetData;

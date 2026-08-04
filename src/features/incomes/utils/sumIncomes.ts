@@ -1,4 +1,4 @@
-import type { Entry } from "../features/transactions/types/entry";
+import type { Entry } from "../../../features/transactions/types/entry";
 
 export type MonthlyCategoryMap = Record<string, Record<string, number>>;
 
