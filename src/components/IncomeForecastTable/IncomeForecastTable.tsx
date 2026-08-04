@@ -2,6 +2,7 @@ import type { Forecast } from "../../data/initialForecast";
 import { getIncomeForecastMetrics } from "../../hooks/getIncomeForecastMetrics";
 import type { BudgetData } from "../../types/budgetData";
 import { AnnualSavingsProgress } from "./AnnualSavingsProgress";
+import { CashScenario } from "./CashScenario";
 import { ForecastAssumptionsTable } from "./ForecastAssumptionsTable";
 import { MonthlyNotes } from "./MonthlyNotes";
 import { MonthlyPerformanceTable } from "./MonthlyPerformanceTable";
@@ -44,10 +45,19 @@ export const IncomeForecastTable = ({
     forecastedProgress,
     savedProgress,
     remainingForecast,
+
+    remainingIncome,
+    remainingExpenses,
+    remainingMonths,
   } = getIncomeForecastMetrics(incomes, expenses, forecast);
 
   return (
     <div>
+      <CashScenario
+        remainingIncome={remainingIncome}
+        remainingExpenses={remainingExpenses}
+        remainingMonths={remainingMonths}
+      />
       <AnnualSavingsProgress
         annualGoal={annualGoal}
         annualResult={annualResult}
