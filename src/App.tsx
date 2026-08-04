@@ -4,7 +4,6 @@ import { useBudgetData } from "./hooks/useBudgetData";
 
 import { AccountsBalance } from "./components/AccountsBalance/AccountsBalance";
 import { BitcoinPrice } from "./components/BitcoinPrice";
-import { BudgetInsights } from "./components/BudgetInsights/BudgetInsights";
 import { BudgetSummaryTable } from "./components/BudgetSummaryTable/BudgetSummaryTable";
 import { BudgetUsageSummary } from "./components/BudgetUsageSummary/BudgetUsageSummary";
 import { ExpensesByCategoryChart } from "./components/ExpensesByCategoryChart/ExpensesByCategoryChart";
@@ -14,6 +13,7 @@ import type { PeriodOption } from "./utils/budgetAverages";
 
 import { initialAccountSnapshots } from "./data/initialAccountSnapshots";
 
+import { BudgetInsights } from "./features/budget-summary/components/BudgetInsights";
 import { ExpensesTable } from "./features/expenses/components/ExpensesTable/ExpensesTable";
 import { ExpensesByIncomeChart } from "./features/incomes/components/ExpensesByIncomeChart";
 import { IncomesTable } from "./features/incomes/components/IncomesTable";

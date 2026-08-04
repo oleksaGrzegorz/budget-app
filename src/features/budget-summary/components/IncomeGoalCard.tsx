@@ -1,12 +1,12 @@
-import { budgetSummaryLabels as incomeCategories } from "../../data/budgetSummaryLabels";
-import type { Forecast } from "../../data/initialForecast";
-import { months } from "../../data/months";
-import type { BudgetData } from "../../types/budgetData";
+import { budgetSummaryLabels as incomeCategories } from "../../../data/budgetSummaryLabels";
+import type { Forecast } from "../../../data/initialForecast";
+import { months } from "../../../data/months";
+import type { BudgetData } from "../../../types/budgetData";
 import {
   getActiveMonths,
   getCategoryAverage,
   type PeriodOption,
-} from "../../utils/budgetAverages";
+} from "../../../utils/budgetAverages";
 
 interface IncomeGoalCardProps {
   incomes: BudgetData;

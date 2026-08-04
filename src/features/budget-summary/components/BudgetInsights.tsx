@@ -1,7 +1,7 @@
-import type { Forecast } from "../../data/initialForecast";
-import type { BudgetData } from "../../types/budgetData";
-import type { GoalsData } from "../../types/goalsData";
-import type { PeriodOption } from "../../utils/budgetAverages";
+import type { Forecast } from "../../../data/initialForecast";
+import type { BudgetData } from "../../../types/budgetData";
+import type { GoalsData } from "../../../types/goalsData";
+import type { PeriodOption } from "../../../utils/budgetAverages";
 import { IncomeGoalCard } from "./IncomeGoalCard";
 
 interface BudgetInsightsProps {
