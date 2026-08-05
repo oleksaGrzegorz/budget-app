@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import { budgetSummaryLabels as incomeCategories } from "../../data/budgetSummaryLabels";
-import type { Forecast } from "../../data/initialForecast";
-import { months } from "../../data/months";
+import { budgetSummaryLabels as incomeCategories } from "../../../../data/budgetSummaryLabels";
+import type { Forecast } from "../../../../data/initialForecast";
+import { months } from "../../../../data/months";
 import { tableStyles } from "./tableStyles";
 
 const formatNumber = (value: number) =>

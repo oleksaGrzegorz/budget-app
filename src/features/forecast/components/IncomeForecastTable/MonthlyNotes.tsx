@@ -1,5 +1,5 @@
-import type { Forecast } from "../../data/initialForecast";
-import { months } from "../../data/months";
+import type { Forecast } from "../../../../data/initialForecast";
+import { months } from "../../../../data/months";
 
 interface MonthlyNotesProps {
   forecast: Forecast;

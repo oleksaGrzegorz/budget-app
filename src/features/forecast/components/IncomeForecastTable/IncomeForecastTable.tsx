@@ -1,6 +1,6 @@
-import type { Forecast } from "../../data/initialForecast";
-import { getIncomeForecastMetrics } from "../../hooks/getIncomeForecastMetrics";
-import type { BudgetData } from "../../types/budgetData";
+import type { Forecast } from "../../../../data/initialForecast";
+import { getIncomeForecastMetrics } from "../../../../hooks/getIncomeForecastMetrics";
+import type { BudgetData } from "../../../../types/budgetData";
 import { AnnualSavingsProgress } from "./AnnualSavingsProgress";
 import { CashScenario } from "./CashScenario";
 import { ForecastAssumptionsTable } from "./ForecastAssumptionsTable";
