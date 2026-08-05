@@ -2,11 +2,11 @@ import type {
   AccountId,
   AccountSnapshot,
   Currency,
-} from "../../data/initialAccountSnapshots";
+} from "../../../../data/initialAccountSnapshots";
 import {
   accountDefinitions,
   isAccountActiveOnDate,
-} from "../../data/initialAccountSnapshots";
+} from "../../../../data/initialAccountSnapshots";
 
 export interface YearSummary {
   year: string;

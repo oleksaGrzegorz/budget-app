@@ -12,7 +12,7 @@ import {
 
 import type { ChartMetric } from "./types";
 
-import type { AccountSnapshot } from "../../data/initialAccountSnapshots";
+import type { AccountSnapshot } from "../../../../data/initialAccountSnapshots";
 import { getChartValue } from "./chartData";
 import {
   formatChartValue,
@@ -99,7 +99,7 @@ const CustomTooltip = ({
     payload?: ChartPoint;
   }>;
   label?: string;
-  currencyLabel?: string;
+  currencyLabel: string;
   firstValue: number;
 }) => {
   if (!active || !payload?.length) {

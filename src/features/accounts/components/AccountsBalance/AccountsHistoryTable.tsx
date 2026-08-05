@@ -2,8 +2,8 @@ import { Fragment } from "react";
 
 import type { AccountDefinition } from "./types";
 
-import type { AccountSnapshot } from "../../data/initialAccountSnapshots";
-import { isAccountActiveOnDate } from "../../data/initialAccountSnapshots";
+import type { AccountSnapshot } from "../../../../data/initialAccountSnapshots";
+import { isAccountActiveOnDate } from "../../../../data/initialAccountSnapshots";
 import {
   getAccountPercentDiff,
   getDiff,

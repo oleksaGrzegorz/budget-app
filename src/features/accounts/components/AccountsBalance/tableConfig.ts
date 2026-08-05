@@ -1,4 +1,4 @@
-import type { AccountId } from "../../data/initialAccountSnapshots";
+import type { AccountId } from "../../../../data/initialAccountSnapshots";
 
 export const accountPercentDiffColumns: Partial<Record<AccountId, string>> = {
   "pln.bonds": "%",

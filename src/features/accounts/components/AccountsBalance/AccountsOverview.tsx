@@ -1,4 +1,4 @@
-import type { AccountSnapshot } from "../../data/initialAccountSnapshots";
+import type { AccountSnapshot } from "../../../../data/initialAccountSnapshots";
 import { getEurTotal, getPlnTotal, getTotalEur } from "./calculations";
 import { formatEur, formatPln } from "./format";
 

@@ -1,6 +1,6 @@
 import type { ChartMetricId } from "./types";
 
-import type { AccountSnapshot } from "../../data/initialAccountSnapshots";
+import type { AccountSnapshot } from "../../../../data/initialAccountSnapshots";
 import { getEurTotal, getPlnTotal, getTotalEur } from "./calculations";
 import type { TimeRange } from "./chartConfig";
 import { timeRanges } from "./chartConfig";

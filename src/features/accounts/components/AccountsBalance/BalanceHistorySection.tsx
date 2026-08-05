@@ -2,7 +2,7 @@ import type { Dispatch, SetStateAction } from "react";
 
 import type { ChartMetric, ChartMetricId } from "./types";
 
-import type { AccountSnapshot } from "../../data/initialAccountSnapshots";
+import type { AccountSnapshot } from "../../../../data/initialAccountSnapshots";
 import { AccountsLineChart } from "./AccountsLineChart";
 import type { TimeRange } from "./chartConfig";
 import { timeRanges } from "./chartConfig";

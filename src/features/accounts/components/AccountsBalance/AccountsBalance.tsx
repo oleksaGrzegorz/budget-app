@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 
 import type { ChartMetric, ChartMetricId } from "./types";
 
-import type { AccountSnapshot } from "../../data/initialAccountSnapshots";
+import type { AccountSnapshot } from "../../../../data/initialAccountSnapshots";
 import { QuarterlyAssetsSummary } from "../QuarterlyAssetsSummary/QuarterlyAssetsSummary";
 import { AccountsHistoryTable } from "./AccountsHistoryTable";
 import { AccountsOverview } from "./AccountsOverview";

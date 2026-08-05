@@ -2,12 +2,12 @@ import { useState } from "react";
 
 import { useBudgetData } from "./hooks/useBudgetData";
 
-import { AccountsBalance } from "./components/AccountsBalance/AccountsBalance";
 import { BitcoinPrice } from "./components/BitcoinPrice";
 import { ExpensesByCategoryChart } from "./components/ExpensesByCategoryChart/ExpensesByCategoryChart";
 
 import { initialAccountSnapshots } from "./data/initialAccountSnapshots";
 
+import { AccountsBalance } from "./features/accounts/components/AccountsBalance/AccountsBalance";
 import { BudgetInsights } from "./features/budget-summary/components/BudgetInsights";
 import { BudgetSummaryTable } from "./features/budget-summary/components/BudgetSummaryTable/BudgetSummaryTable";
 import { BudgetUsageSummary } from "./features/budget-summary/components/BudgetUsageSummary";
