@@ -1,7 +1,7 @@
-import { GoalCell } from "../../../../../components/BudgetSummaryTable/GoalCell";
 import { months } from "../../../../../data/months";
 import type { Goals } from "../../../../../types/goals";
 import type { PeriodOption } from "../../../utils/budgetAverages";
+import { GoalCell } from "../GoalCell";
 
 interface TotalsSectionProps {
   getTotalIncome: (month: string) => number | null;

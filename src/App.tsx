@@ -4,13 +4,13 @@ import { useBudgetData } from "./hooks/useBudgetData";
 
 import { AccountsBalance } from "./components/AccountsBalance/AccountsBalance";
 import { BitcoinPrice } from "./components/BitcoinPrice";
-import { BudgetSummaryTable } from "./components/BudgetSummaryTable/BudgetSummaryTable";
 import { ExpensesByCategoryChart } from "./components/ExpensesByCategoryChart/ExpensesByCategoryChart";
 import { IncomeForecastTable } from "./components/IncomeForecastTable/IncomeForecastTable";
 
 import { initialAccountSnapshots } from "./data/initialAccountSnapshots";
 
 import { BudgetInsights } from "./features/budget-summary/components/BudgetInsights";
+import { BudgetSummaryTable } from "./features/budget-summary/components/BudgetSummaryTable/BudgetSummaryTable";
 import { BudgetUsageSummary } from "./features/budget-summary/components/BudgetUsageSummary";
 import type { PeriodOption } from "./features/budget-summary/utils/budgetAverages";
 import { ExpensesTable } from "./features/expenses/components/ExpensesTable/ExpensesTable";

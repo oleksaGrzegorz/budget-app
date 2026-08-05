@@ -1,10 +1,10 @@
 import { Fragment } from "react";
 
-import { GoalCell } from "../../../../components/BudgetSummaryTable/GoalCell";
 import { categoryAverageTypes, categoryGroups } from "../../../../data/categories";
 import { months } from "../../../../data/months";
 import type { BudgetData } from "../../../../types/budgetData";
 import type { GoalsData } from "../../../../types/goalsData";
+import { GoalCell } from "../../../budget-summary/components/BudgetSummaryTable/GoalCell";
 import {
   getActiveMonths,
   getCategoryAverage,
