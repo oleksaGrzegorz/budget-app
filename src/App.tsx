@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useBudgetData } from "./hooks/useBudgetData";
 
 import { BitcoinPrice } from "./components/BitcoinPrice";
-import { ExpensesByCategoryChart } from "./components/ExpensesByCategoryChart/ExpensesByCategoryChart";
 
 import { initialAccountSnapshots } from "./data/initialAccountSnapshots";
 
@@ -12,7 +11,8 @@ import { BudgetInsights } from "./features/budget-summary/components/BudgetInsig
 import { BudgetSummaryTable } from "./features/budget-summary/components/BudgetSummaryTable/BudgetSummaryTable";
 import { BudgetUsageSummary } from "./features/budget-summary/components/BudgetUsageSummary";
 import type { PeriodOption } from "./features/budget-summary/utils/budgetAverages";
-import { ExpensesTable } from "./features/expenses/components/ExpensesTable/ExpensesTable";
+import { ExpensesByCategoryChart } from "./features/expenses/components/ExpensesByCategoryChart";
+import { ExpensesTable } from "./features/expenses/components/ExpensesTable";
 import { IncomeForecastTable } from "./features/forecast/components/IncomeForecastTable/IncomeForecastTable";
 import { ExpensesByIncomeChart } from "./features/incomes/components/ExpensesByIncomeChart";
 import { IncomesTable } from "./features/incomes/components/IncomesTable";
