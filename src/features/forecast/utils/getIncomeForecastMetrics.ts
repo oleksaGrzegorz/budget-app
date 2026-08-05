@@ -1,8 +1,7 @@
-import type { BudgetData } from "../types/budgetData";
-
-import { budgetSummaryLabels as incomeCategories } from "../data/budgetSummaryLabels";
-import type { Forecast } from "../data/initialForecast";
-import { months } from "../data/months";
+import { budgetSummaryLabels as incomeCategories } from "../../../data/budgetSummaryLabels";
+import type { Forecast } from "../../../data/initialForecast";
+import { months } from "../../../data/months";
+import type { BudgetData } from "../../../types/budgetData";
 
 export const getIncomeForecastMetrics = (
   incomes: BudgetData,
@@ -97,13 +96,32 @@ export const getIncomeForecastMetrics = (
     return ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
   };
 
+  /*
+   * Miesiące, dla których nie ma jeszcze rzeczywistych danych.
+   * Są wykorzystywane przez prognozę oraz symulator gotówki.
+   */
+  const remainingMonthNames = months.filter(
+    (month) => !hasActualData(month),
+  );
+
+  const remainingMonths = remainingMonthNames.length;
+
+  const remainingIncome = remainingMonthNames.reduce(
+    (sum, month) => sum + getPlannedIncome(month),
+    0,
+  );
+
+  const remainingExpenses = remainingMonthNames.reduce(
+    (sum, month) => sum + getPlannedExpenses(month),
+    0,
+  );
+
+  const remainingResult = remainingIncome - remainingExpenses;
+
   const annualGoal = getYearTotal(getSavingsGoal);
   const annualResult = getActualYearTotal(getActualSavings);
 
-  const remainingForecast = months.reduce(
-    (sum, month) => (hasActualData(month) ? sum : sum + getSavingsGoal(month)),
-    0,
-  );
+  const remainingForecast = remainingResult;
 
   const forecastedYearEnd = annualResult + remainingForecast;
   const forecastGap = forecastedYearEnd - annualGoal;
@@ -121,11 +139,17 @@ export const getIncomeForecastMetrics = (
         )
       : 0;
 
-  const gapProgress = Math.max(100 - actualProgress - forecastProgress, 0);
+  const gapProgress = Math.max(
+    100 - actualProgress - forecastProgress,
+    0,
+  );
 
   const forecastedProgress =
     annualGoal > 0
-      ? Math.min(Math.max((forecastedYearEnd / annualGoal) * 100, 0), 100)
+      ? Math.min(
+          Math.max((forecastedYearEnd / annualGoal) * 100, 0),
+          100,
+        )
       : 0;
 
   const savedProgress =
@@ -148,15 +172,23 @@ export const getIncomeForecastMetrics = (
     getActualAverage,
     getActualYearTotal,
     getAverageRating,
+
     annualGoal,
     annualResult,
     forecastedYearEnd,
     forecastGap,
+
     actualProgress,
     forecastProgress,
     gapProgress,
     forecastedProgress,
-    savedProgress, 
+    savedProgress,
+
     remainingForecast,
+    remainingMonthNames,
+    remainingMonths,
+    remainingIncome,
+    remainingExpenses,
+    remainingResult,
   };
 };
