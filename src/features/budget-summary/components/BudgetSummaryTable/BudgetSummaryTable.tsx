@@ -1,8 +1,8 @@
 import { months } from "../../../../data/months";
-import { useBudgetMetrics } from "../../../../hooks/useBudgetMetrics";
 import type { BudgetData } from "../../../../types/budgetData";
 import type { Goals } from "../../../../types/goals";
 import type { PeriodOption } from "../../../budget-summary/utils/budgetAverages";
+import { useBudgetMetrics } from "../../hooks/useBudgetMetrics";
 import { SavingsSection } from "./sections/SavingsSection";
 import { TotalsSection } from "./sections/TotalsSection";
 
